@@ -1,0 +1,410 @@
+<div class="main-content">
+  <section *ngIf="cookDetail[0].cookVerified == 0" id='section_1' class="d-block d-lg-none">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col d-flex vh-100">
+          <div class="col align-self-center text-center mb-6">
+            <img alt="Image placeholder" src="../../assets/img/svg/illustrations/Login-rafiki.svg"
+              class="svg-inject img-fluid">
+            <button type="button" (click)="modalEvent('modalRegister', null)"
+              class="btn btn-sm btn-primary rounded-pill border-0 mt-3 mx-3">Register as Cook</button>
+            <h6 class="text-primary font-weight-bolder mt-2"><small>Start your journey by registering as our
+                cook.</small></h6>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section *ngIf="cookDetail[0].cookVerified == 1" id='section_1' class="d-block d-lg-none">
+    <div class="container-fluid pb-5">
+      <div class='row'>
+        <div class="col-12 px-0 py-2">
+          <div class="col-12 px-3 py-1 mb-2">
+            <nav class="nav nav-pills nav-fill nav-justified" id="billing_profile" role="tablist">
+              <a class="nav-item nav-link nav-home py-1 my-1" style="border-radius: 5px 0px 0px 5px" id="home-tab"
+                data-toggle="tab" href="#counter" role="tab" aria-selected="true">
+                Counter
+              </a>
+              <a class="nav-item nav-link nav-home active py-1 my-1" style="border-radius: 0px 0px 0px 0px"
+                id="profile-tab1" data-toggle="tab" href="#kitchen" role="tab" aria-selected="false">
+                Kitchen
+              </a>
+              <a class="nav-item nav-link nav-home py-1 my-1" style="border-radius: 0px 5px 5px 0px" id="profile-tab2"
+                data-toggle="tab" href="#kitchenHistory" role="tab" aria-selected="false">
+                History
+              </a>
+            </nav>
+          </div>
+          <div class="col-12">
+            <div class="tab-content" id="myTabContent">
+              <!-- Available Orders -->
+              <div class="tab-pane fade" id="counter" role="tabpanel">
+                <div *ngIf="allOrders.length == 0" id='section_1' class="d-block d-lg-none">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col d-flex mt-8">
+                        <div class="col align-self-center text-center">
+                          <img alt="Image placeholder" src="../../assets/img/svg/illustrations/undraw_loading_frh4.svg"
+                            class="svg-inject img-fluid">
+                          <h6 class="text-primary font-weight-bolder mt-3"><small>Opps, it seems like there is no order
+                              at the moment.</small></h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div *ngFor="let m of allOrders" class="card shadow mb-3">
+                  <div class="card-header" style="background-color:#e0e6ed">
+                    <div class="row m-0 p-0 d-flex justify-content-between align-items-center">
+                      <div class="col-8 m-0 p-0">
+                        <h6 class="card-title mb-0 font-weight-bolder">{{ m.foodTitle }} <span
+                            class="text-primary">x{{ m.quantity }}</span></h6>
+                        <p class="text-muted text-xs mb-0">{{ m.createdTime | date:'short' }}</p>
+                        <p class="text-muted text-xs mb-0 lh-100">{{ m.orderID }}</p>
+                      </div>
+                      <div class="col-4 m-0 p-0">
+                        <button type="button" class="btn btn-primary btn-sm rounded-pill py-1 px-3 float-right"
+                          (click)="modalEvent('modalGrab', m)">
+                          Grab
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body py-2">
+                    <p class="card-text text-sm">{{ m.foodCustomization }}</p>
+                  </div>
+                  <ul class="list-group list-group-flush border-bottom-0">
+                    <li class="list-group-item">
+                      <div class="alert alert-group alert-outline-dark bg-secondary alert-icon px-3 mb-0" role="alert">
+                        <div class="alert-group-prepend py-2">
+                          <span class="alert-group-icon text-">
+                            <i class="fas fa-map-marker-alt text-primary"></i>
+                          </span>
+                        </div>
+                        <div class="alert-content p-0">
+                          <p class="text-primary font-weight-bold text-justify text-xs mb-0 lh-120">
+                            {{ m.deliveryAddress }}</p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <div class="card-footer py-2">
+                    <div class="row align-items-center">
+                      <div class="col-12">
+                        <span
+                          class="avatar avatar-sm bg-dark rounded-circle">{{ m.clientName | uppercase | slice:0:2 }}</span>
+                        <span class="h6 mb-0 avatar-content text-sm">{{ m.clientName }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Kitchen -->
+              <div class="tab-pane fade show active" id="kitchen" role="tabpanel">
+                <div class="card border-0 bg-gray-400 shadow mb-4">
+                  <!-- <div class="card-body">
+                    <div class="col px-0">
+                      <div class="avatar-parent-child mr-3 shadow">
+                        <span class="avatar avatar-sm bg-primary rounded-circle"
+                          style="width: 35px; height: 35px;">{{ cookDetail[0].clientRating | number:'.1' }}</span>
+                        <span class="avatar-child avatar-badge bg-success"
+                          style="width: 12px; height: 12px; right: -5px; bottom: 20px;"></span>
+                      </div>
+                      <span class="h6 font-weight-bolder mb-0 avatar-content">{{ publicAuth.clientName }}</span>
+                      <span><i class="fas fa-utensils fa-2x text-dark opacity-4 float-right"></i></span>
+                    </div>
+                    <div>
+                      <h6 class="mt-4 text-justify">You are now at home cook's paradise.</h6>
+                    </div>
+                    <p class="text-sm lh-120 mb-1 text-justify">Start grabbing orders now!</p>
+                  </div> -->
+
+                  <img src="../../assets/img/backgrounds/36a0edc6dcbf4466ae71d0548f94ff43.jpg"
+                    class="card-img-top" style="height: 200px; object-fit: cover;">
+                  <div
+                    style="height:71%; width: 100%; position:absolute; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 20%, rgba(138, 25, 29, 0.9) 100%);">
+                  </div>
+                  <div class="card-img-overlay pt-7">
+                    <h6 class="mt-4 pt-3 text-white">You are now at home cook's paradise.</h6>
+                    <p class="text-sm lh-120  text-white text-justify mb-1">Start grabbing orders now!</p>
+                  </div>
+                  <div class="card-body">
+                    <div class="col px-0">
+                      <div class="avatar-parent-child mr-3 shadow">
+                        <span class="avatar avatar-sm bg-primary rounded-circle"
+                          style="width: 35px; height: 35px;">{{ cookDetail[0].clientRating | number:'.1' }}</span>
+                        <span class="avatar-child avatar-badge bg-success"
+                          style="width: 12px; height: 12px; right: -5px; bottom: 20px;"></span>
+                      </div>
+                      <span class="h6 font-weight-bolder mb-0 avatar-content">{{ publicAuth.clientName }}</span>
+                      <span><i class="fas fa-utensils fa-2x text-dark opacity-4 float-right"></i></span>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center mb-2">
+                  <span class="h5 font-weight-bolder">
+                    Current Orders
+                  </span>
+                </div>
+                <div *ngFor="let m of cookOrders, let i = index">
+                  <!-- <div *ngIf="cookOrders.length == 0" class="container">
+                    Kitchen Empty
+                    <div class="row">
+                      <div class="d-flex align-items-center">
+                        <div class="col-12">
+                          <div class="alert text-center" role="alert">
+                            <div class="row justify-content-center my-5">
+                              <div class="col-md-5">
+                                <img alt="Image placeholder" src="../../assets/img/svg/cart/undraw_Hamburger_8ge6.svg"
+                                  class="svg-inject img-fluid">
+                              </div>
+                            </div>
+                            <p>Kitchen Empty. Start grabbing orders.{{i}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> -->
+                  <div *ngIf="m.orderStatus == 2" class="card shadow mb-3">
+                    <div class="card-header" style="background-color:#e0e6ed">
+                      <div class="row m-0 p-0 d-flex justify-content-between align-items-center">
+                        <div class="col-8 m-0 p-0">
+                          <h6 class="card-title mb-0 font-weight-bolder">{{ m.foodTitle }} <span
+                              class="text-primary">x{{ m.quantity }}</span></h6>
+                          <p class="text-muted text-xs mb-0">{{ m.createdTime | date:'short' }}</p>
+                          <p class="text-muted text-xs mb-0 lh-100">{{ m.orderID }}</p>
+                        </div>
+                        <div class="col-4 m-0 p-0">
+                          <button type="button" class="btn btn-primary btn-sm rounded-pill py-1 px-3 float-right"
+                            (click)="modalEvent('modalDone', m)">
+                            Done
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body py-2">
+                      <p class="card-text text-sm">{{ m.foodCustomization }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush border-bottom-0">
+                      <li class="list-group-item">
+                        <div class="alert alert-group alert-outline-dark bg-secondary alert-icon px-3 mb-0"
+                          role="alert">
+                          <div class="alert-group-prepend py-2">
+                            <span class="alert-group-icon text-">
+                              <i class="fas fa-map-marker-alt text-primary"></i>
+                            </span>
+                          </div>
+                          <div class="alert-content p-0">
+                            <p class="text-primary font-weight-bold text-justify text-xs mb-0 lh-120">
+                              {{ m.deliveryAddress }}</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <div class="card-footer py-2">
+                      <div class="row align-items-center">
+                        <div class="col-7">
+                          <span
+                            class="avatar avatar-sm bg-dark rounded-circle">{{ m.clientName | uppercase | slice:0:2 }}</span>
+                          <span class="h6 mb-0 avatar-content text-sm">{{ m.clientName }}</span>
+                        </div>
+                        <div class="col-5 text-right text-right">
+                          <div class="actions">
+                            <a href="#" class="action-item"><i class="fas fa-dollar-sign mr-1"></i>RM
+                              {{ m.foodPrice | number:'.2' }}</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Kitchen History -->
+              <div class="tab-pane fade" id="kitchenHistory" role="tabpanel">
+                <div *ngFor="let m of cookOrders">
+                  <div *ngIf="m.orderStatus == 3" class="card shadow mb-3">
+                    <div class="card-header" style="background-color:#e0e6ed">
+                      <div class="row m-0 p-0 d-flex justify-content-between align-items-center">
+                        <div class="col-12 m-0 p-0">
+                          <h6 class="card-title mb-0 font-weight-bolder">{{ m.foodTitle }} <span
+                              class="text-primary">x{{ m.quantity }}</span></h6>
+                          <p class="text-muted text-xs mb-0">{{ m.createdTime | date:'short' }}</p>
+                          <p class="text-muted text-xs mb-0 lh-100">{{ m.orderID }}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body py-2">
+                      <p class="card-text text-sm">{{ m.foodCustomization }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush border-bottom-0">
+                      <li class="list-group-item">
+                        <div class="alert alert-group alert-outline-dark bg-secondary alert-icon px-3 mb-0"
+                          role="alert">
+                          <div class="alert-group-prepend py-2">
+                            <span class="alert-group-icon text-">
+                              <i class="fas fa-map-marker-alt text-primary"></i>
+                            </span>
+                          </div>
+                          <div class="alert-content p-0">
+                            <p class="text-primary font-weight-bold text-justify text-xs mb-0 lh-120">
+                              {{ m.deliveryAddress }}</p>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                    <div class="card-footer py-2">
+                      <div class="row align-items-center">
+                        <div class="col-7">
+                          <span
+                            class="avatar avatar-sm bg-dark rounded-circle">{{ m.clientName | uppercase | slice:0:2 }}</span>
+                          <span class="h6 mb-0 avatar-content text-sm">{{ m.clientName }}</span>
+                        </div>
+                        <div class="col-5 text-right text-right">
+                          <div class="actions">
+                            <a href="#" class="action-item"><i class="fas fa-dollar-sign mr-1"></i>RM
+                              {{ m.foodPrice | number:'.2' }}</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalGrab" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="modal-header py-3">
+          <h6 class="modal-title font-weight-bolder text-primary" id="exampleModalLabel">Please state a price</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-3 m-1">
+          <div class="card shadow border-dark mb-3">
+            <div class="card-header" style="background-color:#e0e6ed">
+              <h6 class="card-title mb-0 font-weight-bolder">{{ modalData.foodTitle }} <span
+                  class="text-primary">x{{ modalData.quantity }}</span></h6>
+              <span class="text-muted text-xs">{{ modalData.createdTime | date:'short' }}</span>
+            </div>
+            <div class="card-body py-2">
+              <p class="card-text text-sm">{{ modalData.foodCustomization }}</p>
+            </div>
+          </div>
+          <div class="form-group mb-0">
+            <input formControlName="price" type="number" class="form-control form-control-emphasized form-control-sm"
+              placeholder="RM">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="row m-0">
+            <div class="col p-0">
+              <button [disabled]="form.invalid" type="submit" class="btn btn-sm btn-block btn-primary">GRAB</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalDone" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header py-3">
+        <h6 class="modal-title font-weight-bolder text-primary" id="exampleModalLabel">Order Finished?</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-3 m-1">
+        <div class="card shadow mb-0">
+          <div class="card-header" style="background-color:#e0e6ed">
+            <h6 class="card-title mb-0 font-weight-bolder">{{ modalData.foodTitle }} <span
+                class="text-primary">x{{ modalData.quantity }}</span></h6>
+            <span class="text-muted text-xs">{{ modalData.createdTime | date:'short' }}</span>
+          </div>
+          <div class="card-body py-2">
+            <p class="card-text text-sm">{{ modalData.foodCustomization }}</p>
+          </div>
+          <div class="card-footer py-2">
+            <div class="row align-items-center">
+              <div class="col-7">
+                <span
+                  class="avatar avatar-sm bg-dark rounded-circle">{{ modalData.clientName | uppercase | slice:0:2 }}</span>
+                <span class="h6 mb-0 avatar-content text-sm">{{ modalData.clientName }}</span>
+              </div>
+              <div class="col-5 text-right text-right">
+                <div class="actions">
+                  <a href="javascript: void(0)" class="action-item"><i class="fas fa-dollar-sign mr-1"></i>RM
+                    {{ modalData.foodPrice | number:'.2' }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="row m-0">
+          <div class="col p-0">
+            <button (click)="updateOrder(); updateClientInfo()" type="button"
+              class="btn btn-sm btn-block btn-primary">DONE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal modal-primary fade" id="modalRegister" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header py-3">
+        <h6 class="modal-title text-white font-weight-bolder" id="exampleModalLabel">Register as a Cook</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form class="form-primary">
+        <div class="modal-body p-3 m-1">
+          <div class="form-group">
+            <label class="form-control-label text-white">IC Number</label>
+            <input type="number" class="form-control form-control-emphasized form-control-sm"
+              placeholder="IC Number without any symbol">
+          </div>
+          <div class="mt-4">
+            <label class="form-control-label text-white">Kitchen Pictures (Verification Purpose)</label>
+            <input type="file" name="file-2[]" id="file-2" class="custom-input-file" data-multiple-caption="{count} files selected" multiple />
+           <label for="file-2" class="py-2">
+               <i class="fa fa-upload"></i>
+               <span>Choose files</span>
+           </label>
+       </div>
+        </div>
+        <div class="modal-footer">
+          <div class="row m-0">
+            <div class="col p-0 pr-1">
+              <button type="button" class="btn btn-sm btn-block bg-primary-dark text-white"
+                data-dismiss="modal">CLOSE</button>
+            </div>
+            <div class="col p-0 pl-1">
+              <button type="button" type="submit" class="btn btn-sm btn-block btn-secondary text-primary font-weight-bolder" (click)="registerCook()">REGISTER</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

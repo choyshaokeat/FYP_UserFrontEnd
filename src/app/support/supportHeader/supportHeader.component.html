@@ -1,0 +1,78 @@
+<router-outlet></router-outlet>
+<section id="sct-topics">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card shadow-none border-0 m-0 px-1 pt-3 pb-2">
+          <h3 class="text-dark text-left font-weight-700" style="font-family:Calibri;">Support Center</h3>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 p-0 px-3">
+        <div class="card opacity-container text-white overflow-hidden shadow mb-2 border-0">
+
+          <div class="row">
+            <div class="col-4 p-0 m-0">
+              <img alt="Image placeholder" src="../../assets/img/svg/shapes/wave-2.svg" class="svg-inject rounded"
+                style="width: 100%; height: 120px; object-fit: cover;">
+              <span class="mask bg-gradient-primary opacity-5 rounded-0"></span>
+            </div>
+            <div class="col-8 p-0 m-0">
+              <div class="card-img-overlay d-flex align-items-start p-0">
+                <div class="overlay-text">
+                  <div class="card-body d-flex justify-content-between px-3 py-3">
+                    <span class="h6 text-dark font-weight-900">Updated data policy & privacy pollicy</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-img-overlay d-flex align-items-end p-0">
+                <div class="overlay-text">
+                  <div class="card-body d-flex justify-content-between px-3 py-3">
+                    <span class="text-muted text-xs font-weight-500">Last updated: 04/08/2020</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 pt-2">
+        <div class="list-group">
+          <a href="javascript:void(0)" [routerLink]="['/support/faq']" class="list-group-item list-group-item-action">
+            <div class="d-flex flex-row bd-highlight text-sm">
+              <div class="bd-highlight mr-2"><i class="fas fa-question-circle"></i></div>
+              <div class="bd-highlight">FAQ</div>
+              <div class="bd-highlight ml-auto"><i class="fas fa-chevron-right"></i></div>
+            </div>
+          </a>
+          <a href="javascript:void(0)" [routerLink]='["/policy/data"]' class="list-group-item list-group-item-action">
+            <div class="d-flex flex-row bd-highlight text-sm">
+              <div class="bd-highlight mr-2"><i class="fas fa-info-circle"></i></div>
+              <div class="bd-highlight">Data Policy</div>
+              <div class="bd-highlight ml-auto"><i class="fas fa-chevron-right"></i></div>
+            </div>
+          </a>
+          <a href="javascript:void(0)" [routerLink]='["/policy/refund"]' class="list-group-item list-group-item-action">
+            <div class="d-flex flex-row bd-highlight text-sm">
+              <div class="bd-highlight mr-2"><i class="fas fa-search-dollar"></i></div>
+              <div class="bd-highlight">Refund Policy</div>
+              <div class="bd-highlight ml-auto"><i class="fas fa-chevron-right"></i></div>
+            </div>
+          </a>
+          <a href="javascript:void(0)" [routerLink]='["/policy/sales"]' class="list-group-item list-group-item-action">
+            <div class="d-flex flex-row bd-highlight text-sm">
+              <div class="bd-highlight mr-2"><i class="fas fa-file-signature"></i></div>
+              <div class="bd-highlight">Sales Fulfilment Policy</div>
+              <div class="bd-highlight ml-auto"><i class="fas fa-chevron-right"></i></div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+</section>

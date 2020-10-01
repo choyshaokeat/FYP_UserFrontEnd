@@ -1,0 +1,145 @@
+<div class="main-content">
+    <div class="container d-flex align-items-center">
+      <div class="col">
+        <div class="row justify-content-center">
+          <div class="col-md-8 col-lg-6 mb-6">
+  
+            <div class="mt-5 mb-4 text-center">
+              <h3 class="font-weight-900">Register Account</h3>
+            </div>
+            <span class="clearfix"></span>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+              <div class="form-group">
+                <label class="form-control-label">Full Name</label>
+                <div class="input-group input-group-merge">
+                    <input  
+                    formControlName="clientName"
+                    type="text" 
+                    class="form-control form-control-sm text-dark border rounded bg-secondary"
+                    [ngClass]="{'is-valid':f.clientName.valid, 'is-invalid': f.clientName.touched && f.clientName.invalid}"
+                    autocomplete="off">
+                    <div class="valid-feedback">
+                      Acceptable
+                    </div>
+                    <div class="invalid-feedback">
+                      Please enter valid name
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-control-label">Email Address</label>
+                <div class="input-group input-group-merge">
+                    <input  
+                    formControlName="clientEmail"
+                    type="text" 
+                    class="form-control form-control-sm text-dark border rounded bg-secondary"
+                    [ngClass]="{'is-valid':f.clientEmail.valid, 'is-invalid': f.clientEmail.touched && f.clientEmail.invalid}"
+                    autocomplete="off">
+                    <div class="valid-feedback">
+                      Acceptable
+                    </div>
+                    <div class="invalid-feedback">
+                      Please enter valid email address
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-control-label">Mobile Number</label>
+                <div class="input-group input-group-merge">
+                    <input  
+                    formControlName="clientContact"
+                    type="text" 
+                    class="form-control form-control-sm text-dark border rounded bg-secondary"
+                    [ngClass]="{'is-valid':f.clientContact.valid, 'is-invalid': f.clientContact.touched && f.clientContact.invalid}"
+                    autocomplete="off">
+                    <div class="valid-feedback">
+                      Acceptable
+                    </div>
+                    <div class="invalid-feedback">
+                      Please enter valid mobile number
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-control-label">Address</label>
+                <div class="input-group input-group-merge">
+                    <input  
+                    formControlName="clientAddress"
+                    type="text" 
+                    class="form-control form-control-sm text-dark border rounded bg-secondary"
+                    [ngClass]="{'is-valid':f.clientAddress.valid, 'is-invalid': f.clientAddress.touched && f.clientAddress.invalid}"
+                    autocomplete="off">
+                    <div class="valid-feedback">
+                      Acceptable
+                    </div>
+                    <div class="invalid-feedback">
+                      Please enter valid address
+                    </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-control-label">New Password</label>
+                <div class="input-group input-group-merge">
+                  <input  
+                  formControlName="clientPW"
+                  type="password"
+                  class="form-control form-control-sm text-dark border rounded bg-secondary"
+                  [ngClass]="{'is-valid':f.clientPW.valid, 'is-invalid':f.clientPW.invalid && f.clientPW.touched}"
+                  autocomplete="off">
+                  <div class="valid-feedback">
+                    Acceptable
+                  </div>
+                  <div class="invalid-feedback">
+                    Must contain minimum 8 uppercase, lowercase and number.
+                  </div>
+                </div>
+              </div>
+
+              <button [disabled]="form.invalid" class="btn btn-sm btn-block btn-primary" type="submit">Submit</button>
+            </form>
+  
+  
+            <div class="mt-4 text-center"><small>Already have an acocunt?</small>
+              <a href="javascript:void(0)" class="small font-weight-bold" (click)='login()'>&nbsp;Sign in</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Modal Preparing-->
+  <div class="modal modal-danger bg-translucent-dark fade" id="modal_error" tabindex="-1" role="dialog" aria-labelledby="modal-delete-account" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fas fa-exclamation-circle fa-2x"></i>
+                    <h4 class="text-white mt-2">Email Existed</h4>
+                    <h6 class="text-white mt-4">Sorry, the email already exist in our system.</h6>
+                </div>
+                <div class="mt-4">
+                    <a href="javascript:void(0)" class="btn btn-block btn-sm btn-link text-light mt-2" data-dismiss="modal">Dismiss</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="modal modal-primary bg-translucent-dark fade" id="modal_done" tabindex="-1" role="dialog" aria-labelledby="modal-delete-account" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fas fa-check-circle fa-2x"></i>
+                    <h4 class="text-white mt-2">Welcome Onboard</h4>
+                    <h6 class="text-white mt-4">Thanks for registration, redirect in 5 sec.</h6>
+                </div>
+                <div class="mt-4">
+                    <a [routerLink]="['/eat']" class="btn btn-block btn-sm btn-white text-primary">Done</a>
+                    <a href="javascript:void(0)" class="btn btn-block btn-sm btn-link text-light mt-2" data-dismiss="modal">Dismiss</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>

@@ -1,0 +1,34 @@
+<footer id="footer-main">
+  <!-- Mobile Version  -->
+  <div id="navbar_mobile" class="d-sm-block d-lg-none bg-white footer p-0 fixed-bottom">
+    <div class="container-fluid shadow-dark">
+      <!-- nav-justified -->
+      <div class="row px-2" style="padding-top: 1px; padding-bottom: 1px;">
+        <a class="col nav-item nav-link pt-2 pb-0" href="javascript:void(0)" [routerLink]="['/eat']">
+          <div class="d-flex flex-column pb-0">
+            <div class="d-flex justify-content-center" style="font-size: 1.1rem;">
+              <i class="fas fa-grin-tongue-squint fa-lg" [ngClass]="{'text-primary': url === '/eat'}"></i>
+            </div>
+            <div class="d-flex justify-content-center pt-1 lh-150" [ngClass]="{'text-primary': url === '/eat'}"><small>EAT</small></div>
+          </div>
+        </a>
+        <a class="col nav-item nav-link pt-2 pb-0" href="javascript:void(0)" [routerLink]="['/account']">
+          <div class="d-flex flex-column pb-0">
+            <div class="d-flex justify-content-center" style="font-size: 1.1rem;">
+              <i class="fas fa-grin-beam fa-lg" [ngClass]="{'text-primary': url === '/account'}"></i>
+            </div>
+            <div class="d-flex justify-content-center pt-1 lh-150" [ngClass]="{'text-primary': url === '/account'}"><small>ACCOUNT</small></div>
+          </div>
+        </a>
+        <a class="col nav-item nav-link pt-2 pb-0" href="javascript:void(0)" [routerLink]="['/cook']">
+          <div class="d-flex flex-column pb-0">
+            <div class="d-flex justify-content-center" style="font-size: 1.1rem;">
+              <i class="fas fa-grin-wink fa-lg" [ngClass]="{'text-primary': url === '/cook'}"></i>
+            </div>
+            <div class="d-flex justify-content-center pt-1 lh-150" [ngClass]="{'text-primary': url === '/cook'}"><small>COOK</small></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

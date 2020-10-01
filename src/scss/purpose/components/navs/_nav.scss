@@ -1,0 +1,24 @@
+//
+// Nav
+//
+
+
+.nav-link {
+    color: $nav-link-color;
+    // background-color: white;
+    &:hover,
+    &.active {
+        color: theme-color("primary");
+    }
+}
+
+
+.nav-home {
+    color: $nav-link-color;
+    background-color: #E0E6ED;
+    &:hover,
+    &.active {
+        color: theme-color("primary");
+    }
+}
+

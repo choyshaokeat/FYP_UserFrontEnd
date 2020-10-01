@@ -1,0 +1,148 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "foododo": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/foododo",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/manifest.webmanifest"
+            ],
+            "styles": [
+              "src/scss/purpose.scss",
+              "node_modules/viewerjs/dist/viewer.css",
+              "node_modules/flatpickr/dist/themes/light.css",
+              "src/assets/libs/@fortawesome/fontawesome-free/css/all.min.css"
+            ],
+            "scripts": [
+              "src/assets/js/purpose.core.js",
+              "src/assets/libs/apexcharts/dist/apexcharts.min.js",
+              "src/assets/js/purpose.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "aot": true,
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "3mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "foododo:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "foododo:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "foododo:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/manifest.webmanifest"
+            ],
+            "styles": [
+              "src/assets/libs/flatpickr/dist/flatpickr.min.css",
+              "src/assets/libs/@fortawesome/fontawesome-free/css/all.min.css",
+              "src/assets/libs/fullcalendar/dist/fullcalendar.min.css",
+              "src/assets/css/purpose.css",
+              "node_modules/viewerjs/dist/viewer.css",
+              "src/styles.css"
+            ],
+            "scripts": [
+              "src/assets/js/purpose.core.js",
+              "src/assets/libs/progressbar.js/dist/progressbar.min.js",
+              "src/assets/libs/apexcharts/dist/apexcharts.min.js",
+              "src/assets/libs/moment/min/moment.min.js",
+              "src/assets/libs/fullcalendar/dist/fullcalendar.min.js",
+              "src/assets/js/purpose.js"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "foododo:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "foododo:serve:production"
+            }
+          }
+        }
+      }
+    }},
+  "defaultProject": "foododo"
+}

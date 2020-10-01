@@ -1,0 +1,115 @@
+<nav class="navbar navbar-horizontal navbar-expand-lg py-1">
+  <div class="container">
+    <span class="navbar-brand font-weight-bolder text-primary" href="javascript:void(0)">
+        <a class="fas fa-caret-left mr-2" [routerLink]="['/account']"></a>
+      Personal Info
+    </span>
+  </div>
+</nav>
+<div class="container-fluid d-block d-lg-none">
+  <div class="row">
+    <div class="col-12 bg-secondary-light border-0 mt-2 mb-6">
+      <form>
+        <!-- General information -->
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label">Name</label>
+              <input [(ngModel)]="clientName" name="merchant_owner_name" class="form-control form-control-sm"
+                type="text">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label">Registered Email</label>
+              <input [(ngModel)]="clientEmail" name="merchant_owner_email" class="form-control form-control-sm"
+                type="email" placeholder="name@exmaple.com" disabled>
+              <small class="form-text text-muted mt-2">This is the main email that we'll send notifications.</small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label">Contact</label>
+              <input [(ngModel)]="clientContact" name="merchant_owner_contact" class="form-control form-control-sm"
+                type="text">
+            </div>
+          </div>
+        </div>
+        <!-- Location -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="form-control-label">Address</label>
+              <textarea [(ngModel)]="clientAddress" name="merchant_owner_address" class="form-control form-control-sm"
+                placeholder="Your home address" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-control-label ">Change Password</label><br>
+              <button type="button" class="btn btn-sm btn-block btn-soft-dark"
+                (click)="modalEvent(clientPW, 'change_pw')">
+                Manage now
+              </button>
+            </div>
+          </div>
+        </div>
+        <hr class="mt-1 mb-3" />
+        <!-- Save changes buttons -->
+        <button type="button" (click)="updateClientInfo()" class="btn btn-sm btn-block btn-primary">Save
+          changes</button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal bg-translucent-dark fade" id="modal_change_pw" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document" data-backdrop="false">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="text-center">
+            <h4 class="mt-2">Change Password</h4>
+            <form [formGroup]="form" (ngSubmit)="submit()">
+              <div class="form-group">
+                <label class="form-control-label text-dark">New Password</label>
+                <div class="input-group input-group-merge">
+                  <input formControlName="clientPW_1" type="password" class="form-control form-control-sm"
+                    [ngClass]="{'is-valid':f.clientPW_1.valid, 'is-invalid':f.clientPW_1.invalid && f.clientPW_1.touched}"
+                    autocomplete="off">
+                  <div class="valid-feedback">
+                    Acceptable
+                  </div>
+                  <div class="invalid-feedback">
+                    Must contain minimum 8 uppercase, lowercase and number.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-control-label text-dark">Confirm password</label>
+                <div class="input-group input-group-merge">
+                  <input formControlName="clientPW_2" type="password" class="form-control form-control-sm"
+                    [ngClass]="{'is-valid':f.clientPW_2.value === f.clientPW_1.value && f.clientPW_1.valid && f.clientPW_2.valid, 'is-invalid': f.clientPW_2.value != f.clientPW_1.value && f.clientPW_2.touched }"
+                    autocomplete="off">
+                  <div class="valid-feedback">
+                    Password Match
+                  </div>
+                  <div class="invalid-feedback">
+                    Password Missmatch
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4">
+                <button [disabled]="form.invalid" class="btn btn-block btn-sm btn-primary" type="submit">Submit</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
