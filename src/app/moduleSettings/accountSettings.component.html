@@ -1,18 +1,11 @@
-<nav class="navbar navbar-horizontal navbar-expand-lg py-1">
-  <div class="container">
-    <span class="navbar-brand font-weight-bolder text-primary" href="javascript:void(0)">
-        <a class="fas fa-caret-left mr-2" [routerLink]="['/account']"></a>
-      Personal Info
-    </span>
-  </div>
-</nav>
-<div class="container-fluid d-block d-lg-none">
+<div class="container d-block mt-7">
   <div class="row">
     <div class="col-12 bg-secondary-light border-0 mt-2 mb-6">
+      <h1 class="my-5 font-weight-bold underline">Settings</h1>
       <form>
         <!-- General information -->
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6 col-lg-12">
             <div class="form-group">
               <label class="form-control-label">Name</label>
               <input [(ngModel)]="clientName" name="merchant_owner_name" class="form-control form-control-sm"
@@ -48,7 +41,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6 col-lg-12">
             <div class="form-group">
               <label class="form-control-label ">Change Password</label><br>
               <button type="button" class="btn btn-sm btn-block btn-soft-dark"
@@ -58,7 +51,7 @@
             </div>
           </div>
         </div>
-        <hr class="mt-1 mb-3" />
+        <hr class="mt-3 mb-5" />
         <!-- Save changes buttons -->
         <button type="button" (click)="updateClientInfo()" class="btn btn-sm btn-block btn-primary">Save
           changes</button>

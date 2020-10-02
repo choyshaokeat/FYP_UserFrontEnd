@@ -1,0 +1,90 @@
+<header class="fixed-top">
+    <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark shadow shadow-lg bg-brown py-3 px-5"
+        (scroll)="onWindowScroll($event);">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-primary"
+                aria-controls="navbar-primary" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-flex" id="navbar-primary">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item mr-4 font-weight-bold">
+                        <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/home']">
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mr-4 font-weight-bold">
+                        <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/info']">
+                            <span>Current Info</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mr-4 font-weight-bold">
+                        <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/history']">
+                            <span>History</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="javascript:void(0)"
+                            class="btn btn-sm btn-soft-secondary text-primary rounded-pill my-auto font-weight-bold"
+                            (click)="modalEvent('modalBook')">Book now</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-lg-auto d-none d-lg-flex">
+                    <li class="nav-item dropdown dropdown-animate">
+                        <a class="nav-link text-dark pr-lg-0 py-0 hover-translate-y-n3" href="javascript.void(0)"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="media media-pill align-items-center py-0">
+                                <div class="ml-2 d-none d-block">
+                                    <span
+                                        class="mb-0 text-white h6 font-weight-bold dropdown-toggle">{{ publicAuth.clientName }}</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right px-0 mt-2">
+                            <h6 class="dropdown-header px-4">User menu</h6>
+                            <a class="dropdown-item text-sm px-4" href="#" [routerLink]="['/home']">
+                                <i class="fas fa-envelope text-primary"></i>Notifications
+                            </a>
+                            <a class="dropdown-item text-sm px-4" href="#" [routerLink]="['/settings']">
+                                <i class="fas fa-cog text-primary"></i>Settings
+                            </a>
+                            <div class="dropdown-divider" role="presentation"></div>
+                            <a class="dropdown-item text-sm px-4" href="#" (click)="logOut()">
+                                <i class="fas fa-sign-out-alt text-danger"></i>Sign out
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Modal -->
+<div class="modal bg-translucent-dark fade" id="modalBook" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document" data-backdrop="false">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h6 class="modal-title text-center mb-4" id="myLargeModalLabel">Please select a booking option to proceed.</h6>
+                    <div class="card-group text-center">
+                        <div class="card bg-gradient-primary p-3 border-0 shadow-primary">
+                            <a href="#" class="hover-translate-y-n3">
+                                <div class="card-body">
+                                    <h5 class="h4 text-white m-0">Book for ownself</h5>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="card bg-gradient-dark p-3 border-0 shadow-primary">
+                            <a href="#" class="hover-translate-y-n3">
+                                <div class="card-body">
+                                    <h5 class="h4 text-white m-0">Book with friends</h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

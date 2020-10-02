@@ -95,7 +95,7 @@ export class LoginLayoutComponent implements OnInit {
       await this.DataService.callAll();
 
       this.spinner.hide();
-      this.router.navigate(['/eat']);
+      this.router.navigate(['/home']);
     }
     catch (err) {
       console.error(err);

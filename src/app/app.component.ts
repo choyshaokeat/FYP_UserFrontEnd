@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
 
   loginStatus: boolean = false;
   errorDetails: any;
+  publicAuth: any;
 
   constructor(
     private API: ApiFrontEndService,
@@ -26,7 +27,6 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     await this.serviceLogin();
     await this.DataService.callAll();
-    this.loginStatus = true;
     await this.subscribeData();
   }
 
@@ -39,6 +39,12 @@ export class AppComponent implements OnInit {
         }
       }
     );
+    this.publicAuth = this.DataService.publicAuth;
+    if (this.publicAuth == undefined || this.publicAuth == 'guest') {
+      this.loginStatus = false;
+    } else {
+      this.loginStatus = true;
+    }
   }
 
   async serviceLogin() {

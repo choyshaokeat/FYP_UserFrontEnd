@@ -4,10 +4,10 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 
-import { ApiFrontEndService } from '../../services/api-front-end.service';
-import { ApiBackEndService } from '../../services/api-back-end.service';
-import { DataService } from '../../services/data.service';
-import { EncrDecrService } from '../../services/encdec.service';
+import { ApiFrontEndService } from '../services/api-front-end.service';
+import { ApiBackEndService } from '../services/api-back-end.service';
+import { DataService } from '../services/data.service';
+import { EncrDecrService } from '../services/encdec.service';
 
 declare var $: any;
 

@@ -5,41 +5,22 @@ import { LoginComponent } from './login/login.component';
 import { LoginLayoutComponent } from './login/loginLayout/loginLayout.component';
 import { RegisterComponent } from './register/register.component';
 import { HeaderComponent } from './wrapper/header/header.component';
-import { FooterComponent } from './wrapper/footer/footer.component';
 import { ErrorComponent } from './wrapper/error/error.component';
-
-import { EatComponent } from './eat/eat.component';
-import { CookComponent } from './cook/cook.component';
-
+import { HomeComponent } from './home/home.component';
+import { CurrentInfoComponent } from './currentInfo/currentInfo.component';
+import { HistoryComponent } from './history/history.component';
 import { PaymentComponent } from './modulePayment/payment.component';
-
-import { AccountComponent } from './moduleAccount/account.component';
-import { AccountSettingsComponent } from './moduleAccount/accountSettings/accountSettings.component';
-
-import { SupportComponent } from './support/support.component';
-import { SupportFAQComponent } from './support/supportFAQ/supportFAQ.component';
-import { SupportHeaderComponent } from './support/supportHeader/supportHeader.component';
+import { AccountSettingsComponent } from './moduleSettings/accountSettings.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/eat', pathMatch: 'full' },
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-
-  { path: 'eat', component: EatComponent },
-  { path: 'cook', component: CookComponent },
-
+  { path: 'home', component: HomeComponent },
+  { path: 'info', component: CurrentInfoComponent },
+  { path: 'history', component: HistoryComponent },
   { path: 'payment', component: PaymentComponent },
-  { path: 'payment/:exchange', component: PaymentComponent },
-
-  { path: 'account', component: AccountComponent },
   { path: 'settings', component: AccountSettingsComponent },
-  {
-    path: 'support', component: SupportComponent,
-    children: [
-      { path: 'faq', component: SupportFAQComponent },
-      { path: 'header', component: SupportHeaderComponent },
-    ]
-  },
 ];
 
 @NgModule({
@@ -53,18 +34,10 @@ export const RoutingComponents = [
   LoginLayoutComponent,
   RegisterComponent,
   HeaderComponent,
-  FooterComponent,
   ErrorComponent,
-
-  EatComponent,
-  CookComponent,
-
+  HomeComponent,
+  CurrentInfoComponent,
+  HistoryComponent,
   PaymentComponent,
-
-  AccountComponent,
   AccountSettingsComponent,
-
-  SupportComponent,
-  SupportFAQComponent,
-  SupportHeaderComponent,
 ]
