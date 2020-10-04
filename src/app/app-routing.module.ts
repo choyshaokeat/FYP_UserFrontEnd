@@ -7,8 +7,10 @@ import { RegisterComponent } from './register/register.component';
 import { HeaderComponent } from './wrapper/header/header.component';
 import { ErrorComponent } from './wrapper/error/error.component';
 import { HomeComponent } from './home/home.component';
-import { CurrentInfoComponent } from './currentInfo/currentInfo.component';
+import { VirtualRoomComponent } from './virtualRoom/virtualRoom.component';
 import { HistoryComponent } from './history/history.component';
+import { SingleBookingComponent } from './moduleBooking/singleBooking/singleBooking.component';
+import { BulkBookingComponent } from './moduleBooking/bulkBooking/bulkBooking.component';
 import { PaymentComponent } from './modulePayment/payment.component';
 import { AccountSettingsComponent } from './moduleSettings/accountSettings.component';
 
@@ -17,8 +19,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'info', component: CurrentInfoComponent },
+  { path: 'virtualRoom', component: VirtualRoomComponent },
   { path: 'history', component: HistoryComponent },
+  { path: 'singleBooking', component: SingleBookingComponent },
+  { path: 'bulkBooking', component: BulkBookingComponent },
   { path: 'payment', component: PaymentComponent },
   { path: 'settings', component: AccountSettingsComponent },
 ];
@@ -36,8 +40,10 @@ export const RoutingComponents = [
   HeaderComponent,
   ErrorComponent,
   HomeComponent,
-  CurrentInfoComponent,
+  VirtualRoomComponent,
   HistoryComponent,
+  SingleBookingComponent,
+  BulkBookingComponent,
   PaymentComponent,
   AccountSettingsComponent,
 ]

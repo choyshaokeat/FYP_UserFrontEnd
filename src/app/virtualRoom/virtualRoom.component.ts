@@ -11,11 +11,11 @@ import * as moment from 'moment'
 declare var $: any;
 
 @Component({
-  selector: 'app-currentInfo',
-  templateUrl: './currentInfo.component.html',
-  styleUrls: ['./currentInfo.component.scss']
+  selector: 'app-virtualRoom',
+  templateUrl: './virtualRoom.component.html',
+  styleUrls: ['./virtualRoom.component.scss']
 })
-export class CurrentInfoComponent implements OnInit {
+export class VirtualRoomComponent implements OnInit {
 
   publicAuth: any;
 
@@ -40,16 +40,13 @@ export class CurrentInfoComponent implements OnInit {
     }
   }
 
-  async modalEvent(type, data) {
-    if (type == 'modalAddOrder') {
-      $('#modalAddOrder').modal('show');
-    } else {
-      //console.log(this.modalData);
-      if (type == 'modalRespond') {
-        $('#modalRespond').modal('show');
-      } else if (type == 'modalCancellation') {
-        $('#modalCancellation').modal('show');
-      }
+  deleteVR() {
+
+  }
+  
+  async modalEvent(type) {
+    if (type == 'modalDeleteVR') {
+      $('#modalDeleteVR').modal('show');
     }
   }
 }

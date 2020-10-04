@@ -1,0 +1,95 @@
+<div class="container-fluid vh-100 bg-white d-flex align-items-center">
+  <div class="container">
+    <section class="slice slice-xl">
+      <div class="row text-center px-2">
+        <div class="col">
+          <h1 class="mb-4 font-weight-bold hover-scale-110">Introducing
+            <span class="badge badge-sm py-0 px-3 badge-success text-md font-weight-600">Virtual Room</span>
+          </h1>
+          <p class="mb-7">Virtual Room is a place that help students to book accommodation in bulk. A host that created
+            a
+            virtual room can share the room code to other students to join. Once the virtual room is full, the host
+            can proceed with
+            booking process.</p>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-lg-12 col-xl-6">
+          <a href="javascript:void(0)" (click)="modalEvent('modalCreateVR')">
+            <div class="card bg-dark px-3 py-6 border-0 hover-shadow-lg hover-translate-y-n3">
+              <div class="card-body">
+                <h5 class="h2 text-white m-0" style="text-shadow: 0 0 5px #fff;">Create Virtual Room</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-lg-12 col-xl-6">
+          <a href="javascript:void(0)" (click)="modalEvent('modalJoinVR')">
+            <div class="card bg-dark px-3 py-6 border-0 hover-shadow-lg hover-translate-y-n3">
+              <div class="card-body">
+                <h5 class="h2 text-white m-0" style="text-shadow: 0 0 5px #fff;">Join Virtual Room</h5>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal bg-translucent-dark fade" id="modalCreateVR" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document" data-backdrop="false">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div>
+          <h5 class="modal-title text-center mb-4" id="myLargeModalLabel">Please select room capacity to proceed.</h5>
+          <div class="mb-4 d-flex align-items-center justify-content-center">
+            <a href="javascript:void(0)" class="btn-inner--icon text-muted" (click)="deleteQuantity()">
+              <i class='fas fa-minus text-lg'></i>
+            </a>
+            <span class="badge badge-lg badge-secondary rounded-pill text-xl mx-4 py-2">
+              {{ roomCapacity }}
+            </span>
+            <a href="javascript:void(0)" class="btn-inner--icon text-muted" (click)="addQuantity()">
+              <i class='fas fa-plus text-lg'></i>
+            </a>
+          </div>
+          <button type="button" class="btn btn-block btn-animated btn-success btn-animated-x" (click)="createVR()">
+            <span class="btn-inner--visible">Create Now</span>
+            <span class="btn-inner--hidden">
+              <i class="fas fa-check"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal bg-translucent-dark fade" id="modalJoinVR" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document" data-backdrop="false">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div>
+          <h5 class="modal-title text-center mb-4" id="myLargeModalLabel">Please fill in room code to proceed.</h5>
+          <div class="form-group mb-4">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="inputGroup-sizing-default">Room CODE</span>
+              </div>
+              <input type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default" maxlength="6">
+            </div>
+          </div>
+          <button type="button" class="btn btn-block btn-animated btn-success btn-animated-x" (click)="joinVR()">
+            <span class="btn-inner--visible">Join Now</span>
+            <span class="btn-inner--hidden">
+              <i class="fas fa-check"></i>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

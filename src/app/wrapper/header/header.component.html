@@ -14,13 +14,13 @@
                         </a>
                     </li>
                     <li class="nav-item mr-4 font-weight-bold">
-                        <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/info']">
-                            <span>Current Info</span>
+                        <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/history']">
+                            <span>History</span>
                         </a>
                     </li>
                     <li class="nav-item mr-4 font-weight-bold">
-                        <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/history']">
-                            <span>History</span>
+                        <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/virtualRoom']">
+                            <span>Virtual Room</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -69,14 +69,14 @@
                     <h6 class="modal-title text-center mb-4" id="myLargeModalLabel">Please select a booking option to proceed.</h6>
                     <div class="card-group text-center">
                         <div class="card bg-gradient-primary p-3 border-0 shadow-primary">
-                            <a href="#" class="hover-translate-y-n3">
+                            <a href="javascript:void(0)" class="hover-translate-y-n3" [routerLink]="['/singleBooking']" data-dismiss="modal" aria-label="Close">
                                 <div class="card-body">
-                                    <h5 class="h4 text-white m-0">Book for ownself</h5>
+                                    <h5 class="h4 text-white m-0">Book individually</h5>
                                 </div>
                             </a>
                         </div>
                         <div class="card bg-gradient-dark p-3 border-0 shadow-primary">
-                            <a href="#" class="hover-translate-y-n3">
+                            <a href="javascript:void(0)" class="hover-translate-y-n3" [routerLink]="['/bulkBooking']" data-dismiss="modal" aria-label="Close">
                                 <div class="card-body">
                                     <h5 class="h4 text-white m-0">Book with friends</h5>
                                 </div>
