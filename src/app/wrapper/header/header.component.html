@@ -1,4 +1,4 @@
-<header class="fixed-top">
+<header *ngIf="loginStatus" class="fixed-top">
     <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark shadow shadow-lg bg-brown py-3 px-5"
         (scroll)="onWindowScroll($event);">
         <div class="container-fluid">
@@ -36,20 +36,20 @@
                             <div class="media media-pill align-items-center py-0">
                                 <div class="ml-2 d-none d-block">
                                     <span
-                                        class="mb-0 text-white h6 font-weight-bold dropdown-toggle">{{ publicAuth.clientName }}</span>
+                                        class="mb-0 text-white h6 font-weight-bold dropdown-toggle">{{ publicAuth.studentName }}</span>
                                 </div>
                             </div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right px-0 mt-2">
                             <h6 class="dropdown-header px-4">User menu</h6>
-                            <a class="dropdown-item text-sm px-4" href="#" [routerLink]="['/home']">
+                            <a class="dropdown-item text-sm px-4" href="javascript:void(0)" [routerLink]="['/home']">
                                 <i class="fas fa-envelope text-primary"></i>Notifications
                             </a>
-                            <a class="dropdown-item text-sm px-4" href="#" [routerLink]="['/settings']">
+                            <a class="dropdown-item text-sm px-4" href="javascript:void(0)" [routerLink]="['/settings']">
                                 <i class="fas fa-cog text-primary"></i>Settings
                             </a>
                             <div class="dropdown-divider" role="presentation"></div>
-                            <a class="dropdown-item text-sm px-4" href="#" (click)="logOut()">
+                            <a class="dropdown-item text-sm px-4" href="javascript:void(0)" (click)="logOut()">
                                 <i class="fas fa-sign-out-alt text-danger"></i>Sign out
                             </a>
                         </div>

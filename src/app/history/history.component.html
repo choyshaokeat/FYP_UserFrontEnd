@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container-fluid bg-white d-block mt-7 px-5">
   <div class="row">
     <div class="col-4">
@@ -9,27 +10,27 @@
           <div class="row">
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Village:</small>
-              <p class="text-sm lh-160 mb-3">Village 5</p>
+              <p class="text-sm lh-160 mb-3">Village {{ bookingHistory[0].village }}</p>
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Room Number:</small>
-              <p class="text-sm lh-160 mb-3">V5A-L3-05</p>
+              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0].roomNumber }}</p>
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Aircond:</small>
-              <p class="text-sm lh-160 mb-3">No</p>
+              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0].aircond }}</p>
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Number of Semester:</small>
-              <p class="text-sm lh-160 mb-3">3</p>
+              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0].numberOfSemester }}</p>
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Duration:</small>
-              <p class="text-sm lh-160 mb-3">16/01/2021 - 16/12/2021</p>
+              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0].checkInDate | date:'dd/MM/yyyy' }} - {{ bookingHistory[0].checkOutDate | date:'dd/MM/yyyy' }}</p>
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Total Fees:</small>
-              <p class="text-sm lh-160 mb-3">MYR 2250</p>
+              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0].fees }}</p>
             </div>
           </div>
           <small class="h6 text-sm font-weight-bold">Roommates:</small>
@@ -72,7 +73,7 @@
           <div class="table-responsive">
             <table class="table table-bordered rounded">
               <thead>
-                <tr>
+                <tr class="text-center">
                   <th scope="col">Year</th>
                   <th scope="col">Duration</th>
                   <th scope="col">Village</th>
@@ -80,79 +81,19 @@
                   <th scope="col">Bed</th>
                   <th scope="col">Aircond</th>
                   <th scope="col">Fees</th>
-                  <th scope="col" class="text-center">Status</th>
+                  <th scope="col">Status</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">2018</th>
-                  <td>01/01/2018 - 01/06/2018</td>
-                  <td>5</td>
-                  <td>V5A-L3-01</td>
-                  <td>A</td>
-                  <td>No</td>
-                  <td>MYR 750</td>
-                  <td class="text-center">Checked-out</td>
-                </tr>
-                <tr>
-                  <th scope="row">2018</th>
-                  <td>01/01/2018 - 01/06/2018</td>
-                  <td>5</td>
-                  <td>V5A-L3-01</td>
-                  <td>A</td>
-                  <td>No</td>
-                  <td>MYR 750</td>
-                  <td class="text-center">Checked-out</td>
-                </tr>
-                <tr>
-                  <th scope="row">2018</th>
-                  <td>01/01/2018 - 01/06/2018</td>
-                  <td>5</td>
-                  <td>V5A-L3-01</td>
-                  <td>A</td>
-                  <td>No</td>
-                  <td>MYR 750</td>
-                  <td class="text-center">Checked-out</td>
-                </tr>
-                <tr>
-                  <th scope="row">2018</th>
-                  <td>01/01/2018 - 01/06/2018</td>
-                  <td>5</td>
-                  <td>V5A-L3-01</td>
-                  <td>A</td>
-                  <td>No</td>
-                  <td>MYR 750</td>
-                  <td class="text-center">Checked-out</td>
-                </tr>
-                <tr>
-                  <th scope="row">2018</th>
-                  <td>01/01/2018 - 01/06/2018</td>
-                  <td>5</td>
-                  <td>V5A-L3-01</td>
-                  <td>A</td>
-                  <td>No</td>
-                  <td>MYR 750</td>
-                  <td class="text-center">Checked-out</td>
-                </tr>
-                <tr>
-                  <th scope="row">2018</th>
-                  <td>01/01/2018 - 01/06/2018</td>
-                  <td>5</td>
-                  <td>V5A-L3-01</td>
-                  <td>A</td>
-                  <td>No</td>
-                  <td>MYR 750</td>
-                  <td class="text-center">Checked-out</td>
-                </tr>
-                <tr>
-                  <th scope="row">2018</th>
-                  <td>01/01/2018 - 01/06/2018</td>
-                  <td>5</td>
-                  <td>V5A-L3-01</td>
-                  <td>A</td>
-                  <td>No</td>
-                  <td>MYR 750</td>
-                  <td class="text-center">Checked-out</td>
+                <tr *ngFor="let m of bookingHistory" class="text-center">
+                  <th scope="row">{{ m.checkInDate | date:'yyyy' }}</th>
+                  <td>{{ m.checkInDate | date:'dd/MM/yyyy' }} - {{ m.checkOutDate | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ m.village }}</td>
+                  <td>{{ m.roomNumber }}</td>
+                  <td>{{ m.bed }}</td>
+                  <td>{{ m.aircond }}</td>
+                  <td>{{ m.fees }}</td>
+                  <td>{{ m.status }}</td>
                 </tr>
               </tbody>
             </table>

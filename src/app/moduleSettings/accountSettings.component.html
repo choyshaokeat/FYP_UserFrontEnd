@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div class="container d-block mt-7">
   <div class="row">
     <div class="col-12 bg-secondary-light border-0 mt-2 mb-6">
@@ -8,7 +9,7 @@
           <div class="col-md-6 col-lg-12">
             <div class="form-group">
               <label class="form-control-label">Name</label>
-              <input [(ngModel)]="clientName" name="merchant_owner_name" class="form-control form-control-sm"
+              <input [(ngModel)]="studentName" name="merchant_owner_name" class="form-control form-control-sm"
                 type="text">
             </div>
           </div>
@@ -17,7 +18,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <label class="form-control-label">Registered Email</label>
-              <input [(ngModel)]="clientEmail" name="merchant_owner_email" class="form-control form-control-sm"
+              <input [(ngModel)]="studentEmail" name="merchant_owner_email" class="form-control form-control-sm"
                 type="email" placeholder="name@exmaple.com" disabled>
               <small class="form-text text-muted mt-2">This is the main email that we'll send notifications.</small>
             </div>
@@ -25,7 +26,7 @@
           <div class="col-md-6">
             <div class="form-group">
               <label class="form-control-label">Contact</label>
-              <input [(ngModel)]="clientContact" name="merchant_owner_contact" class="form-control form-control-sm"
+              <input [(ngModel)]="studentContact" name="merchant_owner_contact" class="form-control form-control-sm"
                 type="text">
             </div>
           </div>
@@ -35,7 +36,7 @@
           <div class="col-md-12">
             <div class="form-group">
               <label class="form-control-label">Address</label>
-              <textarea [(ngModel)]="clientAddress" name="merchant_owner_address" class="form-control form-control-sm"
+              <textarea [(ngModel)]="studentAddress" name="merchant_owner_address" class="form-control form-control-sm"
                 placeholder="Your home address" rows="3"></textarea>
             </div>
           </div>
@@ -45,7 +46,7 @@
             <div class="form-group">
               <label class="form-control-label ">Change Password</label><br>
               <button type="button" class="btn btn-sm btn-block btn-soft-dark"
-                (click)="modalEvent(clientPW, 'change_pw')">
+                (click)="modalEvent(studentPW, 'change_pw')">
                 Manage now
               </button>
             </div>
@@ -53,7 +54,7 @@
         </div>
         <hr class="mt-3 mb-5" />
         <!-- Save changes buttons -->
-        <button type="button" (click)="updateClientInfo()" class="btn btn-sm btn-block btn-primary">Save
+        <button type="button" (click)="updateStudentInfo()" class="btn btn-sm btn-block btn-primary">Save
           changes</button>
       </form>
 
@@ -71,8 +72,8 @@
               <div class="form-group">
                 <label class="form-control-label text-dark">New Password</label>
                 <div class="input-group input-group-merge">
-                  <input formControlName="clientPW_1" type="password" class="form-control form-control-sm"
-                    [ngClass]="{'is-valid':f.clientPW_1.valid, 'is-invalid':f.clientPW_1.invalid && f.clientPW_1.touched}"
+                  <input formControlName="studentPW_1" type="password" class="form-control form-control-sm"
+                    [ngClass]="{'is-valid':f.studentPW_1.valid, 'is-invalid':f.studentPW_1.invalid && f.studentPW_1.touched}"
                     autocomplete="off">
                   <div class="valid-feedback">
                     Acceptable
@@ -85,8 +86,8 @@
               <div class="form-group">
                 <label class="form-control-label text-dark">Confirm password</label>
                 <div class="input-group input-group-merge">
-                  <input formControlName="clientPW_2" type="password" class="form-control form-control-sm"
-                    [ngClass]="{'is-valid':f.clientPW_2.value === f.clientPW_1.value && f.clientPW_1.valid && f.clientPW_2.valid, 'is-invalid': f.clientPW_2.value != f.clientPW_1.value && f.clientPW_2.touched }"
+                  <input formControlName="studentPW_2" type="password" class="form-control form-control-sm"
+                    [ngClass]="{'is-valid':f.studentPW_2.value === f.studentPW_1.value && f.studentPW_1.valid && f.studentPW_2.valid, 'is-invalid': f.studentPW_2.value != f.studentPW_1.value && f.studentPW_2.touched }"
                     autocomplete="off">
                   <div class="valid-feedback">
                     Password Match

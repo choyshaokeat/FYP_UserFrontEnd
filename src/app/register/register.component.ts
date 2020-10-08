@@ -88,7 +88,7 @@ export class RegisterComponent implements OnInit {
             };
             var auth = this.EncrDecrService.encryptObject('client', data);
             localStorage.setItem('auth', auth);
-            this.DataService.updateClientInfo(auth);
+            this.DataService.updateStudentInfo(auth);
             await this.DataService.callAll();
             setTimeout(() => {
               this.router.navigate(['eat']);

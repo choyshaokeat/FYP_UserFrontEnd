@@ -9,7 +9,52 @@
               <p class="lead-100 mb-0 text-sm">Automated Student Accommodation Booking System</p>
             </div>
             <span class="clearfix"></span>
-            <app-loginLayout></app-loginLayout>
+            <section class='loginLayout'>
+              <form [formGroup]="form" (ngSubmit)="login()">
+                <div class="form-group">
+                  <label class="form-control-label">Email address</label>
+                  <div class="input-group input-group-merge">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input formControlName="studentEmail" type="text"
+                      class="form-control form-control-sm input-group-text text-primary font-weight-bold"
+                      placeholder="name@example.com" name=' formControlName="merchantBizName"' autocomplete="off">
+                  </div>
+                </div>
+                <div class="form-group mb-4">
+                  <div class="d-flex align-items-center justify-content-between">
+                    <div>
+                      <label class="form-control-label">Password</label>
+                    </div>
+                  </div>
+                  <div class="input-group input-group-merge">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input formControlName="studentPW" [type]="showPassword_boolean ? 'text' : 'password'"
+                      class="form-control form-control-sm input-group-text text-primary font-weight-bold"
+                      placeholder="Password" name='password' autocomplete="off">
+                    <div class="input-group-append">
+                      <a href='javascript:void(0)' class="input-group-text" (click)='showPassword()'>
+                        <i class="fas fa-eye"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <input type="hidden" id="role" name="role" value="Client">
+                <button class="btn btn-block btn-sm btn-primary" type="submit">Login</button>
+              </form>
+              <div class="mt-4 text-center"><small>Not registered?</small>
+                <a href="javascript:void(0)" class="small font-weight-bold" (click)='register()'>&nbsp;Create
+                  account</a>
+              </div>
+              <div role="alert" class="alert alert-contrast alert-danger text-center" *ngIf='login_error'>
+                <div class="message">
+                  <b>Credential missmatch!</b>
+                </div>
+              </div>
+            </section>
           </div>
         </div>
       </div>

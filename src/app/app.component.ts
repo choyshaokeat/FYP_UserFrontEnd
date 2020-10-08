@@ -31,16 +31,8 @@ export class AppComponent implements OnInit {
   }
 
   async subscribeData() {
-    this.DataService.current_errorDetails.subscribe(
-      async (data) => {
-        this.errorDetails = data;
-        if (this.errorDetails.trigger == true) {
-          $('#modal_error').modal('show');
-        }
-      }
-    );
     this.publicAuth = this.DataService.publicAuth;
-    if (this.publicAuth == undefined || this.publicAuth == 'guest') {
+    if (this.publicAuth == undefined) {
       this.loginStatus = false;
     } else {
       this.loginStatus = true;
@@ -53,10 +45,10 @@ export class AppComponent implements OnInit {
       // let loginResponse;
       // console.log(auth);
       // console.log(this.EncrDecrService.decryptObject('client',auth));
-      this.DataService.updateClientInfo(auth);
+      this.DataService.updateStudentInfo(auth);
       try {
         var res = await this.API.login(this.EncrDecrService.decryptObject('client', auth));
-        this.DataService.updateClientInfo(auth);
+        this.DataService.updateStudentInfo(auth);
         console.log(res)
       }
       catch (err) {
@@ -66,7 +58,7 @@ export class AppComponent implements OnInit {
       }
 
     } else {
-      this.DataService.updateClientInfo(this.EncrDecrService.encryptObject('client', 'guest'));
+      this.DataService.updateStudentInfo(this.EncrDecrService.encryptObject('client', 'guest'));
     }
   }
 

@@ -28,19 +28,19 @@ export class AccountSettingsComponent implements OnInit {
   currentMerchantInfo: any;
   country: any;
   modal_data: any;
-  clientName: any;
-  clientEmail: any;
-  clientContact: any;
-  clientPW: any;
-  clientAddress: any;
+  studentName: any;
+  studentEmail: any;
+  studentContact: any;
+  studentPW: any;
+  studentAddress: any;
   message: any;
   form = this.fb.group({
-    clientPW_1: ['', [
+    studentPW_1: ['', [
       Validators.required,
       Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'),
       Validators.minLength(8),
     ]],
-    clientPW_2: ['', [
+    studentPW_2: ['', [
       Validators.required,
       Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'),
       Validators.minLength(8),
@@ -73,35 +73,35 @@ export class AccountSettingsComponent implements OnInit {
 
 
   subscribeData() {
-    this.DataService.currentClientInfo.subscribe(
+    this.DataService.currentStudentInfo.subscribe(
       data => {
-        var clientInfo = this.EncrDecrService.decryptObject('client', data);
-        this.clientName = clientInfo.clientName;
-        this.clientEmail = clientInfo.clientEmail;
-        this.clientContact = clientInfo.clientContact;
-        this.clientPW = clientInfo.clientPW;
-        this.clientAddress = clientInfo.clientAddress;
+        var studentInfo = this.EncrDecrService.decryptObject('client', data);
+        this.studentName = studentInfo.studentName;
+        this.studentEmail = studentInfo.studentEmail;
+        this.studentContact = studentInfo.studentContact;
+        this.studentPW = studentInfo.studentPW;
+        this.studentAddress = studentInfo.studentAddress;
       }
     );
   }
 
 
-  updateClientInfo() {
+  updateStudentInfo() {
     let data = {
       type: 'info',
-      clientID: this.DataService.publicAuth.clientID,
-      clientName: this.clientName,
-      clientEmail: this.clientEmail,
-      clientContact: this.clientContact,
-      clientAddress: this.clientAddress,
+      studentID: this.DataService.publicAuth.studentID,
+      studentName: this.studentName,
+      studentEmail: this.studentEmail,
+      studentContact: this.studentContact,
+      studentAddress: this.studentAddress,
     }
     return new Promise(async (resolve, reject) => {
       try {
         this.spinner.show();
-        var data_client = await this.API.updateClientInfo(data);
+        var studentData = await this.API.updateStudentInfo(data);
         await this.DataService.syncData('info');
         await this.subscribeData();
-        var res = { data_client };
+        var res = { studentData };
         setTimeout(() => {this.spinner.hide();},500);
         resolve(res);
       }
@@ -116,16 +116,15 @@ export class AccountSettingsComponent implements OnInit {
   updatePW(value) {
     let data = {
       type: 'password',
-      clientID: this.DataService.publicAuth.clientID,
-      clientEmail: this.clientEmail,
-      clientPW: value.clientPW_2,
+      studentID: this.DataService.publicAuth.studentID,
+      studentEmail: this.studentEmail,
+      studentPW: value.studentPW_2,
     }
     return new Promise(async (resolve, reject) => {
       try {
         this.spinner.show();
-        var data_merchant = await this.API.updateClientInfo(data);
-        data_merchant = data_merchant;
-        var res = { data_merchant };
+        var studentData = await this.API.updateStudentInfo(data);
+        var res = { studentData };
         setTimeout(() => {this.spinner.hide();},500);
         resolve(res);
       }
@@ -158,10 +157,6 @@ export class AccountSettingsComponent implements OnInit {
     if (type == 'change_pw') {
       $('#modal_change_pw').modal('show');
     }
-  }
-
-  update_client_profile() {
-    
   }
 
 }

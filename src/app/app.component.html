@@ -1,11 +1,6 @@
 <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
 </ngx-spinner>
-<!-- <app-header *ngIf='loginStatus'></app-header> -->
-<app-error *ngIf='loginStatus'></app-error>
-<app-header></app-header>
 <router-outlet (activate)="onActivate($event)"></router-outlet>
-<!-- <app-footer></app-footer> -->
-
 
 <section id="popUp">
   <div class="modal fade" id="loginOption">
@@ -18,7 +13,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <app-loginLayout (closeModal)='closeModal()'></app-loginLayout>
+          <app-login></app-login>
         </div>
       </div>
     </div>

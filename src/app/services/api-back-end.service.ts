@@ -38,46 +38,15 @@ export class ApiBackEndService {
     return this.http.post(`${this.getBackEndURL()}/client/login`, { data }, httpOptions);
   }
 
-  resetPW(data) {
-    return this.http.post(`${this.getBackEndURL()}/client/resetPW`, { data }, httpOptions);
+  getStudentInfo(data) {
+    return this.http.post(`${this.getBackEndURL()}/client/getStudentInfo`, { data }, httpOptions);
   }
 
-  getClientInfo(data) {
-    return this.http.post(`${this.getBackEndURL()}/client/getClientInfo`, { data }, httpOptions);
+  updateStudentInfo(data) {
+    return this.http.post(`${this.getBackEndURL()}/client/updateStudentInfo`, { data }, httpOptions);
   }
 
-  updateClientInfo(data) {
-    return this.http.post(`${this.getBackEndURL()}/client/updateClientInfo`, { data }, httpOptions);
+  getBookingInfo(data) {
+    return this.http.post(`${this.getBackEndURL()}/client/getBookingInfo`, { data }, httpOptions);
   }
-
-  createOrder(data) {
-    return this.http.post(`${this.getBackEndURL()}/client/createOrder`, { data }, httpOptions);
-  }
-
-  // Account
-  getOrders(data) {
-    return this.http.post(`${this.getBackEndURL()}/client/getOrders`, { data }, httpOptions);
-  }
-
-  updateOrder(data) {
-    return this.http.post(`${this.getBackEndURL()}/client/updateOrder`, { data }, httpOptions);
-  }
-
-  getOrdersDetails(data) {
-    return this.http.post(`${this.getBackEndURL()}/client/getOrdersDetails`, { data }, httpOptions);
-  }
-
-  createPayment(data) {
-    return this.http.post(`${this.getBackEndURL()}/client/createPayment`, { data }, httpOptions);
-  }
-
-  //eat
-  addOrder(data) {
-    return this.http.post(`${this.getBackEndURL()}/client/addOrder`, { data }, httpOptions);
-  }
-
-  getAccount(data) {
-    return this.http.post(`${this.getBackEndURL()}/client/getAccount`, { data }, httpOptions);
-  }
-
 }

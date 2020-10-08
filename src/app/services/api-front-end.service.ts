@@ -71,28 +71,10 @@ export class ApiFrontEndService {
     });
   }
 
-  public resetPW(data) {
-    return new Promise((resolve, reject) => {
-      data = this.EncrDecrService.encryptObject('login', data);
-      this.ApiBackEndService.resetPW(data).subscribe(
-        (res: { status, data }) => {
-          res = this.EncrDecrService.decryptObject('login', res);
-          if (res.status == 200) {
-            if (res.data.length != 0) resolve(res.data)
-          }
-          else reject(res.status);
-        },
-        (err) => {
-          reject(err)
-        }
-      );
-    });
-  }
-
-  public getClientInfo(user) {
+  public getStudentInfo(user) {
     return new Promise((resolve, reject) => {
       user = this.EncrDecrService.encryptObject('client', user);
-      this.ApiBackEndService.getClientInfo(user).subscribe(
+      this.ApiBackEndService.getStudentInfo(user).subscribe(
         (res: { status, data }) => {
           res = this.EncrDecrService.decryptObject('client', res);
           if (res.status == 200) {
@@ -107,10 +89,10 @@ export class ApiFrontEndService {
     });
   }
 
-  public updateClientInfo(user) {
+  public updateStudentInfo(user) {
     return new Promise((resolve, reject) => {
       user = this.EncrDecrService.encryptObject('client', user);
-      this.ApiBackEndService.updateClientInfo(user).subscribe(
+      this.ApiBackEndService.updateStudentInfo(user).subscribe(
         (res: { status, data }) => {
           res = this.EncrDecrService.decryptObject('client', res);
           if (res.status == 200) {
@@ -126,133 +108,23 @@ export class ApiFrontEndService {
     });
   }
 
-  public getOrders(data) {
-    return new Promise<any>((resolve, reject) => {
+  public getBookingInfo(data) {
+    return new Promise((resolve, reject) => {
       data = this.EncrDecrService.encryptObject('client', data);
-      this.ApiBackEndService.getOrders(data).subscribe(
-        (res: { status, data }) => {
-          res = this.EncrDecrService.decryptObject('client', res);
-          if (res.status == 200) resolve(res.data);
-          else reject(res);
-        },
-        (err) => {
-          console.error(err);
-          reject(err);
-        }
-      );
-    });
-  }
-
-  public updateOrder(data) {
-    return new Promise<any>((resolve, reject) => {
-      data = this.EncrDecrService.encryptObject('client', data);
-      this.ApiBackEndService.updateOrder(data).subscribe(
-        (res: { status, data }) => {
-          res = this.EncrDecrService.decryptObject('client', res);
-          if (res.status == 200) resolve(res.data);
-          else reject(res);
-        },
-        (err) => {
-          console.error(err);
-          reject(err);
-        }
-      );
-    });
-  }
-
-  public getOrdersDetails(data) {
-    return new Promise<any>((resolve, reject) => {
-      data = this.EncrDecrService.encryptObject('client', data);
-      this.ApiBackEndService.getOrdersDetails(data).subscribe(
-        (res: { status, data }) => {
-          res = this.EncrDecrService.decryptObject('client', res);
-          if (res.status == 200) resolve(res.data);
-          else reject(res);
-        },
-        (err) => {
-          console.error(err);
-          reject(err);
-        }
-      );
-    });
-  }
-
-  public createOrder(data) {
-    data = this.EncrDecrService.encryptObject('client', data);
-    return new Promise<any>((resolve, reject) => {
-      this.ApiBackEndService.createOrder(data).subscribe(
+      this.ApiBackEndService.getBookingInfo(data).subscribe(
         (res: { status, data }) => {
           res = this.EncrDecrService.decryptObject('client', res);
           if (res.status == 200) {
-            resolve(res.data)
+            if (res.data.length != 0) resolve(res.data)
+            else if (res.data.length == 0) reject('Empty data');
           }
-          else {
-            reject('failed');
-          }
+          else reject(res.status);
         },
         (err) => {
-          reject(err);
+          reject(err)
         }
       );
     });
   }
-
-  public createPayment(data) {
-    data = this.EncrDecrService.encryptObject('client', data);
-    // console.log(data)
-    return new Promise<any>((resolve, reject) => {
-      this.ApiBackEndService.createPayment(data).subscribe(
-        (res: { status, data }) => {
-          // console.log(res);
-          res = this.EncrDecrService.decryptObject('client', res);
-          // console.log(res)
-          if (res.status == 200) {
-            resolve(res)
-          } else {
-            reject('failed');
-          }
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    });
-  }
-
-  //eat
-  public addOrder(data) {
-    return new Promise<any>((resolve, reject) => {
-      data = this.EncrDecrService.encryptObject('client', data);
-      this.ApiBackEndService.addOrder(data).subscribe(
-        (res: { status, data }) => {
-          res = this.EncrDecrService.decryptObject('client', res);
-          if (res.status == 200) resolve(res.data);
-          else reject(res);
-        },
-        (err) => {
-          console.error(err);
-          reject(err);
-        }
-      );
-    });
-  }
-
-  public getAccount(data) {
-    return new Promise<any>((resolve, reject) => {
-      data = this.EncrDecrService.encryptObject('client', data);
-      this.ApiBackEndService.getAccount(data).subscribe(
-        (res: { status, data }) => {
-          res = this.EncrDecrService.decryptObject('client', res);
-          if (res.status == 200) resolve(res.data);
-          else reject(res);
-        },
-        (err) => {
-          console.error(err);
-          reject(err);
-        }
-      );
-    });
-  }
-
 
 }

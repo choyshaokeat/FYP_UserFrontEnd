@@ -16,7 +16,8 @@ declare var $: any;
 export class HeaderComponent implements OnInit {
 
   sidebarClick: any;
-  public isCollapsed = false;
+  loginStatus: any;
+  headerShown: any;
   public publicAuth: any;
 
   constructor(
@@ -34,10 +35,11 @@ export class HeaderComponent implements OnInit {
   async subscribeData() {
     this.publicAuth = this.DataService.publicAuth;
     if (this.publicAuth == undefined || this.publicAuth == 'guest') {
-      this.router.navigate(['/login']);
+      this.loginStatus = false;
     } else {
-      this.publicAuth = this.DataService.publicAuth;
+      this.loginStatus = true;
     }
+    this.DataService.currentHeaderShown.subscribe(data => this.headerShown = data);
   }
 
   hideNavbar(e: any) { e.hide(); }
@@ -51,6 +53,7 @@ export class HeaderComponent implements OnInit {
     this.spinner.show();
     this.DataService.reset();
     this.spinner.hide();
+    this.DataService.updateHeaderShown(false);
     this.router.navigate(['/login']);
   }
 

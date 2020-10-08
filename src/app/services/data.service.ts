@@ -44,13 +44,9 @@ export class DataService {
       try {
         console.log('callAll');
         // Socket IO
+        var data;
         await this.socketIO('listen', undefined);
-        var type;
-        this.updateOrders(await this.getOrders(this.publicAuth));
-        this.updateAllOrders(await this.getOrders(type = {type: "all"}));
-        this.updateCookOrders(await this.getOrders(type = {type: "cook", cookID: this.publicAuth.clientID}));
-        this.updateAccountAmount(await this.API.getAccount(this.publicAuth.clientID));
-        //console.log(await this.getOrders(this.publicAuth));
+        this.updateBookingHistory(await this.API.getBookingInfo(data = {studentID: this.publicAuth.studentID, type: "bookingHistory"}));
         resolve('ok');
       }
       catch (err) {
@@ -65,13 +61,9 @@ export class DataService {
       try {
         if (module == "info") {
           // Client Info
-          var data = await this.getClientInfo(this.publicAuth);
-          var type;
-          this.updateClientInfo(await this.EncrDecrService.encryptObject('client', data[0]));
-          this.updateOrders(await this.getOrders(this.publicAuth));
-          this.updateAllOrders(await this.getOrders(type = {type: "all"}));
-          this.updateCookOrders(await this.getOrders(type = {type: "cook", cookID: this.publicAuth.clientID}));
-          this.updateAccountAmount(await this.API.getAccount(this.publicAuth.clientID));
+          var data = await this.API.getStudentInfo(this.publicAuth);
+          this.updateStudentInfo(await this.EncrDecrService.encryptObject('client', data[0]));
+          this.updateBookingHistory(await this.API.getBookingInfo(data = {studentID: this.publicAuth.studentID, type: "bookingHistory"}));
         }
         resolve('ok');
       }
@@ -82,123 +74,44 @@ export class DataService {
     });
   }
 
-
-  // Client Info
-  async getClientInfo(value) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        var res = await this.API.getClientInfo(value);
-        resolve(res);
-      }
-      catch (err) {
-        console.error(res, err);
-        reject(err);
-      }
-    });
-  }
-
-  async getOrders(value) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        var res = await this.API.getOrders(value);
-        resolve(res);
-      }
-      catch (err) {
-        console.error(res, err);
-        reject(err);
-      }
-    });
-  }
-
-  // Observable
   // SocketIO
   private brodcastData = new BehaviorSubject('');
   currentBrodcastData = this.brodcastData.asObservable();
-
   updateBrodcastData(value) {
     this.brodcastData.next(value);
   }
+
   // Service Aunthenticator
   public publicAuth: any;
 
   // Client Info
-  private clientInfo = new BehaviorSubject('');
-  currentClientInfo = this.clientInfo.asObservable();
-
-  updateClientInfo(value) {
+  private studentInfo = new BehaviorSubject('');
+  currentStudentInfo = this.studentInfo.asObservable();
+  updateStudentInfo(value) {
     console.log(value);
-    this.clientInfo.next(value);
+    this.studentInfo.next(value);
     this.publicAuth = this.EncrDecrService.decryptObject('client', value);
   }
 
-  // Payment
-  private orderInfo = new BehaviorSubject('');
-  currentOrderInfo = this.orderInfo.asObservable();
-  updateOrderInfo(value) {
-    this.orderInfo.next(value);
-  }
-
-  private paymentInfo = new BehaviorSubject('');
-  currentPaymentInfo = this.paymentInfo.asObservable();
-  updatePaymentInfo(value) {
-    this.paymentInfo.next(value);
-  }
-
-  // Account
-  private loginDetails = new BehaviorSubject('');
-  currentLoginDetails = this.loginDetails.asObservable();
-  updateLoginDetails(value) {
-    this.loginDetails.next(value);
-  }
-
-  private errorDetails = new BehaviorSubject({
-    title: '',
-    msg1: '',
-    msg2: '',
-    msg3: '',
-    trigger: false
-  });
-  current_errorDetails = this.errorDetails.asObservable();
-  updateErrorDetails(value) {
-    this.errorDetails.next(value);
-  }
-
   public reset() {
-    this.updateClientInfo(this.EncrDecrService.encryptObject('client', 'guest'));
+    this.updateStudentInfo(this.EncrDecrService.encryptObject('client', 'guest'));
     localStorage.clear();
     sessionStorage.clear();
   }
 
-  private accountAmount = new BehaviorSubject([]);
-  currentAccountAmount = this.accountAmount.asObservable();
-  updateAccountAmount(value) {
-    this.accountAmount.next(value);
+  //booking
+  private bookingHistory = new BehaviorSubject('');
+  currentBookingHistory = this.bookingHistory.asObservable();
+  updateBookingHistory(value) {
+    console.log(value);
+    this.bookingHistory.next(value);
   }
 
-  // Orders
-  private orders = new BehaviorSubject([]);
-  currentOrders = this.orders.asObservable();
-  updateOrders(value) {
-    this.orders.next(value);
-  }
-
-  private allOrders = new BehaviorSubject([]);
-  currentAllOrders = this.allOrders.asObservable();
-  updateAllOrders(value) {
-    this.allOrders.next(value);
-  }
-
-  private cookOrders = new BehaviorSubject([]);
-  currentCookOrders = this.cookOrders.asObservable();
-  updateCookOrders(value) {
-    this.cookOrders.next(value);
-  }
-
-  //paging
-  private page = new BehaviorSubject([]);
-  currentPage = this.page.asObservable();
-  updatePage(value) {
-    this.page.next(value);
+  //header
+  private headerShown = new BehaviorSubject([]);
+  currentHeaderShown = this.headerShown.asObservable();
+  updateHeaderShown(value) {
+    this.headerShown.next(value);
     //console.log(value);
   }
 }

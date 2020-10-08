@@ -18,6 +18,7 @@ declare var $: any;
 export class HistoryComponent implements OnInit {
 
   publicAuth: any;
+  bookingHistory: any;
 
   constructor(
     private API: ApiFrontEndService,
@@ -29,6 +30,7 @@ export class HistoryComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.subscribeData();
   }
 
   async subscribeData() {
@@ -37,6 +39,10 @@ export class HistoryComponent implements OnInit {
       this.router.navigate(['/login']);
     } else {
       this.publicAuth = this.DataService.publicAuth;
+      this.DataService.currentBookingHistory.subscribe(
+        async data => {
+          this.bookingHistory = data;
+        });
     }
   }
 
