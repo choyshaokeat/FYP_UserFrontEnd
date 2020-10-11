@@ -1,4 +1,4 @@
-<header *ngIf="loginStatus" class="fixed-top">
+<header class="fixed-top">
     <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark shadow shadow-lg bg-brown py-3 px-5"
         (scroll)="onWindowScroll($event);">
         <div class="container-fluid">
@@ -13,7 +13,7 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    <li class="nav-item mr-4 font-weight-bold">
+                    <li *ngIf="bookingHistoryCount > 0" class="nav-item mr-4 font-weight-bold">
                         <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/history']">
                             <span>History</span>
                         </a>

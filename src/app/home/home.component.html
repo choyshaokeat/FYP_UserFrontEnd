@@ -11,7 +11,7 @@
               <p class="lead lh-180 text-white font-weight-bold" style="text-shadow: 0px 0px 4px #7e6a58;">Roomy is an <br>
                 <span class="text-dark" style="text-shadow: 0px 0px 0px #7e6a58;">Automated Student Accommodation Booking System</span>
                 <br>that takes room booking to the next level.</p>
-              <div class="mt-5">
+              <div *ngIf="publicAuth.bookingStatus == 0" class="mt-5">
                 <div class="card-group text-center">
                   <div class="card bg-gradient-primary p-3 border-0 shadow-primary">
                     <a href="javascript:void(0)" class="hover-translate-y-n3" [routerLink]="['/singleBooking']">

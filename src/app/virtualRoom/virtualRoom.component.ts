@@ -18,6 +18,8 @@ declare var $: any;
 export class VirtualRoomComponent implements OnInit {
 
   publicAuth: any;
+  vrInfo: any;
+  vrCode: any;
 
   constructor(
     private API: ApiFrontEndService,
@@ -29,21 +31,35 @@ export class VirtualRoomComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.subscribeData();
+    this.padZero();
   }
 
   async subscribeData() {
-    this.publicAuth = this.DataService.publicAuth;
+    this.DataService.currentStudentInfo.subscribe(data =>
+      this.publicAuth = this.EncrDecrService.decryptObject('client', data)
+    );
     if (this.publicAuth == undefined || this.publicAuth == 'guest') {
       this.router.navigate(['/login']);
     } else {
-      this.publicAuth = this.DataService.publicAuth;
+      this.DataService.callAll();
+      this.DataService.currentVRInfo.subscribe(
+        async data => {
+          this.vrInfo = data;
+          this.vrCode = this.vrInfo.vrCode;
+        });
     }
   }
 
   deleteVR() {
 
   }
-  
+
+  padZero() {
+    const fullNumber = this.vrCode.toString();
+    console.log(fullNumber);
+  }
+
   async modalEvent(type) {
     if (type == 'modalDeleteVR') {
       $('#modalDeleteVR').modal('show');

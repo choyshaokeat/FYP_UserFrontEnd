@@ -42,7 +42,6 @@ export class HistoryComponent implements OnInit {
     if (this.publicAuth == undefined || this.publicAuth == 'guest') {
       this.router.navigate(['/login']);
     } else {
-      this.DataService.callAll();
       this.DataService.currentBookingHistory.subscribe(
         async data => {
           this.bookingHistory = data;

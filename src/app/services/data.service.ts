@@ -5,6 +5,7 @@ import { ApiFrontEndService } from './api-front-end.service';
 import { EncrDecrService } from './encdec.service';
 import { SocketioService } from './socketio.service';
 import * as moment from 'moment';
+//import { resolve } from 'dns';
 
 
 @Injectable({
@@ -45,9 +46,11 @@ export class DataService {
         //console.log('callAll');
         //await this.socketIO('listen', undefined);
         var data = await this.API.getStudentInfo(this.publicAuth);
-        console.log(data);
+        //console.log(data);
         this.updateStudentInfo(await this.EncrDecrService.encryptObject('client', data[0]));
-        this.updateBookingHistory(await this.API.getBookingInfo(data = { studentID: data[0].studentID, type: "bookingHistory" }));
+        this.updateBookingHistory(await this.API.getBookingInfo(data = { studentID: this.publicAuth.studentID, type: "bookingHistory" }));
+        this.updateVRInfo(await this.API.getVirtualRoom(data = { vrCode: this.publicAuth.vrCode, type: "vrInfo" }));
+        this.updateHistoryCount(await this.checkBookingHistoryCount());
         resolve('ok');
       }
       catch (err) {
@@ -64,7 +67,9 @@ export class DataService {
           var data = await this.API.getStudentInfo(this.publicAuth);
           //console.log(data);
           this.updateStudentInfo(await this.EncrDecrService.encryptObject('client', data[0]));
-          this.updateBookingHistory(await this.API.getBookingInfo(data = { studentID: data[0].studentID, type: "bookingHistory" }));
+          this.updateBookingHistory(await this.API.getBookingInfo(data = { studentID: this.publicAuth.studentID, type: "bookingHistory" }));
+          this.updateVRInfo(await this.API.getVirtualRoom(data = { vrCode: this.publicAuth.vrCode, type: "vrInfo" }));
+          this.updateHistoryCount(await this.checkBookingHistoryCount());
         }
         resolve('ok');
       }
@@ -75,12 +80,23 @@ export class DataService {
     });
   }
 
+  async checkBookingHistoryCount() {
+    var check = {
+      type: "count",
+      studentID: this.publicAuth.studentID
+    }
+    var count = await this.API.getBookingInfo(check);
+    count = count[0].bookingHistoryCount;
+    //console.log(count);
+    return count;
+  }
+
   // SocketIO
-  private brodcastData = new BehaviorSubject('');
+  /* private brodcastData = new BehaviorSubject('');
   currentBrodcastData = this.brodcastData.asObservable();
   updateBrodcastData(value) {
     this.brodcastData.next(value);
-  }
+  } */
 
   // Service Aunthenticator
   public publicAuth: any;
@@ -109,11 +125,26 @@ export class DataService {
     //console.log(value);
   }
 
+  //Virtual Room
+  private vrInfo = new BehaviorSubject('');
+  currentVRInfo = this.vrInfo.asObservable();
+  updateVRInfo(value) {
+    this.vrInfo.next(value);
+    //console.log(value);
+  }
+
   //header
   private headerShown = new BehaviorSubject([]);
   currentHeaderShown = this.headerShown.asObservable();
   updateHeaderShown(value) {
     this.headerShown.next(value);
+    //console.log(value);
+  }
+
+  private historyCount = new BehaviorSubject([]);
+  currentHistoryCount = this.historyCount.asObservable();
+  updateHistoryCount(value) {
+    this.historyCount.next(value);
     //console.log(value);
   }
 }

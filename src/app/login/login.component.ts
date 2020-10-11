@@ -74,8 +74,6 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('auth', auth);
       this.DataService.updateStudentInfo(auth);
       await this.DataService.callAll();
-      this.DataService.updateHeaderShown(true);
-
       this.spinner.hide();
       this.router.navigate(['/home']);
     }

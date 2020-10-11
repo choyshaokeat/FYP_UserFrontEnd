@@ -115,8 +115,7 @@ export class ApiFrontEndService {
         (res: { status, data }) => {
           res = this.EncrDecrService.decryptObject('client', res);
           if (res.status == 200) {
-            if (res.data.length != 0) resolve(res.data)
-            else if (res.data.length == 0) reject('Empty data');
+            resolve(res.data)
           }
           else reject(res.status);
         },
@@ -134,8 +133,7 @@ export class ApiFrontEndService {
         (res: { status, data }) => {
           res = this.EncrDecrService.decryptObject('client', res);
           if (res.status == 200) {
-            if (res.data.length != 0) resolve(res.data)
-            else if (res.data.length == 0) reject('Empty data');
+            resolve(res.data)
           }
           else reject(res.status);
         },

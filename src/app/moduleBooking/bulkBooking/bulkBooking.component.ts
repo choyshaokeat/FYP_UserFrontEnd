@@ -85,20 +85,36 @@ export class BulkBookingComponent implements OnInit {
   async createVR() {
     if (this.createVRForm.status === 'VALID') {
       this.spinner.show();
+      //Create a VR in virtualRoom table
       var vrData = {
         type: "createVR",
         vrPassword: this.createVRForm.get('vrPassword').value,
         vrCapacity: this.roomCapacity,
         vrHost: this.publicAuth.studentID
       }
-      //console.log(vrData);
       await this.API.updateVirtualRoom(vrData);
+      //Update bookingStatus from 0 to 1 in studentInfo table
       var updateBookingStatus = {
         type: "bookingStatus",
         studentID: this.publicAuth.studentID,
         bookingStatus: 1
       }
       await this.API.updateStudentInfo(updateBookingStatus);
+      //Get vrCode from virtualRoom table
+      var a = {
+        type: "getVRCode",
+        vrHost: this.publicAuth.studentID
+      }
+      //Update vrCode to studentInfo table
+      let vrCode = await this.API.getVirtualRoom(a);
+      console.log(vrCode);
+      var updateVRCode = {
+        type: "vrCode",
+        studentID: this.publicAuth.studentID,
+        vrCode: vrCode[0].vrCode
+      }
+      console.log(updateVRCode);
+      await this.API.updateStudentInfo(updateVRCode);
       await this.DataService.syncData('info');
       $('#modalCreateVR').modal('hide');
       this.router.navigate(['/virtualRoom']);
@@ -132,6 +148,18 @@ export class BulkBookingComponent implements OnInit {
           vrCode: parseInt(this.joinVRForm.get('vrCode').value, 10)
         }
         await this.API.updateVirtualRoom(updateRoomData);
+        var updateBookingStatus = {
+          type: "bookingStatus",
+          studentID: this.publicAuth.studentID,
+          bookingStatus: 1
+        }
+        await this.API.updateStudentInfo(updateBookingStatus);
+        var updateVRCode = {
+          type: "vrCode",
+          studentID: this.publicAuth.studentID,
+          vrCode: parseInt(this.joinVRForm.get('vrCode').value, 10)
+        }
+        await this.API.updateStudentInfo(updateVRCode);
         $('#modalJoinVR').modal('hide');
         this.router.navigate(['/virtualRoom']);
         this.spinner.hide();
@@ -153,9 +181,9 @@ export class BulkBookingComponent implements OnInit {
     } else if (type == 'modalJoinVR') {
       $('#modalJoinVR').modal('show');
     } else if (type == 'roomFullError') {
-      $('#modalCreateVR').modal('show');
+      $('#modalroomFullError').modal('show');
     } else if (type == 'roomNotFound') {
-      $('#modalCreateVR').modal('show');
+      $('#modalroomNotFound').modal('show');
     }
   }
 }

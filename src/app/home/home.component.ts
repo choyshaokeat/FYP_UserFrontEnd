@@ -29,27 +29,15 @@ export class HomeComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.subscribeData();
   }
 
   async subscribeData() {
-    this.publicAuth = this.DataService.publicAuth;
+    this.DataService.currentStudentInfo.subscribe(data =>
+      this.publicAuth = this.EncrDecrService.decryptObject('client', data)
+    );
     if (this.publicAuth == undefined || this.publicAuth == 'guest') {
       this.router.navigate(['/login']);
-    } else {
-      this.publicAuth = this.DataService.publicAuth;
-    }
-  }
-
-  async modalEvent(type, data) {
-    if (type == 'modalAddOrder') {
-      $('#modalAddOrder').modal('show');
-    } else {
-      //console.log(this.modalData);
-      if (type == 'modalRespond') {
-        $('#modalRespond').modal('show');
-      } else if (type == 'modalCancellation') {
-        $('#modalCancellation').modal('show');
-      }
     }
   }
 }

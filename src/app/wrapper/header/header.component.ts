@@ -16,8 +16,7 @@ declare var $: any;
 export class HeaderComponent implements OnInit {
 
   sidebarClick: any;
-  loginStatus: any;
-  headerShown: any;
+  bookingHistoryCount: any;
   public publicAuth: any;
 
   constructor(
@@ -38,12 +37,13 @@ export class HeaderComponent implements OnInit {
     );
     if (this.publicAuth == undefined || this.publicAuth == 'guest') {
       this.router.navigate(['/login']);
-      this.loginStatus = false;
     } else {
-      this.loginStatus = true;
       this.DataService.callAll();
+      this.DataService.currentHistoryCount.subscribe(
+        async data => {
+          this.bookingHistoryCount = data;
+        });
     }
-    this.DataService.currentHeaderShown.subscribe(data => this.headerShown = data);
   }
 
   hideNavbar(e: any) { e.hide(); }
@@ -57,7 +57,6 @@ export class HeaderComponent implements OnInit {
     this.spinner.show();
     this.DataService.reset();
     this.spinner.hide();
-    this.DataService.updateHeaderShown(false);
     this.router.navigate(['/login']);
   }
 
