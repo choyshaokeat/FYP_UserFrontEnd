@@ -19,6 +19,7 @@ export class HistoryComponent implements OnInit {
 
   publicAuth: any;
   bookingHistory: any;
+  roommates: any;
 
   constructor(
     private API: ApiFrontEndService,
@@ -31,14 +32,17 @@ export class HistoryComponent implements OnInit {
 
   async ngOnInit() {
     this.subscribeData();
+    this.getRoommate();
   }
 
   async subscribeData() {
-    this.publicAuth = this.DataService.publicAuth;
+    this.DataService.currentStudentInfo.subscribe(data =>
+      this.publicAuth = this.EncrDecrService.decryptObject('client', data)
+    );
     if (this.publicAuth == undefined || this.publicAuth == 'guest') {
       this.router.navigate(['/login']);
     } else {
-      this.publicAuth = this.DataService.publicAuth;
+      this.DataService.callAll();
       this.DataService.currentBookingHistory.subscribe(
         async data => {
           this.bookingHistory = data;
@@ -46,16 +50,14 @@ export class HistoryComponent implements OnInit {
     }
   }
 
-  async modalEvent(type, data) {
-    if (type == 'modalAddOrder') {
-      $('#modalAddOrder').modal('show');
-    } else {
-      //console.log(this.modalData);
-      if (type == 'modalRespond') {
-        $('#modalRespond').modal('show');
-      } else if (type == 'modalCancellation') {
-        $('#modalCancellation').modal('show');
-      }
-    }
+  async getRoommate() {
+    var data;
+    var roomNumber = await this.API.getBookingInfo(data = { studentID: this.publicAuth.studentID, type: "bookingHistory" });
+    data = {
+      type: "currentRoommates",
+      roomNumber: roomNumber[0].roomNumber
+    };
+    this.roommates = await this.API.getBookingInfo(data);
   }
+
 }

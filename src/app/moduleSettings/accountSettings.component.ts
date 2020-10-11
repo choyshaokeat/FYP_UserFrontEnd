@@ -83,6 +83,7 @@ export class AccountSettingsComponent implements OnInit {
         this.studentAddress = studentInfo.studentAddress;
       }
     );
+    console.log(this.studentName);
   }
 
 

@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     await this.serviceLogin();
-    await this.DataService.callAll();
+    // await this.DataService.callAll();
     await this.subscribeData();
   }
 
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
       try {
         var res = await this.API.login(this.EncrDecrService.decryptObject('client', auth));
         this.DataService.updateStudentInfo(auth);
-        console.log(res)
+        //console.log(res)
       }
       catch (err) {
         console.error(err);

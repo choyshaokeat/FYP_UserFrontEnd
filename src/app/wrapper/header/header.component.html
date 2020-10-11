@@ -18,15 +18,14 @@
                             <span>History</span>
                         </a>
                     </li>
-                    <li class="nav-item mr-4 font-weight-bold">
+                    <li *ngIf="publicAuth.bookingStatus == 1" class="nav-item mr-4 font-weight-bold">
                         <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/virtualRoom']">
                             <span>Virtual Room</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="javascript:void(0)"
-                            class="btn btn-sm btn-soft-secondary text-primary rounded-pill my-auto font-weight-bold"
-                            (click)="modalEvent('modalBook')">Book now</a>
+                        <button class="btn btn-sm btn-soft-secondary text-primary rounded-pill my-auto font-weight-bold"
+                            [disabled]="publicAuth.bookingStatus == 1" (click)="modalEvent('modalBook')">Book now</button>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-lg-auto d-none d-lg-flex">
@@ -45,7 +44,8 @@
                             <a class="dropdown-item text-sm px-4" href="javascript:void(0)" [routerLink]="['/home']">
                                 <i class="fas fa-envelope text-primary"></i>Notifications
                             </a>
-                            <a class="dropdown-item text-sm px-4" href="javascript:void(0)" [routerLink]="['/settings']">
+                            <a class="dropdown-item text-sm px-4" href="javascript:void(0)"
+                                [routerLink]="['/settings']">
                                 <i class="fas fa-cog text-primary"></i>Settings
                             </a>
                             <div class="dropdown-divider" role="presentation"></div>
@@ -66,17 +66,20 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div>
-                    <h6 class="modal-title text-center mb-4" id="myLargeModalLabel">Please select a booking option to proceed.</h6>
+                    <h6 class="modal-title text-center mb-4" id="myLargeModalLabel">Please select a booking option to
+                        proceed.</h6>
                     <div class="card-group text-center">
                         <div class="card bg-gradient-primary p-3 border-0 shadow-primary">
-                            <a href="javascript:void(0)" class="hover-translate-y-n3" [routerLink]="['/singleBooking']" data-dismiss="modal" aria-label="Close">
+                            <a href="javascript:void(0)" class="hover-translate-y-n3" [routerLink]="['/singleBooking']"
+                                data-dismiss="modal" aria-label="Close">
                                 <div class="card-body">
                                     <h5 class="h4 text-white m-0">Book individually</h5>
                                 </div>
                             </a>
                         </div>
                         <div class="card bg-gradient-dark p-3 border-0 shadow-primary">
-                            <a href="javascript:void(0)" class="hover-translate-y-n3" [routerLink]="['/bulkBooking']" data-dismiss="modal" aria-label="Close">
+                            <a href="javascript:void(0)" class="hover-translate-y-n3" [routerLink]="['/bulkBooking']"
+                                data-dismiss="modal" aria-label="Close">
                                 <div class="card-body">
                                     <h5 class="h4 text-white m-0">Book with friends</h5>
                                 </div>

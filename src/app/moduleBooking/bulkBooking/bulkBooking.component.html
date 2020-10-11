@@ -43,26 +43,44 @@
   <div class="modal-dialog modal-dialog-centered" role="document" data-backdrop="false">
     <div class="modal-content">
       <div class="modal-body">
-        <div>
-          <h5 class="modal-title text-center mb-4" id="myLargeModalLabel">Please select room capacity to proceed.</h5>
-          <div class="mb-4 d-flex align-items-center justify-content-center">
-            <a href="javascript:void(0)" class="btn-inner--icon text-muted" (click)="deleteQuantity()">
-              <i class='fas fa-minus text-lg'></i>
-            </a>
-            <span class="badge badge-lg badge-secondary rounded-pill text-xl mx-4 py-2">
-              {{ roomCapacity }}
-            </span>
-            <a href="javascript:void(0)" class="btn-inner--icon text-muted" (click)="addQuantity()">
-              <i class='fas fa-plus text-lg'></i>
-            </a>
+        <form [formGroup]="createVRForm" (ngSubmit)="createVR()">
+          <div>
+            <h5 class="modal-title text-center mb-4" id="myLargeModalLabel">Select room capacity & create a password.</h5>
+            <div class="mb-4 d-flex align-items-center justify-content-center">
+              <a href="javascript:void(0)" class="btn-inner--icon text-muted" (click)="deleteQuantity()">
+                <i class='fas fa-minus text-lg'></i>
+              </a>
+              <span class="badge badge-lg badge-secondary rounded-pill text-xl mx-4 py-2">
+                {{ roomCapacity }}
+              </span>
+              <a href="javascript:void(0)" class="btn-inner--icon text-muted" (click)="addQuantity()">
+                <i class='fas fa-plus text-lg'></i>
+              </a>
+            </div>
+            <div class="form-group mb-4">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+                </div>
+                <input type="password" class="form-control" aria-label="Sizing example input" formControlName="vrPassword"
+                  aria-describedby="inputGroup-sizing-default"
+                  [ngClass]="{'is-valid':c.vrPassword.valid, 'is-invalid':c.vrPassword.invalid && c.vrPassword.touched}">
+                <div class="valid-feedback text-center">
+                  Acceptable
+                </div>
+                <div class="invalid-feedback text-center">
+                  Must contain minimum 8 uppercase, lowercase and number.
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-block btn-animated btn-success btn-animated-x" [disabled]="createVRForm.invalid" (click)="createVR()">
+              <span class="btn-inner--visible">Create Now</span>
+              <span class="btn-inner--hidden">
+                <i class="fas fa-check"></i>
+              </span>
+            </button>
           </div>
-          <button type="button" class="btn btn-block btn-animated btn-success btn-animated-x" (click)="createVR()">
-            <span class="btn-inner--visible">Create Now</span>
-            <span class="btn-inner--hidden">
-              <i class="fas fa-check"></i>
-            </span>
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>
@@ -72,24 +90,49 @@
   <div class="modal-dialog modal-dialog-centered" role="document" data-backdrop="false">
     <div class="modal-content">
       <div class="modal-body">
-        <div>
-          <h5 class="modal-title text-center mb-4" id="myLargeModalLabel">Please fill in room code to proceed.</h5>
-          <div class="form-group mb-4">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Room CODE</span>
+        <form [formGroup]="joinVRForm" (ngSubmit)="joinVR()">
+          <div>
+            <h5 class="modal-title text-center mb-4" id="myLargeModalLabel">Enter room code & password to proceed.</h5>
+            <div class="form-group mb-2">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Room CODE</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Sizing example input" formControlName="vrCode"
+                  aria-describedby="inputGroup-sizing-default" maxlength="6"
+                  [ngClass]="{'is-valid':j.vrCode.valid, 'is-invalid':j.vrCode.invalid && j.vrCode.touched}">
+                <div class="valid-feedback text-center">
+                  Acceptable
+                </div>
+                <div class="invalid-feedback text-center">
+                  Invalid room number
+                </div>
               </div>
-              <input type="text" class="form-control" aria-label="Sizing example input"
-                aria-describedby="inputGroup-sizing-default" maxlength="6">
             </div>
+            <div class="form-group mb-4">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
+                </div>
+                <input type="password" class="form-control" aria-label="Sizing example input" formControlName="vrPassword"
+                  aria-describedby="inputGroup-sizing-default"
+                  [ngClass]="{'is-valid':j.vrPassword.valid, 'is-invalid':j.vrPassword.invalid && j.vrPassword.touched}">
+                <div class="valid-feedback text-center">
+                  Acceptable
+                </div>
+                <div class="invalid-feedback text-center">
+                  Must contain minimum 8 uppercase, lowercase and number
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-block btn-animated btn-success btn-animated-x" [disabled]="joinVRForm.invalid" (click)="joinVR()">
+              <span class="btn-inner--visible">Join Now</span>
+              <span class="btn-inner--hidden">
+                <i class="fas fa-check"></i>
+              </span>
+            </button>
           </div>
-          <button type="button" class="btn btn-block btn-animated btn-success btn-animated-x" (click)="joinVR()">
-            <span class="btn-inner--visible">Join Now</span>
-            <span class="btn-inner--hidden">
-              <i class="fas fa-check"></i>
-            </span>
-          </button>
-        </div>
+        </form>
       </div>
     </div>
   </div>

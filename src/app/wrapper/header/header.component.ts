@@ -33,11 +33,15 @@ export class HeaderComponent implements OnInit {
   }
 
   async subscribeData() {
-    this.publicAuth = this.DataService.publicAuth;
+    this.DataService.currentStudentInfo.subscribe(data =>
+      this.publicAuth = this.EncrDecrService.decryptObject('client', data)
+    );
     if (this.publicAuth == undefined || this.publicAuth == 'guest') {
+      this.router.navigate(['/login']);
       this.loginStatus = false;
     } else {
       this.loginStatus = true;
+      this.DataService.callAll();
     }
     this.DataService.currentHeaderShown.subscribe(data => this.headerShown = data);
   }
@@ -58,16 +62,16 @@ export class HeaderComponent implements OnInit {
   }
 
   @HostListener('window:scroll', ['$event'])
-  
+
   onWindowScroll(e) {
-      let element = document.querySelector('#navbar-main');
-      if (window.pageYOffset + 30 > element.clientHeight) {
-        element.classList.remove('py-3');
-        element.classList.add('bg-gray-300', 'py-2', 'shadow');
-      } else {
-        element.classList.remove('bg-gray-300', 'py-2', 'shadow');
-        element.classList.add('py-3');
-      }
+    let element = document.querySelector('#navbar-main');
+    if (window.pageYOffset + 30 > element.clientHeight) {
+      element.classList.remove('py-3');
+      element.classList.add('bg-gray-300', 'py-2', 'shadow');
+    } else {
+      element.classList.remove('bg-gray-300', 'py-2', 'shadow');
+      element.classList.add('py-3');
+    }
   }
 
   async modalEvent(type) {
@@ -75,5 +79,5 @@ export class HeaderComponent implements OnInit {
       $('#modalBook').modal('show');
     }
   }
-  
+
 }

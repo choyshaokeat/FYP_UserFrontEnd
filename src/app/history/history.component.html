@@ -10,52 +10,39 @@
           <div class="row">
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Village:</small>
-              <p class="text-sm lh-160 mb-3">Village {{ bookingHistory[0].village }}</p>
+              <p class="text-sm lh-160 mb-3">Village {{ bookingHistory[0]?.village }}</p>
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Room Number:</small>
-              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0].roomNumber }}</p>
+              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0]?.roomNumber }}</p>
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Aircond:</small>
-              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0].aircond }}</p>
+              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0]?.aircond }}</p>
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Number of Semester:</small>
-              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0].numberOfSemester }}</p>
+              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0]?.numberOfSemester }}</p>
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Duration:</small>
-              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0].checkInDate | date:'dd/MM/yyyy' }} - {{ bookingHistory[0].checkOutDate | date:'dd/MM/yyyy' }}</p>
+              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0]?.checkInDate | date:'dd/MM/yyyy' }} - {{ bookingHistory[0]?.checkOutDate | date:'dd/MM/yyyy' }}</p>
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Total Fees:</small>
-              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0].fees }}</p>
+              <p class="text-sm lh-160 mb-3">RM {{ bookingHistory[0]?.fees | number:'.2' }}</p>
             </div>
           </div>
           <small class="h6 text-sm font-weight-bold">Roommates:</small>
-          <div class="card mb-2 bg-gray-400 border-0">
+          <div class="card mb-2 bg-gray-400 border-0" *ngFor="let m of roommates">
             <div class="card-body">
               <div class="d-flex align-items-center">
                 <span
-                  class="avatar rounded-circle avatar-lg bg-primary text-white font-weight-bold hover-shadow-lg hover-scale-110">A</span>
+                  class="avatar rounded-circle avatar-lg bg-primary text-white font-weight-bold hover-shadow-lg hover-scale-110">{{ m.bed }}</span>
                 <div class="avatar-content ml-3">
-                  <h5 class="mb-0 font-weight-bold">CHOY SHAO KEAT</h5>
-                  <small class="d-block text-muted font-weight-bold">Email: choyshaokeat@utp.edu.my</small>
-                  <small class="d-block text-muted font-weight-bold">Phone: 010-1234567</small>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card mb-2 bg-gray-400 border-0">
-            <div class="card-body">
-              <div class="d-flex align-items-center">
-                <span
-                  class="avatar rounded-circle avatar-lg bg-primary text-white font-weight-bold hover-shadow-lg hover-scale-110">B</span>
-                <div class="avatar-content ml-3">
-                  <h5 class="mb-0 font-weight-bold">HOR KAH WAI</h5>
-                  <small class="d-block text-muted font-weight-bold">Email: horkahwai@utp.edu.my</small>
-                  <small class="d-block text-muted font-weight-bold">Phone: 010-1234567</small>
+                  <h5 class="mb-0 font-weight-bold">{{ m.studentName }}</h5>
+                  <small class="d-block text-muted font-weight-bold">Email: {{ m.studentEmail }}</small>
+                  <small class="d-block text-muted font-weight-bold">Phone: {{ m.studentContact }}</small>
                 </div>
               </div>
             </div>
@@ -86,14 +73,14 @@
               </thead>
               <tbody>
                 <tr *ngFor="let m of bookingHistory" class="text-center">
-                  <th scope="row">{{ m.checkInDate | date:'yyyy' }}</th>
-                  <td>{{ m.checkInDate | date:'dd/MM/yyyy' }} - {{ m.checkOutDate | date:'dd/MM/yyyy' }}</td>
-                  <td>{{ m.village }}</td>
-                  <td>{{ m.roomNumber }}</td>
-                  <td>{{ m.bed }}</td>
-                  <td>{{ m.aircond }}</td>
-                  <td>{{ m.fees }}</td>
-                  <td>{{ m.status }}</td>
+                  <th scope="row">{{ m?.checkInDate | date:'yyyy' }}</th>
+                  <td>{{ m?.checkInDate | date:'dd/MM/yyyy' }} - {{ m?.checkOutDate | date:'dd/MM/yyyy' }}</td>
+                  <td>{{ m?.village }}</td>
+                  <td>{{ m?.roomNumber }}</td>
+                  <td>{{ m?.bed }}</td>
+                  <td>{{ m?.aircond }}</td>
+                  <td>RM {{ m?.fees | number:'.2' }}</td>
+                  <td>{{ m?.status }}</td>
                 </tr>
               </tbody>
             </table>

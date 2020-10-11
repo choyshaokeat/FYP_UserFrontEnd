@@ -127,4 +127,42 @@ export class ApiFrontEndService {
     });
   }
 
+  public getVirtualRoom(data) {
+    return new Promise((resolve, reject) => {
+      data = this.EncrDecrService.encryptObject('client', data);
+      this.ApiBackEndService.getVirtualRoom(data).subscribe(
+        (res: { status, data }) => {
+          res = this.EncrDecrService.decryptObject('client', res);
+          if (res.status == 200) {
+            if (res.data.length != 0) resolve(res.data)
+            else if (res.data.length == 0) reject('Empty data');
+          }
+          else reject(res.status);
+        },
+        (err) => {
+          reject(err)
+        }
+      );
+    });
+  }
+
+  public updateVirtualRoom(data) {
+    return new Promise((resolve, reject) => {
+      data = this.EncrDecrService.encryptObject('client', data);
+      this.ApiBackEndService.updateVirtualRoom(data).subscribe(
+        (res: { status, data }) => {
+          res = this.EncrDecrService.decryptObject('client', res);
+          if (res.status == 200) {
+            if (res.data.length != 0) resolve(res.data)
+            else if (res.data.length == 0) reject('Empty data');
+          }
+          else reject(res.status);
+        },
+        (err) => {
+          reject(err)
+        }
+      );
+    });
+  }
+
 }

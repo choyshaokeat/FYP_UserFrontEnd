@@ -49,4 +49,12 @@ export class ApiBackEndService {
   getBookingInfo(data) {
     return this.http.post(`${this.getBackEndURL()}/client/getBookingInfo`, { data }, httpOptions);
   }
+
+  //Virtual Room
+  getVirtualRoom(data) {
+    return this.http.post(`${this.getBackEndURL()}/client/getVirtualRoom`, { data }, httpOptions);
+  }
+  updateVirtualRoom(data) {
+    return this.http.post(`${this.getBackEndURL()}/client/updateVirtualRoom`, { data }, httpOptions);
+  }
 }

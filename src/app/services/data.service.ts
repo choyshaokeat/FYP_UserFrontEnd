@@ -19,7 +19,7 @@ export class DataService {
     private socketService: SocketioService,
   ) { }
 
-  async socketIO(type, data) {
+  /* async socketIO(type, data) {
     if (type == 'emit') {
       console.log(data.merchantID);
       let syncData = {
@@ -37,16 +37,17 @@ export class DataService {
         console.log(data);
       })
     }
-  }
+  } */
 
   async callAll() {
     return new Promise<any>(async (resolve, reject) => {
       try {
-        console.log('callAll');
-        // Socket IO
-        var data;
-        await this.socketIO('listen', undefined);
-        this.updateBookingHistory(await this.API.getBookingInfo(data = {studentID: this.publicAuth.studentID, type: "bookingHistory"}));
+        //console.log('callAll');
+        //await this.socketIO('listen', undefined);
+        var data = await this.API.getStudentInfo(this.publicAuth);
+        console.log(data);
+        this.updateStudentInfo(await this.EncrDecrService.encryptObject('client', data[0]));
+        this.updateBookingHistory(await this.API.getBookingInfo(data = { studentID: data[0].studentID, type: "bookingHistory" }));
         resolve('ok');
       }
       catch (err) {
@@ -60,10 +61,10 @@ export class DataService {
     return new Promise<any>(async (resolve, reject) => {
       try {
         if (module == "info") {
-          // Client Info
           var data = await this.API.getStudentInfo(this.publicAuth);
+          //console.log(data);
           this.updateStudentInfo(await this.EncrDecrService.encryptObject('client', data[0]));
-          this.updateBookingHistory(await this.API.getBookingInfo(data = {studentID: this.publicAuth.studentID, type: "bookingHistory"}));
+          this.updateBookingHistory(await this.API.getBookingInfo(data = { studentID: data[0].studentID, type: "bookingHistory" }));
         }
         resolve('ok');
       }
@@ -88,9 +89,10 @@ export class DataService {
   private studentInfo = new BehaviorSubject('');
   currentStudentInfo = this.studentInfo.asObservable();
   updateStudentInfo(value) {
-    console.log(value);
     this.studentInfo.next(value);
     this.publicAuth = this.EncrDecrService.decryptObject('client', value);
+    localStorage.setItem('auth', value);
+    //console.log(this.publicAuth);
   }
 
   public reset() {
@@ -103,8 +105,8 @@ export class DataService {
   private bookingHistory = new BehaviorSubject('');
   currentBookingHistory = this.bookingHistory.asObservable();
   updateBookingHistory(value) {
-    console.log(value);
     this.bookingHistory.next(value);
+    //console.log(value);
   }
 
   //header
