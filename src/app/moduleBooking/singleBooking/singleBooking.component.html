@@ -6,12 +6,11 @@
         <div class="card-header">
           <div class="d-flex align-items-center py-2">
             <span
-              class="avatar bg-primary text-white rounded-circle avatar-lg hover-shadow-lg hover-scale-110">Ch</span>
+              class="avatar bg-primary text-white rounded-circle avatar-lg hover-shadow-lg hover-scale-110">{{ publicAuth.studentName | slice:0:2 }}</span>
             <div class="avatar-content ml-3">
-              <h5 class="mb-0 font-weight-bold">CHOY SHAO KEAT</h5>
-              <small class="d-block text-muted font-weight-bold">Bachelor of Information Technology
-                (Hons)</small>
-              <small class="d-block text-muted font-weight-bold">Matrix ID: 24629</small>
+              <h5 class="mb-0 font-weight-bold">{{ publicAuth.studentName | uppercase }}</h5>
+              <small class="d-block text-muted font-weight-bold">{{ publicAuth.course }}</small>
+              <small class="d-block text-muted font-weight-bold">Matrix ID: {{ publicAuth.studentID }}</small>
             </div>
           </div>
         </div>

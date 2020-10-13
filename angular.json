@@ -28,12 +28,14 @@
               "src/scss/purpose.scss",
               "node_modules/viewerjs/dist/viewer.css",
               "node_modules/flatpickr/dist/themes/light.css",
-              "src/assets/libs/@fortawesome/fontawesome-free/css/all.min.css"
+              "src/assets/libs/@fortawesome/fontawesome-free/css/all.min.css",
+              "src/assets/libs/swiper/dist/css/swiper.min.css"
             ],
             "scripts": [
               "src/assets/js/purpose.core.js",
               "src/assets/libs/apexcharts/dist/apexcharts.min.js",
-              "src/assets/js/purpose.js"
+              "src/assets/js/purpose.js",
+              "src/assets/libs/swiper/dist/js/swiper.min.js"
             ]
           },
           "configurations": {
@@ -105,7 +107,8 @@
               "src/assets/libs/fullcalendar/dist/fullcalendar.min.css",
               "src/assets/css/purpose.css",
               "node_modules/viewerjs/dist/viewer.css",
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/libs/swiper/dist/css/swiper.min.css"
             ],
             "scripts": [
               "src/assets/js/purpose.core.js",
@@ -113,7 +116,8 @@
               "src/assets/libs/apexcharts/dist/apexcharts.min.js",
               "src/assets/libs/moment/min/moment.min.js",
               "src/assets/libs/fullcalendar/dist/fullcalendar.min.js",
-              "src/assets/js/purpose.js"
+              "src/assets/js/purpose.js",
+              "src/assets/libs/swiper/dist/js/swiper.min.js"
             ]
           }
         },

@@ -20,6 +20,10 @@ export class VirtualRoomComponent implements OnInit {
   publicAuth: any;
   vrInfo: any;
   vrCode: any;
+  vrHost: any;
+  vrHostInfo: any;
+  vrRoommates: any;
+  vrRoommatesInfo: any;
 
   constructor(
     private API: ApiFrontEndService,
@@ -31,8 +35,9 @@ export class VirtualRoomComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.subscribeData();
-    this.padZero();
+    this.spinner.show();
+    await this.subscribeData();
+    this.spinner.hide();
   }
 
   async subscribeData() {
@@ -42,22 +47,38 @@ export class VirtualRoomComponent implements OnInit {
     if (this.publicAuth == undefined || this.publicAuth == 'guest') {
       this.router.navigate(['/login']);
     } else {
-      this.DataService.callAll();
-      this.DataService.currentVRInfo.subscribe(
+      await this.DataService.callAll();
+      await this.DataService.currentVRInfo.subscribe(
         async data => {
           this.vrInfo = data;
-          this.vrCode = this.vrInfo.vrCode;
+          this.vrCode = this.vrInfo[0].vrCode;
+          this.vrHost = this.vrInfo[0].vrHost;
+          this.vrRoommates = this.vrInfo[0].vrRoommates;
         });
+      var data1 = {
+        studentID: this.vrHost
+      }
+      this.vrHostInfo = await this.API.getStudentInfo(data1);
+      var data2 = {
+        type: "getVRRoommates",
+        vrCode: this.vrCode,
+        vrHost: this.vrHost
+      }
+      this.vrRoommatesInfo = await this.API.getStudentInfo(data2);
+      console.log(this.vrRoommatesInfo);
     }
   }
 
-  deleteVR() {
-
-  }
-
-  padZero() {
-    const fullNumber = this.vrCode.toString();
-    console.log(fullNumber);
+  async deleteVR() {
+    var data = {
+      type: "deleteVR",
+      vrCode: this.vrCode
+    }
+    await this.API.updateStudentInfo(data);
+    await this.API.updateVirtualRoom(data);
+    this.DataService.callAll()
+    $('#modalDeleteVR').modal('hide');
+    this.router.navigate(['/home']);
   }
 
   async modalEvent(type) {

@@ -62,8 +62,8 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
                 </div>
-                <input type="password" class="form-control" aria-label="Sizing example input" formControlName="vrPassword"
-                  aria-describedby="inputGroup-sizing-default"
+                <input type="password" class="form-control" formControlName="vrPassword"
+                  autocomplete="off"
                   [ngClass]="{'is-valid':c.vrPassword.valid, 'is-invalid':c.vrPassword.invalid && c.vrPassword.touched}">
                 <div class="valid-feedback text-center">
                   Acceptable
@@ -98,8 +98,8 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-default">Room CODE</span>
                 </div>
-                <input type="text" class="form-control" aria-label="Sizing example input" formControlName="vrCode"
-                  aria-describedby="inputGroup-sizing-default" maxlength="6"
+                <input type="text" class="form-control" formControlName="vrCode"
+                  autocomplete="off" maxlength="6"
                   [ngClass]="{'is-valid':j.vrCode.valid, 'is-invalid':j.vrCode.invalid && j.vrCode.touched}">
                 <div class="valid-feedback text-center">
                   Acceptable
@@ -114,8 +114,8 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
                 </div>
-                <input type="password" class="form-control" aria-label="Sizing example input" formControlName="vrPassword"
-                  aria-describedby="inputGroup-sizing-default"
+                <input type="password" class="form-control" formControlName="vrPassword"
+                  autocomplete="off"
                   [ngClass]="{'is-valid':j.vrPassword.valid, 'is-invalid':j.vrPassword.invalid && j.vrPassword.touched}">
                 <div class="valid-feedback text-center">
                   Acceptable

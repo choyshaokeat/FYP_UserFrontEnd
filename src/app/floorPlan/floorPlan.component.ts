@@ -1,35 +1,34 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { FileUploader } from 'ng2-file-upload';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { ApiFrontEndService } from '../../services/api-front-end.service';
-import { ApiBackEndService } from '../../services/api-back-end.service';
-import { DataService } from '../../services/data.service';
-import { EncrDecrService } from '../../services/encdec.service';
+import { ApiFrontEndService } from '../services/api-front-end.service';
+import { DataService } from '../services/data.service';
+import { EncrDecrService } from '../services/encdec.service';
+import * as moment from 'moment'
 
 declare var $: any;
 
 @Component({
-  selector: 'app-singleBooking',
-  templateUrl: './singleBooking.component.html'
+  selector: 'app-floorPlan',
+  templateUrl: './floorPlan.component.html',
 })
-
-export class SingleBookingComponent implements OnInit {
+export class FloorPlanComponent implements OnInit {
 
   publicAuth: any;
 
   constructor(
     private API: ApiFrontEndService,
     private DataService: DataService,
-    private EncrDecrService: EncrDecrService,
     private router: Router,
     private spinner: NgxSpinnerService,
+    private EncrDecrService: EncrDecrService,
+    private fb: FormBuilder
   ) { }
 
   async ngOnInit() {
-    await this.subscribeData();
+    this.subscribeData();
   }
 
   async subscribeData() {
@@ -41,9 +40,4 @@ export class SingleBookingComponent implements OnInit {
     }
   }
 
-  async modalEvent(type) {
-    if (type == 'change_pw') {
-      $('#modal_change_pw').modal('show');
-    }
-  }
 }

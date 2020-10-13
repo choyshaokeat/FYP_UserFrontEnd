@@ -10,6 +10,7 @@ import { HistoryComponent } from './history/history.component';
 import { SingleBookingComponent } from './moduleBooking/singleBooking/singleBooking.component';
 import { BulkBookingComponent } from './moduleBooking/bulkBooking/bulkBooking.component';
 import { AccountSettingsComponent } from './moduleSettings/accountSettings.component';
+import { FloorPlanComponent } from './floorPlan/floorPlan.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'singleBooking', component: SingleBookingComponent },
   { path: 'bulkBooking', component: BulkBookingComponent },
   { path: 'settings', component: AccountSettingsComponent },
+  { path: 'floorPlan', component: FloorPlanComponent },
 ];
 
 @NgModule({
@@ -39,4 +41,5 @@ export const RoutingComponents = [
   SingleBookingComponent,
   BulkBookingComponent,
   AccountSettingsComponent,
+  FloorPlanComponent,
 ]
