@@ -56,6 +56,7 @@ export class HistoryComponent implements OnInit {
       type: "currentRoommates",
       roomNumber: roomNumber[0].roomNumber
     };
+    console.log(data);
     this.roommates = await this.API.getBookingInfo(data);
   }
 

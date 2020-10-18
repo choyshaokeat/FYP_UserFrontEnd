@@ -8,6 +8,7 @@ import { ApiFrontEndService } from '../../services/api-front-end.service';
 import { ApiBackEndService } from '../../services/api-back-end.service';
 import { DataService } from '../../services/data.service';
 import { EncrDecrService } from '../../services/encdec.service';
+import * as moment from 'moment';
 //import { resolve } from 'dns';
 
 declare var $: any;
@@ -32,6 +33,10 @@ export class SingleBookingComponent implements OnInit {
   availableRoomCapacity: any;
   showSubmitButton: any = false;
   selectedRoomCapacity: any;
+  numberOfSemester = 1;
+  minNumberOfSemester: any = 1;
+  maxNumberOfSemester: any = 3;
+  totalFees: any;
 
   constructor(
     private API: ApiFrontEndService,
@@ -50,6 +55,7 @@ export class SingleBookingComponent implements OnInit {
     this.DataService.currentStudentInfo.subscribe(data =>
       this.publicAuth = this.EncrDecrService.decryptObject('client', data)
     );
+    console.log(this.publicAuth);
     if (this.publicAuth == undefined || this.publicAuth == 'guest') {
       this.router.navigate(['/login']);
     }
@@ -99,6 +105,7 @@ export class SingleBookingComponent implements OnInit {
   async selectRoom(selectedRoom) {
     this.selectedRoom = selectedRoom;
     this.showBookingDetails = true;
+    this.calculateFees();
   }
 
   selectRoomCapacity(capacity) {
@@ -142,16 +149,60 @@ export class SingleBookingComponent implements OnInit {
     }
   }
 
+  addQuantity() {
+    if (this.numberOfSemester < this.maxNumberOfSemester) {
+      this.numberOfSemester += 1;
+      this.calculateFees();
+    }
+  }
+
+  deleteQuantity() {
+    if (this.numberOfSemester > this.minNumberOfSemester) {
+      this.numberOfSemester -= 1;
+      this.calculateFees();
+    }
+  }
+
+  calculateFees() {
+    this.totalFees = this.selectedRoom.price*this.numberOfSemester;
+  }
+
   async submit() {
     var availability = await this.checkRoomAvailability()
     if (availability == true) {
-      var data = {
+      var data1 = {
+        type: "updateRoomInfo",
+        roomNumber: this.selectedRoom.roomNumber,
+        bed: this.selectedRoom.bed,
+        studentID: this.publicAuth.studentID
+      }
+      await this.API.updateStudentInfo(data1);
+
+      var data2 = {
         type: "updateRoomInfo",
         roomNumber: this.selectedRoom.roomNumber,
         bed: this.selectedRoom.bed
       }
-      await this.API.updateStudentInfo(data);
-      
+      await this.API.updateRoomInfo(data2);
+
+      var data3 = {
+        type: "createBookingHistory",
+        studentID: this.publicAuth.studentID,
+        roomNumber: this.selectedRoom.roomNumber,
+        village: this.selectedRoom.village,
+        block: this.selectedRoom.block,
+        level: this.selectedRoom.level,
+        bed: this.selectedRoom.bed,
+        aircond: this.selectedRoom.aircond,
+        fees: this.selectedRoom.price*this.numberOfSemester,
+        status: "Booked",
+        checkInDate: moment().utc().format("YYYY-MM-DD HH:mm:ss"),
+        checkOutDate: moment().utc().format("YYYY-MM-DD HH:mm:ss"),
+        numberOfSemester: this.numberOfSemester 
+      }
+      await this.API.updateBookingInfo(data3);
+      this.DataService.callAll();
+      this.router.navigate(['/history']);
       console.log("Done")
     } else {
       $('#roomOccupied').modal('show');

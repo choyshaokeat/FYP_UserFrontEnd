@@ -55,16 +55,26 @@
                     <span class="font-weight-bold text-dark">{{ selectedRoom.aircond }}</span>
                   </td>
                   <td>
-                    <input type="text" class="form-control form-control-sm text-center" style="width: 80px;" value="1">
+                    <div class="align-items-center">
+                      <a href="javascript:void(0)" class="btn-inner--icon text-muted" (click)="deleteQuantity()">
+                        <i class='fas fa-minus'></i>
+                      </a>
+                      <span class="badge badge-secondary mx-2 text-xs">
+                        {{ numberOfSemester }}
+                      </span>
+                      <a href="javascript:void(0)" class="btn-inner--icon text-muted" (click)="addQuantity()">
+                        <i class='fas fa-plus'></i>
+                      </a>
+                    </div>
                   </td>
                   <td class="text-right">
-                    <span class="font-weight-bold text-dark">MYR {{ selectedRoom.price }}</span>
+                    <span class="font-weight-bold text-dark">RM {{ selectedRoom.price | number:'.2' }}</span>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <h6 class="text-success font-weight-bold mt-4 pt-2 text-center">Total: MYR 750</h6>
+          <h6 *ngIf="showBookingDetails" class="text-success font-weight-bold mt-4 pt-2 text-center">Total: RM {{ totalFees | number:'.2'}}</h6>
         </div>
         <div class="card-footer px-0 py-0 border-0 overflow-hidden">
           <button class="btn btn-block btn-success rounded-0" [disabled]="!showBookingDetails" (click)="submit()">Submit</button>
