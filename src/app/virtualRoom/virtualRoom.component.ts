@@ -18,7 +18,7 @@ declare var $: any;
 export class VirtualRoomComponent implements OnInit {
 
   publicAuth: any;
-  vrInfo: any;
+  vrInfo: any = [];
   vrCode: any;
   vrHost: any;
   vrHostInfo: any;
@@ -51,9 +51,9 @@ export class VirtualRoomComponent implements OnInit {
       await this.DataService.currentVRInfo.subscribe(
         async data => {
           this.vrInfo = data;
-          this.vrCode = this.vrInfo[0].vrCode;
-          this.vrHost = this.vrInfo[0].vrHost;
-          this.vrRoommates = this.vrInfo[0].vrRoommates;
+          this.vrCode = this.vrInfo[0]?.vrCode;
+          this.vrHost = this.vrInfo[0]?.vrHost;
+          this.vrRoommates = this.vrInfo[0]?.vrRoommates;
         });
       var data1 = {
         studentID: this.vrHost
@@ -65,7 +65,7 @@ export class VirtualRoomComponent implements OnInit {
         vrHost: this.vrHost
       }
       this.vrRoommatesInfo = await this.API.getStudentInfo(data2);
-      console.log(this.vrRoommatesInfo);
+      //console.log(this.vrRoommatesInfo);
     }
   }
 

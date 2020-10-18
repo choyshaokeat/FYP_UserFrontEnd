@@ -20,8 +20,8 @@ export class BulkBookingComponent implements OnInit {
 
   public publicAuth: any;
   roomCapacity = 2;
-  minRoomCapacity = 2;
-  maxRoomCapacity = 4;
+  minRoomCapacity: any = 0;
+  maxRoomCapacity: any = 0;
   vrInfo: any;
   createVRForm = this.fb.group({
     vrPassword: ['', [
@@ -53,13 +53,27 @@ export class BulkBookingComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.subscribeData();
+    await this.subscribeData();
+    await this.getMinMaxCapacity();
   }
 
   async subscribeData() {
     this.DataService.currentStudentInfo.subscribe(data =>
       this.publicAuth = this.EncrDecrService.decryptObject('client', data)
     );
+  }
+
+  async getMinMaxCapacity() {
+    var data1 = {
+      type: "getMinRoomCapacity",
+    }
+    var minRoomCapacity = await this.API.getRoomInfo(data1);
+    this.minRoomCapacity = minRoomCapacity[0].capacity;
+    var data2 = {
+      type: "getMaxRoomCapacity",
+    }
+    var maxRoomCapacity = await this.API.getRoomInfo(data2);
+    this.maxRoomCapacity = maxRoomCapacity[0].capacity;
   }
 
   get c() {

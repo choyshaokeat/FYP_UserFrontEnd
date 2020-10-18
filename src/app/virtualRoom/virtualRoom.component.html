@@ -8,7 +8,7 @@
             <span class="badge badge-lg badge-success mr-2">
               <h5 class="font-weight-bold m-0 text-white">Virtual Room</h5>
             </span>
-            <button *ngIf="vrInfo[0].vrHost == publicAuth.studentID" type="button" class="btn btn-soft-primary btn-icon-only" (click)="modalEvent('modalDeleteVR')">
+            <button *ngIf="vrHost == publicAuth.studentID" type="button" class="btn btn-soft-primary btn-icon-only" (click)="modalEvent('modalDeleteVR')">
               <span class="btn-inner--icon">
                 <i class="fas fa-trash-alt"></i>
               </span>

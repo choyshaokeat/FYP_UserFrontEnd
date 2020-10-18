@@ -1,6 +1,5 @@
 <header class="fixed-top">
-    <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark shadow shadow-lg bg-brown py-3 px-5"
-        (scroll)="onWindowScroll($event);">
+    <nav class="navbar navbar-horizontal navbar-expand-lg navbar-dark shadow shadow-lg bg-brown py-3 px-5">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-primary"
                 aria-controls="navbar-primary" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,11 +12,6 @@
                             <span>Home</span>
                         </a>
                     </li>
-                    <li class="nav-item mr-4 font-weight-bold">
-                        <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/floorPlan']">
-                            <span>Floor Plan</span>
-                        </a>
-                    </li>
                     <li *ngIf="bookingHistoryCount > 0" class="nav-item mr-4 font-weight-bold">
                         <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/history']">
                             <span>History</span>
@@ -26,6 +20,11 @@
                     <li *ngIf="publicAuth.bookingStatus == 1" class="nav-item mr-4 font-weight-bold">
                         <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/virtualRoom']">
                             <span>Virtual Room</span>
+                        </a>
+                    </li>
+                    <li class="nav-item mr-4 font-weight-bold">
+                        <a href="javascript:void(0)" class="text-white h6" [routerLink]="['/floorPlan']">
+                            <span>Floor Plan</span>
                         </a>
                     </li>
                     <li class="nav-item">

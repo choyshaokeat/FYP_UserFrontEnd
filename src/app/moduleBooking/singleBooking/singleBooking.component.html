@@ -23,10 +23,10 @@
       </div>
       <div class="card hover-shadow-lg">
         <div class="card-header">
-          <h5 class="font-weight-bold m-0"><i class="fas fa-check-circle mr-2"></i>Booking Details</h5>
+          <h5 class="font-weight-bold m-0 text-success"><i class="fas fa-check-circle mr-2"></i>Booking Details</h5>
         </div>
         <div class="card-body">
-          <div class="table-responsive">
+          <div *ngIf="showBookingDetails" class="table-responsive">
             <table class="table table-cards align-items-center">
               <thead>
                 <tr>
@@ -41,24 +41,24 @@
                   <th scope="row">
                     <div class="align-items-center">
                       <div class="lh-100 mb-2">
-                        <span class="text-dark font-weight-bold">Village 5</span>
+                        <span class="text-dark font-weight-bold">Village {{ selectedRoom.village }}</span>
                       </div>
                       <div class="lh-100 mb-2">
-                        <span class="text-muted font-weight-bold">V5A-L3-05</span>
+                        <span class="text-muted font-weight-bold">{{ selectedRoom.roomNumber }}</span>
                       </div>
                       <div class="lh-100">
-                        <span class="text-muted font-weight-bold">Bed A</span>
+                        <span class="text-muted font-weight-bold">Bed {{ selectedRoom.bed }}</span>
                       </div>
                     </div>
                   </th>
                   <td>
-                    <span class="font-weight-bold text-dark">No</span>
+                    <span class="font-weight-bold text-dark">{{ selectedRoom.aircond }}</span>
                   </td>
                   <td>
                     <input type="text" class="form-control form-control-sm text-center" style="width: 80px;" value="1">
                   </td>
                   <td class="text-right">
-                    <span class="font-weight-bold text-dark">MYR 750</span>
+                    <span class="font-weight-bold text-dark">MYR {{ selectedRoom.price }}</span>
                   </td>
                 </tr>
               </tbody>
@@ -67,48 +67,39 @@
           <h6 class="text-success font-weight-bold mt-4 pt-2 text-center">Total: MYR 750</h6>
         </div>
         <div class="card-footer px-0 py-0 border-0 overflow-hidden">
-          <a href="#" class="btn btn-block btn-success rounded-0">Submit</a>
+          <button class="btn btn-block btn-success rounded-0" [disabled]="!showBookingDetails" (click)="submit()">Submit</button>
         </div>
       </div>
     </div>
 
     <div class="col-8">
-      <div class="card">
+      <div class="card border-primary">
         <div class="card-body">
           <h6 class="mb-4">Step 1: Choose a village</h6>
           <nav class="nav nav-pills nav-pills-icon nav-justified font-weight-bold">
-            <a class="nav-item nav-link active" data-toggle="tab" href="javascript:void(0)" role="tab"
-              aria-selected="true">V1</a>
-            <a class="nav-item nav-link" data-toggle="tab" href="javascript:void(0)" role="tab"
-              aria-selected="true">V2</a>
-            <a class="nav-item nav-link" data-toggle="tab" href="javascript:void(0)" role="tab"
-              aria-selected="true">V3</a>
-            <a class="nav-item nav-link" data-toggle="tab" href="javascript:void(0)" role="tab"
-              aria-selected="true">V4</a>
-            <a class="nav-item nav-link" data-toggle="tab" href="javascript:void(0)" role="tab"
-              aria-selected="true">V5</a>
-            <a class="nav-item nav-link" data-toggle="tab" href="javascript:void(0)" role="tab"
-              aria-selected="true">V6</a>
-
+            <a *ngFor="let m of village" class="nav-item nav-link" data-toggle="tab" href="javascript:void(0)"
+              role="tab" (click)="getBuilding(m.village)" aria-selected="true">V{{ m.village }}</a>
           </nav>
         </div>
       </div>
 
-      <div class="card">
+      <div *ngIf="showBuilding" class="card border-primary">
         <div class="card-body">
           <h6 class="mb-4">Step 2: Choose a building</h6>
           <nav class="nav nav-pills nav-pills-icon nav-justified font-weight-bold">
-            <a class="nav-item nav-link active" data-toggle="tab" href="javascript:void(0)" role="tab"
-              aria-selected="true">V1A</a>
-            <a class="nav-item nav-link" data-toggle="tab" href="javascript:void(0)" role="tab"
-              aria-selected="false">V1B</a>
+            <a *ngFor="let m of building" class="nav-item nav-link" data-toggle="tab" href="javascript:void(0)"
+              role="tab" (click)="getRoom(m.block)" aria-selected="true">{{ m.block }}</a>
           </nav>
         </div>
       </div>
 
-      <div class="card">
+      <div *ngIf="showRoom" class="card border-primary">
         <div class="card-body">
-          <h6 class="mb-4">Step 3: Choose a room</h6>
+          <div class="d-flex justify-content-between">
+            <h6 class="mb-4">Step 3: Choose a room</h6>
+            <a href="javascript:void(0)" class="mb-4 h6" (click)="getRoomCapacity(); modalEvent('filterRoom');"><i
+                class="fas fa-filter"></i></a>
+          </div>
           <div class="table-responsive">
             <table class="table table-bordered rounded">
               <thead>
@@ -121,46 +112,18 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">V5A-L3-05</th>
-                  <td>A</td>
-                  <td>No</td>
-                  <td>MYR 750</td>
+                <tr *ngFor="let m of room">
+                  <th scope="row">{{ m.roomNumber }}
+                    <span *ngIf="m.status == 1" class="badge badge-soft-danger ml-2">
+                      Occupied
+                    </span>
+                  </th>
+                  <td>{{ m.bed }}</td>
+                  <td>{{ m.aircond }}</td>
+                  <td>{{ m.price | number:'.2' }}</td>
                   <td class="text-right">
-                    <button type="button" class="btn btn-sm btn-outline-primary py-1">
-                      Select
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">V5A-L3-05</th>
-                  <td>B</td>
-                  <td>No</td>
-                  <td>MYR 750</td>
-                  <td class="text-right">
-                    <button type="button" class="btn btn-sm btn-outline-primary py-1">
-                      Select
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">V5A-L3-06</th>
-                  <td>A</td>
-                  <td>No</td>
-                  <td>MYR 750</td>
-                  <td class="text-right">
-                    <button type="button" class="btn btn-sm btn-outline-primary py-1">
-                      Select
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">V5A-L3-06</th>
-                  <td>B</td>
-                  <td>No</td>
-                  <td>MYR 750</td>
-                  <td class="text-right">
-                    <button type="button" class="btn btn-sm btn-outline-primary py-1">
+                    <button type="button" class="btn btn-sm btn-outline-primary py-1" (click)="selectRoom(m)"
+                      [disabled]="m.status == 1">
                       Select
                     </button>
                   </td>
@@ -175,3 +138,41 @@
 </div>
 
 <!-- Modal -->
+<div class="modal bg-translucent-dark fade" id="filterRoom" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document" data-backdrop="false">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h6 class="modal-title mb-3" id="myLargeModalLabel">Room Capacity:</h6>
+        <nav class="nav nav-pills nav-pills-icon nav-justified font-weight-bold">
+          <a *ngFor="let m of availableRoomCapacity" class="nav-item nav-link" data-toggle="tab"
+            href="javascript:void(0)" role="tab" aria-selected="true"
+            (click)="selectRoomCapacity(m.capacity)">{{ m.capacity }}</a>
+        </nav>
+      </div>
+      <div class="modal-footer">
+        <div class="row m-0">
+          <div class="col p-0 pr-1">
+            <button type="button" class="btn btn-dark btn-block" [disabled]="!showSubmitButton"
+              (click)="filterRoom()">Submit</button>
+          </div>
+          <div class="col p-0 pl-1">
+            <button type="button" class="btn btn-danger btn-block" (click)="resetFilter()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal modal-danger bg-translucent-dark fade" id="roomOccupied" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document" data-backdrop="false">
+    <div class="modal-content">
+      <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span class="h4" aria-hidden="true">&times;</span>
+        </button>
+        <h5 class="text-center text-white my-4"><i class="fas fa-exclamation-triangle fa-4x"></i></h5>
+        <h5 class="modal-title text-center mb-4" id="myLargeModalLabel">Opps, someone is ahead of you.<br/>Room occupied!</h5>
+      </div>
+    </div>
+  </div>
+</div>

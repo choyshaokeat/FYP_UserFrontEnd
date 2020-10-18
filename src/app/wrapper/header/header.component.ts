@@ -46,32 +46,14 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  hideNavbar(e: any) { e.hide(); }
-
-  sidenav_main(data) {
-    this.sidebarClick = data.isTrusted;
-    console.log(this.sidebarClick);
-  }
-
   logOut() {
     this.spinner.show();
     this.DataService.reset();
+    this.DataService.callAll();
     this.spinner.hide();
     this.router.navigate(['/login']);
   }
 
-  @HostListener('window:scroll', ['$event'])
-
-  onWindowScroll(e) {
-    let element = document.querySelector('#navbar-main');
-    if (window.pageYOffset + 30 > element.clientHeight) {
-      element.classList.remove('py-3');
-      element.classList.add('bg-gray-300', 'py-2', 'shadow');
-    } else {
-      element.classList.remove('bg-gray-300', 'py-2', 'shadow');
-      element.classList.add('py-3');
-    }
-  }
 
   async modalEvent(type) {
     if (type == 'modalBook') {

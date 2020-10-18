@@ -31,8 +31,10 @@ export class AppComponent implements OnInit {
   }
 
   async subscribeData() {
-    this.publicAuth = this.DataService.publicAuth;
-    if (this.publicAuth == undefined) {
+    this.DataService.currentStudentInfo.subscribe(data =>
+      this.publicAuth = this.EncrDecrService.decryptObject('client', data)
+    );
+    if (this.publicAuth == undefined || this.publicAuth == 'guest') {
       this.loginStatus = false;
     } else {
       this.loginStatus = true;

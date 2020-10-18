@@ -126,6 +126,24 @@ export class ApiFrontEndService {
     });
   }
 
+  public updateBookingInfo(data) {
+    return new Promise((resolve, reject) => {
+      data = this.EncrDecrService.encryptObject('client', data);
+      this.ApiBackEndService.updateBookingInfo(data).subscribe(
+        (res: { status, data }) => {
+          res = this.EncrDecrService.decryptObject('client', res);
+          if (res.status == 200) {
+            resolve(res.data)
+          }
+          else reject(res.status);
+        },
+        (err) => {
+          reject(err)
+        }
+      );
+    });
+  }
+
   public getVirtualRoom(data) {
     return new Promise((resolve, reject) => {
       data = this.EncrDecrService.encryptObject('client', data);
@@ -153,6 +171,42 @@ export class ApiFrontEndService {
           if (res.status == 200) {
             if (res.data.length != 0) resolve(res.data)
             else if (res.data.length == 0) reject('Empty data');
+          }
+          else reject(res.status);
+        },
+        (err) => {
+          reject(err)
+        }
+      );
+    });
+  }
+
+  public getRoomInfo(data) {
+    return new Promise((resolve, reject) => {
+      data = this.EncrDecrService.encryptObject('client', data);
+      this.ApiBackEndService.getRoomInfo(data).subscribe(
+        (res: { status, data }) => {
+          res = this.EncrDecrService.decryptObject('client', res);
+          if (res.status == 200) {
+            resolve(res.data)
+          }
+          else reject(res.status);
+        },
+        (err) => {
+          reject(err)
+        }
+      );
+    });
+  }
+
+  public updateRoomInfo(data) {
+    return new Promise((resolve, reject) => {
+      data = this.EncrDecrService.encryptObject('client', data);
+      this.ApiBackEndService.updateRoomInfo(data).subscribe(
+        (res: { status, data }) => {
+          res = this.EncrDecrService.decryptObject('client', res);
+          if (res.status == 200) {
+            resolve(res.data)
           }
           else reject(res.status);
         },

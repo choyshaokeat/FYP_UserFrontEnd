@@ -50,11 +50,24 @@ export class ApiBackEndService {
     return this.http.post(`${this.getBackEndURL()}/client/getBookingInfo`, { data }, httpOptions);
   }
 
+  updateBookingInfo(data) {
+    return this.http.post(`${this.getBackEndURL()}/client/updateBookingInfo`, { data }, httpOptions);
+  }
+
   //Virtual Room
   getVirtualRoom(data) {
     return this.http.post(`${this.getBackEndURL()}/client/getVirtualRoom`, { data }, httpOptions);
   }
   updateVirtualRoom(data) {
     return this.http.post(`${this.getBackEndURL()}/client/updateVirtualRoom`, { data }, httpOptions);
+  }
+
+  //Room
+  getRoomInfo(data) {
+    return this.http.post(`${this.getBackEndURL()}/client/getRoomInfo`, { data }, httpOptions);
+  }
+
+  updateRoomInfo(data) {
+    return this.http.post(`${this.getBackEndURL()}/client/updateRoomInfo`, { data }, httpOptions);
   }
 }
