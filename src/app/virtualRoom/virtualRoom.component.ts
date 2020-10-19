@@ -24,6 +24,22 @@ export class VirtualRoomComponent implements OnInit {
   vrHostInfo: any;
   vrRoommates: any;
   vrRoommatesInfo: any;
+  vrCapacity: any;
+  studentIDs: any = [];
+
+  village: any;
+  building: any;
+  room: any;
+  showBuilding: any;
+  showRoom: any;
+  showBookingDetails: any = false;
+  selectedVillage: any;
+  selectedBuilding: any;
+  selectedRoom: any = [];
+  numberOfSemester = 1;
+  minNumberOfSemester: any = 1;
+  maxNumberOfSemester: any = 3;
+  totalFees: any;
 
   constructor(
     private API: ApiFrontEndService,
@@ -37,6 +53,8 @@ export class VirtualRoomComponent implements OnInit {
   async ngOnInit() {
     this.spinner.show();
     await this.subscribeData();
+    await this.getVillage();
+    this.getStudentIDs()
     this.spinner.hide();
   }
 
@@ -54,6 +72,7 @@ export class VirtualRoomComponent implements OnInit {
           this.vrCode = this.vrInfo[0]?.vrCode;
           this.vrHost = this.vrInfo[0]?.vrHost;
           this.vrRoommates = this.vrInfo[0]?.vrRoommates;
+          this.vrCapacity = this.vrInfo[0]?.vrCapacity;
         });
       var data1 = {
         studentID: this.vrHost
@@ -69,6 +88,17 @@ export class VirtualRoomComponent implements OnInit {
     }
   }
 
+  getStudentIDs() {
+    this.studentIDs[0] = this.vrHostInfo[0].studentID;
+    console.log(this.vrRoommatesInfo.length);
+    var j = this.vrRoommatesInfo.length
+    console.log(j);
+    for (var i = 0; i < j; i++) {
+      this.studentIDs[i+1] = this.vrRoommatesInfo[i].studentID;
+    }
+    console.log(this.studentIDs);
+  }
+
   async deleteVR() {
     var data = {
       type: "deleteVR",
@@ -81,9 +111,141 @@ export class VirtualRoomComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  async getVillage() {
+    var data = {
+      type: "getVillage"
+    }
+    this.village = await this.API.getRoomInfo(data);
+    //console.log(this.village);
+  }
+
+  async getBuilding(village) {
+    var data = {
+      type: "getBuilding",
+      village: village
+    }
+    this.building = await this.API.getRoomInfo(data);
+    this.showRoom = false;
+    this.showBuilding = true;
+    this.selectedVillage = village;
+    //console.log(this.village);
+  }
+
+  async getRoom(building) {
+    var data = {
+      type: "getBulkRoom",
+      village: this.selectedVillage,
+      block: building,
+      capacity: this.vrCapacity
+    }
+    this.room = await this.API.getRoomInfo(data);
+    this.showRoom = true;
+    this.selectedBuilding = building;
+    //console.log(this.room);
+  }
+
+  async selectRoom(selectedRoom) {
+    this.selectedRoom = selectedRoom;
+    this.showBookingDetails = true;
+    this.calculateFees();
+  }
+
+  async refreshData() {
+    var data = {
+      type: "getBulkRoom",
+      village: this.selectedVillage,
+      block: this.selectedBuilding,
+      capacity: this.vrCapacity
+    }
+    this.room = await this.API.getRoomInfo(data);
+  }
+
+  async checkRoomAvailability() {
+    var data = {
+      type: "checkRoomAvailability",
+      roomNumber: this.selectedRoom.roomNumber,
+      bed: this.selectedRoom.bed,
+    }
+    var result = await this.API.getRoomInfo(data);
+    console.log(result);
+    if (result[0].status == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  addQuantity() {
+    if (this.numberOfSemester < this.maxNumberOfSemester) {
+      this.numberOfSemester += 1;
+      this.calculateFees();
+    }
+  }
+
+  deleteQuantity() {
+    if (this.numberOfSemester > this.minNumberOfSemester) {
+      this.numberOfSemester -= 1;
+      this.calculateFees();
+    }
+  }
+
+  calculateFees() {
+    this.totalFees = this.selectedRoom.unitPrice*this.numberOfSemester;
+  }
+
+  async submit() {
+    var availability = await this.checkRoomAvailability()
+    if (availability == true) {
+      var data1 = {
+        type: "updateRoomInfo",
+        roomNumber: this.selectedRoom.roomNumber,
+        bed: this.selectedRoom.bed,
+        studentID: this.publicAuth.studentID
+      }
+      await this.API.updateStudentInfo(data1);
+
+      var data2 = {
+        type: "updateRoomInfo",
+        roomNumber: this.selectedRoom.roomNumber,
+        bed: this.selectedRoom.bed
+      }
+      await this.API.updateRoomInfo(data2);
+
+      var data3 = {
+        type: "createBookingHistory",
+        studentID: this.publicAuth.studentID,
+        roomNumber: this.selectedRoom.roomNumber,
+        village: this.selectedRoom.village,
+        block: this.selectedRoom.block,
+        level: this.selectedRoom.level,
+        bed: this.selectedRoom.bed,
+        aircond: this.selectedRoom.aircond,
+        fees: this.selectedRoom.price*this.numberOfSemester,
+        status: "Booked",
+        checkInDate: moment().utc().format("YYYY-MM-DD HH:mm:ss"),
+        checkOutDate: moment().utc().format("YYYY-MM-DD HH:mm:ss"),
+        numberOfSemester: this.numberOfSemester 
+      }
+      await this.API.updateBookingInfo(data3);
+      this.DataService.callAll();
+      this.router.navigate(['/history']);
+      console.log("Done")
+    } else {
+      $('#roomOccupied').modal('show');
+      this.refreshData();
+    }
+  }
+
+  clearCart() {
+    this.showBookingDetails = false;
+    this.selectedRoom = null;
+  }
+
   async modalEvent(type) {
     if (type == 'modalDeleteVR') {
       $('#modalDeleteVR').modal('show');
+    } else if (type == 'modalPassword') {
+      $('#modalPassword').modal('show');
     }
   }
 }

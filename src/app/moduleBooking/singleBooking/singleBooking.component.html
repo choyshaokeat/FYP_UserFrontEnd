@@ -21,11 +21,21 @@
           <p class="text-sm lh-160 mb-0">01 January 2021 - 15 January 2021</p>
         </div>
       </div>
-      <div class="card hover-shadow-lg">
-        <div class="card-header">
-          <h5 class="font-weight-bold m-0 text-success"><i class="fas fa-check-circle mr-2"></i>Booking Details</h5>
+      <div class="card hover-shadow-lg" style="position: -webkit-sticky; position: sticky; top: 6rem; align-self: flex-start;">
+        <div *ngIf="!showBookingDetails" class="card-header">
+          <h5 class="font-weight-bold m-0 text-success"><i class="fas fa-check-circle mr-2"></i>Booking Cart</h5>
+        </div>
+        <div *ngIf="showBookingDetails" class="card-header d-flex justify-content-between pt-4">
+          <h5 class="font-weight-bold m-0 text-success"><i class="fas fa-check-circle mr-2"></i>Booking Cart</h5>
+          <a href="javascript:void(0)" (click)="clearCart()"><h5><i class="fas fa-redo-alt"></i></h5></a>
         </div>
         <div class="card-body">
+          <div *ngIf="!showBookingDetails">
+            <div class="align-self-center text-center mr-2">
+              <img alt="Image placeholder" src="../../assets/img/svg/illustrations/Market launch-pana.svg"
+                class="svg-inject img-fluid">
+            </div>
+          </div>
           <div *ngIf="showBookingDetails" class="table-responsive">
             <table class="table table-cards align-items-center">
               <thead>
@@ -74,16 +84,17 @@
               </tbody>
             </table>
           </div>
-          <h6 *ngIf="showBookingDetails" class="text-success font-weight-bold mt-4 pt-2 text-center">Total: RM {{ totalFees | number:'.2'}}</h6>
+          <h6 *ngIf="showBookingDetails" class="text-dark font-weight-bold mt-4 pt-2 text-center">Total: <span class="text-success">RM {{ totalFees | number:'.2'}}</span></h6>
         </div>
         <div class="card-footer px-0 py-0 border-0 overflow-hidden">
-          <button class="btn btn-block btn-success rounded-0" [disabled]="!showBookingDetails" (click)="submit()">Submit</button>
+          <button *ngIf="showBookingDetails" class="btn btn-block btn-success rounded-0" [disabled]="!showBookingDetails" (click)="submit()">Submit</button>
+          <button *ngIf="!showBookingDetails" class="btn btn-block btn-success rounded-0" disabled>Cart Empty</button>
         </div>
       </div>
     </div>
 
     <div class="col-8">
-      <div class="card border-primary">
+      <div class="card">
         <div class="card-body">
           <h6 class="mb-4">Step 1: Choose a village</h6>
           <nav class="nav nav-pills nav-pills-icon nav-justified font-weight-bold">
@@ -93,7 +104,7 @@
         </div>
       </div>
 
-      <div *ngIf="showBuilding" class="card border-primary">
+      <div *ngIf="showBuilding" class="card">
         <div class="card-body">
           <h6 class="mb-4">Step 2: Choose a building</h6>
           <nav class="nav nav-pills nav-pills-icon nav-justified font-weight-bold">
@@ -103,7 +114,7 @@
         </div>
       </div>
 
-      <div *ngIf="showRoom" class="card border-primary">
+      <div *ngIf="showRoom" class="card">
         <div class="card-body">
           <div class="d-flex justify-content-between">
             <h6 class="mb-4">Step 3: Choose a room</h6>
@@ -130,7 +141,7 @@
                   </th>
                   <td>{{ m.bed }}</td>
                   <td>{{ m.aircond }}</td>
-                  <td>{{ m.price | number:'.2' }}</td>
+                  <td>RM {{ m.price | number:'.2' }}</td>
                   <td class="text-right">
                     <button type="button" class="btn btn-sm btn-outline-primary py-1" (click)="selectRoom(m)"
                       [disabled]="m.status == 1">
@@ -162,8 +173,8 @@
       <div class="modal-footer">
         <div class="row m-0">
           <div class="col p-0 pr-1">
-            <button type="button" class="btn btn-dark btn-block" [disabled]="!showSubmitButton"
-              (click)="filterRoom()">Submit</button>
+            <button type="button" class="btn btn-dark btn-block" [disabled]="!showFilterButton"
+              (click)="filterRoom()">Filter</button>
           </div>
           <div class="col p-0 pl-1">
             <button type="button" class="btn btn-danger btn-block" (click)="resetFilter()">Reset</button>

@@ -31,7 +31,7 @@ export class SingleBookingComponent implements OnInit {
   selectedBuilding: any;
   selectedRoom: any = [];
   availableRoomCapacity: any;
-  showSubmitButton: any = false;
+  showFilterButton: any = false;
   selectedRoomCapacity: any;
   numberOfSemester = 1;
   minNumberOfSemester: any = 1;
@@ -109,7 +109,7 @@ export class SingleBookingComponent implements OnInit {
   }
 
   selectRoomCapacity(capacity) {
-    this.showSubmitButton = true;
+    this.showFilterButton = true;
     this.selectedRoomCapacity = capacity;
   }
 
@@ -185,6 +185,12 @@ export class SingleBookingComponent implements OnInit {
       }
       await this.API.updateRoomInfo(data2);
 
+      var data4 = {
+        type: "updateCurrentCapacity",
+        roomNumber: this.selectedRoom.roomNumber,
+      }
+      await this.API.updateRoomInfo(data4);
+
       var data3 = {
         type: "createBookingHistory",
         studentID: this.publicAuth.studentID,
@@ -208,6 +214,11 @@ export class SingleBookingComponent implements OnInit {
       $('#roomOccupied').modal('show');
       this.resetFilter();
     }
+  }
+
+  clearCart() {
+    this.showBookingDetails = false;
+    this.selectedRoom = null;
   }
 
   async modalEvent(type) {
