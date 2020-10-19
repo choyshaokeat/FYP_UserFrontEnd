@@ -208,12 +208,21 @@ export class SingleBookingComponent implements OnInit {
       }
       await this.API.updateBookingInfo(data3);
       this.DataService.callAll();
-      this.router.navigate(['/history']);
-      console.log("Done")
+
+      $('#bookSucessfully').modal('show');
+        await this.sleep(5000).then(() => { $('#bookSucessfully').modal('hide'); });
+        this.router.navigate(['/history']);
+
+      //console.log("Done")
     } else {
       $('#roomOccupied').modal('show');
       this.resetFilter();
+      this.clearCart();
     }
+  }
+
+  async sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   clearCart() {

@@ -26,6 +26,7 @@ export class VirtualRoomComponent implements OnInit {
   vrRoommatesInfo: any;
   vrCapacity: any;
   studentIDs: any = [];
+  bedAlphabet = ['A','B','C','D','E','F','G','H']
 
   village: any;
   building: any;
@@ -90,13 +91,11 @@ export class VirtualRoomComponent implements OnInit {
 
   getStudentIDs() {
     this.studentIDs[0] = this.vrHostInfo[0].studentID;
-    console.log(this.vrRoommatesInfo.length);
     var j = this.vrRoommatesInfo.length
-    console.log(j);
     for (var i = 0; i < j; i++) {
       this.studentIDs[i+1] = this.vrRoommatesInfo[i].studentID;
     }
-    console.log(this.studentIDs);
+    //console.log(this.studentIDs);
   }
 
   async deleteVR() {
@@ -162,13 +161,12 @@ export class VirtualRoomComponent implements OnInit {
 
   async checkRoomAvailability() {
     var data = {
-      type: "checkRoomAvailability",
+      type: "checkBulkRoomAvailability",
       roomNumber: this.selectedRoom.roomNumber,
-      bed: this.selectedRoom.bed,
     }
     var result = await this.API.getRoomInfo(data);
-    console.log(result);
-    if (result[0].status == 0) {
+    //console.log(result);
+    if (result[0].capacity == result[0].currentCapacity) {
       return true;
     } else {
       return false;
@@ -196,44 +194,67 @@ export class VirtualRoomComponent implements OnInit {
   async submit() {
     var availability = await this.checkRoomAvailability()
     if (availability == true) {
-      var data1 = {
-        type: "updateRoomInfo",
-        roomNumber: this.selectedRoom.roomNumber,
-        bed: this.selectedRoom.bed,
-        studentID: this.publicAuth.studentID
-      }
-      await this.API.updateStudentInfo(data1);
+      var j = this.studentIDs.length;
+      console.log(j);
+      for (var i = 0; i < j; i++) {
+        var data1 = {
+          type: "updateRoomInfo",
+          roomNumber: this.selectedRoom.roomNumber,
+          bed: this.bedAlphabet[i],
+          studentID: this.studentIDs[i]
+        }
+        await this.API.updateStudentInfo(data1);
+  
+        var data2 = {
+          type: "updateRoomInfo",
+          roomNumber: this.selectedRoom.roomNumber,
+          bed: this.bedAlphabet[i]
+        }
+        await this.API.updateRoomInfo(data2);
+  
+        var data3 = {
+          type: "createBookingHistory",
+          studentID: this.studentIDs[i],
+          roomNumber: this.selectedRoom.roomNumber,
+          village: this.selectedRoom.village,
+          block: this.selectedRoom.block,
+          level: this.selectedRoom.level,
+          bed: this.bedAlphabet[i],
+          aircond: this.selectedRoom.aircond,
+          fees: this.selectedRoom.price*this.numberOfSemester,
+          status: "Booked",
+          checkInDate: moment().utc().format("YYYY-MM-DD HH:mm:ss"),
+          checkOutDate: moment().utc().format("YYYY-MM-DD HH:mm:ss"),
+          numberOfSemester: this.numberOfSemester 
+        }
+        await this.API.updateBookingInfo(data3);
 
-      var data2 = {
-        type: "updateRoomInfo",
-        roomNumber: this.selectedRoom.roomNumber,
-        bed: this.selectedRoom.bed
-      }
-      await this.API.updateRoomInfo(data2);
+        var data4 = {
+          type: "updateCurrentCapacity",
+          roomNumber: this.selectedRoom.roomNumber,
+        }
+        await this.API.updateRoomInfo(data4);
 
-      var data3 = {
-        type: "createBookingHistory",
-        studentID: this.publicAuth.studentID,
-        roomNumber: this.selectedRoom.roomNumber,
-        village: this.selectedRoom.village,
-        block: this.selectedRoom.block,
-        level: this.selectedRoom.level,
-        bed: this.selectedRoom.bed,
-        aircond: this.selectedRoom.aircond,
-        fees: this.selectedRoom.price*this.numberOfSemester,
-        status: "Booked",
-        checkInDate: moment().utc().format("YYYY-MM-DD HH:mm:ss"),
-        checkOutDate: moment().utc().format("YYYY-MM-DD HH:mm:ss"),
-        numberOfSemester: this.numberOfSemester 
+        this.DataService.callAll();
+
+        $('#bookSucessfully').modal('show');
+        await this.sleep(5000).then(() => { $('#bookSucessfully').modal('hide'); });
+        this.router.navigate(['/history']);
+        //console.log(data1);
+        //console.log(data2);
+        //console.log(data3);
+        //console.log(data4);
+        //console.log("Done");
       }
-      await this.API.updateBookingInfo(data3);
-      this.DataService.callAll();
-      this.router.navigate(['/history']);
-      console.log("Done")
     } else {
       $('#roomOccupied').modal('show');
       this.refreshData();
+      this.clearCart();
     }
+  }
+
+  async sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   clearCart() {
