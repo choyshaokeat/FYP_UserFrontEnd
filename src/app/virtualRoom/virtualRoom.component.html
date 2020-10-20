@@ -73,7 +73,7 @@
             </div>
         </div>
       </div>
-      <div class="card hover-shadow-lg" style="position: -webkit-sticky; position: sticky; top: 6rem; align-self: flex-start;">
+      <div *ngIf="vrHost == publicAuth.studentID" class="card hover-shadow-lg" style="position: -webkit-sticky; position: sticky; top: 6rem; align-self: flex-start;">
         <div *ngIf="!showBookingDetails" class="card-header py-4">
           <h5 class="font-weight-bold m-0 text-success"><i class="fas fa-check-circle mr-2"></i>Booking Cart</h5>
         </div>

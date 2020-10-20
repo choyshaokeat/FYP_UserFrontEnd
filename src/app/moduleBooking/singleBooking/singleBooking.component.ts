@@ -63,7 +63,8 @@ export class SingleBookingComponent implements OnInit {
 
   async getVillage() {
     var data = {
-      type: "getVillage"
+      type: "getVillage",
+      gender: this.publicAuth.studentGender
     }
     this.village = await this.API.getRoomInfo(data);
     console.log(this.village);
@@ -72,7 +73,8 @@ export class SingleBookingComponent implements OnInit {
   async getBuilding(village) {
     var data = {
       type: "getBuilding",
-      village: village
+      village: village,
+      gender: this.publicAuth.studentGender
     }
     this.building = await this.API.getRoomInfo(data);
     this.showRoom = false;
@@ -85,7 +87,8 @@ export class SingleBookingComponent implements OnInit {
     var data = {
       type: "getRoom",
       village: this.selectedVillage,
-      block: building
+      block: building,
+      gender: this.publicAuth.studentGender
     }
     this.room = await this.API.getRoomInfo(data);
     this.showRoom = true;
@@ -97,7 +100,8 @@ export class SingleBookingComponent implements OnInit {
     var data = {
       type: "getRoomCapacity",
       village: this.selectedVillage,
-      block: this.selectedBuilding
+      block: this.selectedBuilding,
+      gender: this.publicAuth.studentGender
     }
     this.availableRoomCapacity = await this.API.getRoomInfo(data);
   }
@@ -118,7 +122,8 @@ export class SingleBookingComponent implements OnInit {
       type: "filterRoom",
       village: this.selectedVillage,
       block: this.selectedBuilding,
-      capacity: this.selectedRoomCapacity
+      capacity: this.selectedRoomCapacity,
+      gender: this.publicAuth.studentGender
     }
     this.room = await this.API.getRoomInfo(data);
     $('#filterRoom').modal('hide');
@@ -129,6 +134,7 @@ export class SingleBookingComponent implements OnInit {
       type: "getRoom",
       village: this.selectedVillage,
       block: this.selectedBuilding,
+      gender: this.publicAuth.studentGender
     }
     this.room = await this.API.getRoomInfo(data);
     $('#filterRoom').modal('hide');

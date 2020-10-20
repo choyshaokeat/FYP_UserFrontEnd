@@ -51,6 +51,7 @@ export class DataService {
         this.updateBookingHistory(await this.API.getBookingInfo(data = { studentID: this.publicAuth.studentID, type: "bookingHistory" }));
         this.updateVRInfo(await this.API.getVirtualRoom(data = { vrCode: this.publicAuth.vrCode, type: "vrInfo" }));
         this.updateHistoryCount(await this.checkBookingHistoryCount());
+        this.updateRoommate(await this.getRoommate());
         resolve('ok');
       }
       catch (err) {
@@ -70,6 +71,7 @@ export class DataService {
           this.updateBookingHistory(await this.API.getBookingInfo(data = { studentID: this.publicAuth.studentID, type: "bookingHistory" }));
           this.updateVRInfo(await this.API.getVirtualRoom(data = { vrCode: this.publicAuth.vrCode, type: "vrInfo" }));
           this.updateHistoryCount(await this.checkBookingHistoryCount());
+          this.updateRoommate(await this.getRoommate());
         }
         resolve('ok');
       }
@@ -78,6 +80,17 @@ export class DataService {
         reject(err);
       }
     });
+  }
+
+  async getRoommate() {
+    var data;
+    var roomNumber = await this.API.getBookingInfo(data = { studentID: this.publicAuth.studentID, type: "bookingHistory" });
+    data = {
+      type: "currentRoommates",
+      roomNumber: roomNumber[0].roomNumber
+    };
+    var roommate = await this.API.getBookingInfo(data);
+    return roommate;
   }
 
   async checkBookingHistoryCount() {
@@ -122,6 +135,13 @@ export class DataService {
   currentBookingHistory = this.bookingHistory.asObservable();
   updateBookingHistory(value) {
     this.bookingHistory.next(value);
+    //console.log(value);
+  }
+
+  private roommate = new BehaviorSubject('');
+  currentRoommate = this.roommate.asObservable();
+  updateRoommate(value) {
+    this.roommate.next(value);
     //console.log(value);
   }
 

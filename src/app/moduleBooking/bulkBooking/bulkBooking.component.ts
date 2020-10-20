@@ -66,11 +66,13 @@ export class BulkBookingComponent implements OnInit {
   async getMinMaxCapacity() {
     var data1 = {
       type: "getMinRoomCapacity",
+      gender: this.publicAuth.studentGender
     }
     var minRoomCapacity = await this.API.getRoomInfo(data1);
     this.minRoomCapacity = minRoomCapacity[0].capacity;
     var data2 = {
       type: "getMaxRoomCapacity",
+      gender: this.publicAuth.studentGender
     }
     var maxRoomCapacity = await this.API.getRoomInfo(data2);
     this.maxRoomCapacity = maxRoomCapacity[0].capacity;
@@ -104,7 +106,8 @@ export class BulkBookingComponent implements OnInit {
         type: "createVR",
         vrPassword: this.createVRForm.get('vrPassword').value,
         vrCapacity: this.roomCapacity,
-        vrHost: this.publicAuth.studentID
+        vrHost: this.publicAuth.studentID,
+        gender: this.publicAuth.studentGender
       }
       await this.API.updateVirtualRoom(vrData);
       //Update bookingStatus from 0 to 1 in studentInfo table
@@ -140,15 +143,16 @@ export class BulkBookingComponent implements OnInit {
     this.spinner.show();
     var data = {
       type: "roomAvailablityCheck",
-      vrCode: parseInt(this.joinVRForm.get('vrCode').value, 10)
+      gender: this.publicAuth.studentGender,
+      vrCode: parseInt(this.joinVRForm.get('vrCode').value, 10),
     }
     var vrCount = await this.API.getVirtualRoom(data);
     if (vrCount[0].count == 1) {
-      data = {
+      var data1 = {
         type: "capacityCheck",
         vrCode: parseInt(this.joinVRForm.get('vrCode').value, 10)
       }
-      this.vrInfo = await this.API.getVirtualRoom(data);
+      this.vrInfo = await this.API.getVirtualRoom(data1);
       if (this.vrInfo[0].vrCapacity > this.vrInfo[0].currentCapacity && this.vrInfo[0].vrPassword == this.joinVRForm.get('vrPassword').value) {
         var roommates;
         if (this.vrInfo[0].vrRoommates == null) {

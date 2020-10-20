@@ -112,7 +112,8 @@ export class VirtualRoomComponent implements OnInit {
 
   async getVillage() {
     var data = {
-      type: "getVillage"
+      type: "getVillage",
+      gender: this.publicAuth.studentGender
     }
     this.village = await this.API.getRoomInfo(data);
     //console.log(this.village);
@@ -121,7 +122,8 @@ export class VirtualRoomComponent implements OnInit {
   async getBuilding(village) {
     var data = {
       type: "getBuilding",
-      village: village
+      village: village,
+      gender: this.publicAuth.studentGender
     }
     this.building = await this.API.getRoomInfo(data);
     this.showRoom = false;
@@ -135,7 +137,8 @@ export class VirtualRoomComponent implements OnInit {
       type: "getBulkRoom",
       village: this.selectedVillage,
       block: building,
-      capacity: this.vrCapacity
+      capacity: this.vrCapacity,
+      gender: this.publicAuth.studentGender
     }
     this.room = await this.API.getRoomInfo(data);
     this.showRoom = true;
@@ -154,7 +157,8 @@ export class VirtualRoomComponent implements OnInit {
       type: "getBulkRoom",
       village: this.selectedVillage,
       block: this.selectedBuilding,
-      capacity: this.vrCapacity
+      capacity: this.vrCapacity,
+      gender: this.publicAuth.studentGender
     }
     this.room = await this.API.getRoomInfo(data);
   }

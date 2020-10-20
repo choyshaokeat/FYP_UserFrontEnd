@@ -32,7 +32,6 @@ export class HistoryComponent implements OnInit {
 
   async ngOnInit() {
     this.subscribeData();
-    this.getRoommate();
   }
 
   async subscribeData() {
@@ -46,18 +45,11 @@ export class HistoryComponent implements OnInit {
         async data => {
           this.bookingHistory = data;
         });
+      this.DataService.currentRoommate.subscribe(
+        async data => {
+          this.roommates = data;
+        });
     }
-  }
-
-  async getRoommate() {
-    var data;
-    var roomNumber = await this.API.getBookingInfo(data = { studentID: this.publicAuth.studentID, type: "bookingHistory" });
-    data = {
-      type: "currentRoommates",
-      roomNumber: roomNumber[0].roomNumber
-    };
-    console.log(data);
-    this.roommates = await this.API.getBookingInfo(data);
   }
 
 }
