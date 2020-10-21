@@ -51,7 +51,10 @@ export class DataService {
         this.updateBookingHistory(await this.API.getBookingInfo(data = { studentID: this.publicAuth.studentID, type: "bookingHistory" }));
         this.updateVRInfo(await this.API.getVirtualRoom(data = { vrCode: this.publicAuth.vrCode, type: "vrInfo" }));
         this.updateHistoryCount(await this.checkBookingHistoryCount());
-        this.updateRoommate(await this.getRoommate());
+        var i = await this.checkBookingHistoryCount();
+        if (i > 0) {
+          this.updateRoommate(await this.getRoommate());
+        }
         resolve('ok');
       }
       catch (err) {
@@ -71,7 +74,10 @@ export class DataService {
           this.updateBookingHistory(await this.API.getBookingInfo(data = { studentID: this.publicAuth.studentID, type: "bookingHistory" }));
           this.updateVRInfo(await this.API.getVirtualRoom(data = { vrCode: this.publicAuth.vrCode, type: "vrInfo" }));
           this.updateHistoryCount(await this.checkBookingHistoryCount());
-          this.updateRoommate(await this.getRoommate());
+          var i = await this.checkBookingHistoryCount();
+          if (i > 0) {
+            this.updateRoommate(await this.getRoommate());
+          }
         }
         resolve('ok');
       }
