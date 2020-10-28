@@ -26,7 +26,7 @@
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Duration:</small>
-              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0]?.checkInDate | date:'dd/MM/yyyy' }} - {{ bookingHistory[0]?.checkOutDate | date:'dd/MM/yyyy' }}</p>
+              <p class="text-sm lh-160 mb-3">{{ bookingHistory[0]?.expectedCheckInDate | date:'dd/MM/yyyy' }} - {{ bookingHistory[0]?.expectedCheckOutDate | date:'dd/MM/yyyy' }}</p>
             </div>
             <div class="col-lg-12 col-xl-6">
               <small class="h6 text-sm font-weight-bold">Total Fees:</small>
@@ -75,8 +75,9 @@
               </thead>
               <tbody>
                 <tr *ngFor="let m of bookingHistory" class="text-center">
-                  <th scope="row">{{ m?.checkInDate | date:'yyyy' }}</th>
-                  <td>{{ m?.checkInDate | date:'dd/MM/yyyy' }} - {{ m?.checkOutDate | date:'dd/MM/yyyy' }} <span class="font-weight-bold">( {{ m?.numberOfSemester }} sem )</span></td>
+                  <th scope="row">{{ m?.expectedCheckInDate | date:'yyyy' }}</th>
+                  <td>{{ m?.expectedCheckInDate | date:'dd/MM/yyyy' }} - {{ m?.expectedCheckOutDate | date:'dd/MM/yyyy' }} 
+                    <span class="font-weight-bold">( {{ m?.numberOfSemester }} <span *ngIf="m?.numberOfSemester != 'assigned'">sem</span> )</span></td>
                   <td>{{ m?.village }}</td>
                   <td>{{ m?.roomNumber }}</td>
                   <td>{{ m?.bed }}</td>
