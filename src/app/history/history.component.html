@@ -33,16 +33,18 @@
               <p class="text-sm lh-160 mb-3">RM {{ bookingHistory[0]?.fees | number:'.2' }}</p>
             </div>
           </div>
-          <small class="h6 text-sm font-weight-bold">Roommates:</small>
-          <div class="card mb-2 bg-gray-400 border-0" *ngFor="let m of roommates">
-            <div class="card-body">
-              <div class="d-flex align-items-center">
-                <span
-                  class="avatar rounded-circle avatar-lg bg-primary text-white font-weight-bold hover-shadow-lg hover-scale-110">{{ m.bed }}</span>
-                <div class="avatar-content ml-3">
-                  <h5 class="mb-0 font-weight-bold">{{ m.studentName | uppercase }}</h5>
-                  <small class="d-block text-muted font-weight-bold">Email: {{ m.studentEmail }}</small>
-                  <small class="d-block text-muted font-weight-bold">Phone: {{ m.studentContact }}</small>
+          <div *ngIf="bookingHistory[0]?.status != 'Checked-out'">
+            <small class="h6 text-sm font-weight-bold">Roommates:</small>
+            <div class="card mb-2 bg-gray-400 border-0" *ngFor="let m of roommates">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <span
+                    class="avatar rounded-circle avatar-lg bg-primary text-white font-weight-bold hover-shadow-lg hover-scale-110">{{ m.bed }}</span>
+                  <div class="avatar-content ml-3">
+                    <h5 class="mb-0 font-weight-bold">{{ m.studentName | uppercase }}</h5>
+                    <small class="d-block text-muted font-weight-bold">Email: {{ m.studentEmail }}</small>
+                    <small class="d-block text-muted font-weight-bold">Phone: {{ m.studentContact }}</small>
+                  </div>
                 </div>
               </div>
             </div>

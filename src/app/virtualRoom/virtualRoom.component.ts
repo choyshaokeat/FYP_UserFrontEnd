@@ -227,8 +227,7 @@ export class VirtualRoomComponent implements OnInit {
           aircond: this.selectedRoom.aircond,
           fees: this.selectedRoom.price*this.numberOfSemester,
           status: "Booked",
-          checkInDate: moment().utc().format("YYYY-MM-DD HH:mm:ss"),
-          checkOutDate: moment().utc().format("YYYY-MM-DD HH:mm:ss"),
+          bookingDate: moment().format("YYYY-MM-DD HH:mm:ss"),
           numberOfSemester: this.numberOfSemester 
         }
         await this.API.updateBookingInfo(data3);
