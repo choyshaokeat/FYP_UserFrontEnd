@@ -18,6 +18,7 @@ declare var $: any;
 export class HomeComponent implements OnInit {
 
   publicAuth: any;
+  showBooking: any;
 
   constructor(
     private API: ApiFrontEndService,
@@ -38,6 +39,11 @@ export class HomeComponent implements OnInit {
     );
     if (this.publicAuth == undefined || this.publicAuth == 'guest') {
       this.router.navigate(['/login']);
+    } else {
+      this.DataService.currentBookingShow.subscribe(
+        async data => {
+          this.showBooking = data;
+      });
     }
   }
 }

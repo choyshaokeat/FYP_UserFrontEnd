@@ -55,6 +55,7 @@ export class DataService {
         if (i > 0) {
           this.updateRoommate(await this.getRoommate());
         }
+        this.updateBookingShow(await this.API.getBookingDocument(null));
         resolve('ok');
       }
       catch (err) {
@@ -78,6 +79,8 @@ export class DataService {
           if (i > 0) {
             this.updateRoommate(await this.getRoommate());
           }
+        } else {
+          this.updateBookingShow(await this.API.getBookingDocument(null));
         }
         resolve('ok');
       }
@@ -171,6 +174,19 @@ export class DataService {
   currentHistoryCount = this.historyCount.asObservable();
   updateHistoryCount(value) {
     this.historyCount.next(value);
+    //console.log(value);
+  }
+
+  private bookingShow = new BehaviorSubject("");
+  currentBookingShow = this.bookingShow.asObservable();
+  updateBookingShow(value) {
+    if ((moment().utc().unix() > moment(value[0].bookingPeriodStart).unix()) && (moment().utc().unix() < moment(value[0].bookingPeriodEnd).unix())) {
+      //console.log(moment().utc().unix());
+      //console.log(moment(value[0].bookingPeriodStart).unix());
+      //console.log(moment(value[0].bookingPeriodEnd).unix());
+      this.bookingShow.next("true");
+      //console.log(this.currentBookingShow);
+    }
     //console.log(value);
   }
 }

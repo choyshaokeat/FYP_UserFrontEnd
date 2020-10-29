@@ -64,7 +64,7 @@
               <thead>
                 <tr class="text-center">
                   <th scope="col">Year</th>
-                  <th scope="col">Duration</th>
+                  <th scope="col">Duration (E/<span class="text-success">A</span>)</th>
                   <th scope="col">Village</th>
                   <th scope="col">Room</th>
                   <th scope="col">Bed</th>
@@ -76,8 +76,20 @@
               <tbody>
                 <tr *ngFor="let m of bookingHistory" class="text-center">
                   <th scope="row">{{ m?.expectedCheckInDate | date:'yyyy' }}</th>
-                  <td>{{ m?.expectedCheckInDate | date:'dd/MM/yyyy' }} - {{ m?.expectedCheckOutDate | date:'dd/MM/yyyy' }} 
-                    <span class="font-weight-bold">( {{ m?.numberOfSemester }} <span *ngIf="m?.numberOfSemester != 'assigned'">sem</span> )</span></td>
+                  <td>
+                    <div class="align-items-center">
+                      <div class="lh-100 mb-2">
+                        {{ m?.numberOfSemester }} <span *ngIf="m?.numberOfSemester != 'assigned'">Semester</span>
+                      </div>
+                      <div class="lh-100 mb-2">
+                        {{ m?.expectedCheckInDate | date:'dd/MM/yyyy'}} - {{ m?.expectedCheckOutDate | date:'dd/MM/yyyy'}} 
+                      </div>
+                      <div class="lh-100 mb-0 text-success">
+                        {{ m?.checkInDate | date:'dd/MM/yyyy'}} - {{ m?.checkOutDate | date:'dd/MM/yyyy'}} <span *ngIf="m.checkOutDate == null">TBA</span>
+                      </div>
+                      
+                    </div>
+                  </td>
                   <td>{{ m?.village }}</td>
                   <td>{{ m?.roomNumber }}</td>
                   <td>{{ m?.bed }}</td>

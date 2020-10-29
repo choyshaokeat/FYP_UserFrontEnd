@@ -70,4 +70,8 @@ export class ApiBackEndService {
   updateRoomInfo(data) {
     return this.http.post(`${this.getBackEndURL()}/client/updateRoomInfo`, { data }, httpOptions);
   }
+
+  getBookingDocument(data) {
+    return this.http.post(`${this.getBackEndURL()}/client/getBookingDocument`, { data }, httpOptions);
+  }
 }

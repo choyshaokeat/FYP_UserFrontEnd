@@ -1,7 +1,7 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router, ActivatedRoute, Params } from '@angular/router';
-
+import * as moment from 'moment'
 import { ApiFrontEndService } from '../../services/api-front-end.service';
 import { DataService } from '../../services/data.service';
 import { EncrDecrService } from '../../services/encdec.service';
@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
 
   sidebarClick: any;
   bookingHistoryCount: any;
+  showBooking: any;
   public publicAuth: any;
 
   constructor(
@@ -42,7 +43,11 @@ export class HeaderComponent implements OnInit {
       this.DataService.currentHistoryCount.subscribe(
         async data => {
           this.bookingHistoryCount = data;
-        });
+      });
+      this.DataService.currentBookingShow.subscribe(
+        async data => {
+          this.showBooking = data;
+      });
     }
   }
 

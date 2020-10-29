@@ -216,5 +216,23 @@ export class ApiFrontEndService {
       );
     });
   }
+  
+  public getBookingDocument(data) {
+    return new Promise((resolve, reject) => {
+      data = this.EncrDecrService.encryptObject('client', data);
+      this.ApiBackEndService.getBookingDocument(data).subscribe(
+        (res: { status, data }) => {
+          res = this.EncrDecrService.decryptObject('client', res);
+          if (res.status == 200) {
+            resolve(res.data)
+          }
+          else reject(res.status);
+        },
+        (err) => {
+          reject(err)
+        }
+      );
+    });
+  }
 
 }

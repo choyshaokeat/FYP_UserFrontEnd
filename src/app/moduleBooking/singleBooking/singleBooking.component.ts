@@ -35,8 +35,10 @@ export class SingleBookingComponent implements OnInit {
   selectedRoomCapacity: any;
   numberOfSemester = 1;
   minNumberOfSemester: any = 1;
-  maxNumberOfSemester: any = 3;
+  maxNumberOfSemester: any;
   totalFees: any;
+  checkInDate: any;
+  checkOutDate: any;
 
   constructor(
     private API: ApiFrontEndService,
@@ -49,6 +51,7 @@ export class SingleBookingComponent implements OnInit {
   async ngOnInit() {
     await this.subscribeData();
     await this.getVillage();
+    await this.getBookingDocument();
   }
 
   async subscribeData() {
@@ -59,6 +62,11 @@ export class SingleBookingComponent implements OnInit {
     if (this.publicAuth == undefined || this.publicAuth == 'guest') {
       this.router.navigate(['/login']);
     }
+  }
+
+  async getBookingDocument() {
+    var sem = await this.API.getBookingDocument(null);
+    this.maxNumberOfSemester = sem[0].maxBookingSemester;
   }
 
   async getVillage() {
@@ -173,7 +181,78 @@ export class SingleBookingComponent implements OnInit {
     this.totalFees = this.selectedRoom.price*this.numberOfSemester;
   }
 
+  async calculateCheckInOutDate() {
+    var tempDate = await this.API.getBookingDocument(null);
+    var checkInDate = [];
+    var checkOutDate = [];
+    checkInDate.push(moment(tempDate[0].sem1CheckInDate).format("MM-DD"));
+    checkInDate.push(moment(tempDate[0].sem2CheckInDate).format("MM-DD"));
+    checkInDate.push(moment(tempDate[0].sem3CheckInDate).format("MM-DD"));
+    checkOutDate.push(moment(tempDate[0].sem1CheckOutDate).format("MM-DD"));
+    checkOutDate.push(moment(tempDate[0].sem2CheckOutDate).format("MM-DD"));
+    checkOutDate.push(moment(tempDate[0].sem3CheckOutDate).format("MM-DD"));
+    
+    var tempCheckInDate = [];
+    tempCheckInDate.push(moment(tempDate[0].sem1CheckInDate).set('year', 2000).unix());
+    tempCheckInDate.push(moment(tempDate[0].sem2CheckInDate).set('year', 2000).unix());
+    tempCheckInDate.push(moment(tempDate[0].sem3CheckInDate).set('year', 2000).unix());
+
+    console.log(tempCheckInDate);
+    
+    for (let i=0; i<=2; i++) {
+      if( moment().set('year', 2000).unix() < tempCheckInDate[i]) {
+        this.checkInDate = moment(moment().format("YYYY") + "-" + checkInDate[i]).utc().format("YYYY-MM-DD HH:mm:ss");
+        console.log(this.checkInDate); console.log("i: ", i);
+        if ((i + this.numberOfSemester) > 3) {
+          var year = Math.floor((i + this.numberOfSemester)/3); console.log(year);
+          var checkOutSem = (i + this.numberOfSemester) % 3; console.log(checkOutSem);
+          if ( checkOutSem == 0) {
+            var checkOutYear = moment().add((year - 1), 'y').format("YYYY");
+            this.checkOutDate = moment(checkOutYear + "-" + checkOutDate[2]).utc().format("YYYY-MM-DD HH:mm:ss");
+          } else {
+            var checkOutYear = moment().add((year), 'y').format("YYYY");
+            this.checkOutDate = moment(checkOutYear + "-" + checkOutDate[checkOutSem - 1]).utc().format("YYYY-MM-DD HH:mm:ss");
+          }
+          break;
+        } else { console.log(this.numberOfSemester);
+          if (i == 0) {
+            this.checkOutDate = moment(moment().format("YYYY") + "-" + checkOutDate[this.numberOfSemester-1]).utc().format("YYYY-MM-DD HH:mm:ss");
+          } else if (i == 1) {
+            this.checkOutDate = moment(moment().format("YYYY") + "-" + checkOutDate[this.numberOfSemester]).utc().format("YYYY-MM-DD HH:mm:ss");
+          } else {
+            this.checkOutDate = moment(moment().format("YYYY") + "-" + checkOutDate[this.numberOfSemester+1]).utc().format("YYYY-MM-DD HH:mm:ss");
+          }
+          break;
+        }
+      } else if( moment().set('year', 2000).unix() > tempCheckInDate[2] ) {
+        i = 0
+        this.checkInDate = moment(moment().add(1, 'y').format("YYYY") + "-" + checkInDate[0]).utc().format("YYYY-MM-DD HH:mm:ss");
+        //console.log(this.checkInDate);
+        console.log("gg");
+        if ((i + this.numberOfSemester) > 3) {
+          var year = Math.floor((i + this.numberOfSemester)/3);
+          if ( year >= 1) {
+            var checkOutSem = (i + this.numberOfSemester) % 3;
+            if ( checkOutSem == 0) {
+              var checkOutYear = moment().add((year), 'y').format("YYYY");
+              this.checkOutDate = moment(checkOutYear + "-" + checkOutDate[2]).utc().format("YYYY-MM-DD HH:mm:ss");
+            } else {
+              var checkOutYear = moment().add((year + 1), 'y').format("YYYY");
+              this.checkOutDate = moment(checkOutYear + "-" + checkOutDate[checkOutSem - 1]).utc().format("YYYY-MM-DD HH:mm:ss");
+            }
+            break;
+          }
+        } else {
+          this.checkOutDate = moment(moment().add(1, 'y').format("YYYY") + "-" + checkOutDate[this.numberOfSemester - 1]).utc().format("YYYY-MM-DD HH:mm:ss");
+        }
+        break;
+      }
+    }
+
+  }
+
   async submit() {
+    await this.calculateCheckInOutDate();
     var availability = await this.checkRoomAvailability()
     if (availability == true) {
       var data1 = {
@@ -208,7 +287,9 @@ export class SingleBookingComponent implements OnInit {
         aircond: this.selectedRoom.aircond,
         fees: this.selectedRoom.price*this.numberOfSemester,
         status: "Booked",
-        bookingDate: moment().format("YYYY-MM-DD HH:mm:ss"),
+        bookingDate: moment().utc().format("YYYY-MM-DD HH:mm:ss"),
+        expectedCheckInDate: this.checkInDate,
+        expectedCheckOutDate: this.checkOutDate,
         numberOfSemester: this.numberOfSemester 
       }
       await this.API.updateBookingInfo(data3);
