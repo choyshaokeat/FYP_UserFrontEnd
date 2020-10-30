@@ -69,14 +69,14 @@
                   <th scope="col">Room</th>
                   <th scope="col">Bed</th>
                   <th scope="col">Aircond</th>
-                  <th scope="col">Fees</th>
+                  <th scope="col">Invoice/<span class="text-success">Fees</span></th>
                   <th scope="col">Status</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let m of bookingHistory" class="text-center">
-                  <th scope="row">{{ m?.expectedCheckInDate | date:'yyyy' }}</th>
-                  <td>
+                  <th scope="row" class="align-middle">{{ m?.expectedCheckInDate | date:'yyyy' }}</th>
+                  <td class="align-middle">
                     <div class="align-items-center">
                       <div class="lh-100 mb-2">
                         {{ m?.numberOfSemester }} <span *ngIf="m?.numberOfSemester != 'assigned'">Semester</span>
@@ -84,18 +84,26 @@
                       <div class="lh-100 mb-2">
                         {{ m?.expectedCheckInDate | date:'dd/MM/yyyy'}} - {{ m?.expectedCheckOutDate | date:'dd/MM/yyyy'}} 
                       </div>
-                      <div class="lh-100 mb-0 text-success">
+                      <div class="lh-100 mb-0 font-weight-bold text-success">
                         {{ m?.checkInDate | date:'dd/MM/yyyy'}} - {{ m?.checkOutDate | date:'dd/MM/yyyy'}} <span *ngIf="m.checkOutDate == null">TBA</span>
                       </div>
-                      
                     </div>
                   </td>
-                  <td>{{ m?.village }}</td>
-                  <td>{{ m?.roomNumber }}</td>
-                  <td>{{ m?.bed }}</td>
-                  <td>{{ m?.aircond }}</td>
-                  <td>RM {{ m?.fees | number:'.2' }}</td>
-                  <td>{{ m?.status }}</td>
+                  <td class="align-middle">{{ m?.village }}</td>
+                  <td class="align-middle">{{ m?.roomNumber }}</td>
+                  <td class="align-middle">{{ m?.bed }}</td>
+                  <td class="align-middle">{{ m?.aircond }}</td>
+                  <td class="align-middle">
+                    <div class="align-items-center">
+                      <div class="lh-100 mb-2">
+                        INV-{{ m?.id }}
+                      </div>
+                      <div class="lh-100 mb-0 font-weight-bold text-success">
+                        RM {{ m?.fees | number:'.2' }}
+                      </div>
+                    </div>
+                  </td>
+                  <td class="align-middle">{{ m?.status }}</td>
                 </tr>
               </tbody>
             </table>

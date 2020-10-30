@@ -143,6 +143,9 @@ export class DataService {
   private bookingHistory = new BehaviorSubject('');
   currentBookingHistory = this.bookingHistory.asObservable();
   updateBookingHistory(value) {
+    for (var x in value) {
+      value[x].id = value[x].id.toString().padStart(8 ,"0");
+    }
     this.bookingHistory.next(value);
     //console.log(value);
   }
