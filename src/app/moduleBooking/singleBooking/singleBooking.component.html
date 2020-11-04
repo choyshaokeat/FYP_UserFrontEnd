@@ -16,9 +16,9 @@
         </div>
         <div class="card-body">
           <small class="h6 text-sm font-weight-bold">Reminder:</small>
-          <p class="text-sm lh-160 mb-3">Maximum duration allow to book is up to three(3) semesters.</p>
+          <p class="text-sm lh-160 mb-3">Maximum duration allow to book is up to {{ maxNumberOfSemester }} semesters.</p>
           <small class="h6 text-sm font-weight-bold">Booking Period:</small>
-          <p class="text-sm lh-160 mb-0">01 January 2021 - 15 January 2021</p>
+          <p class="text-sm lh-160 mb-0">{{ bookingPeriod[0] | date:'dd MMM yyyy, hh:mm a' }} - {{ bookingPeriod[1] | date:'dd MMM yyyy, hh:mm a' }}</p>
         </div>
       </div>
       <div class="card hover-shadow-lg" style="position: -webkit-sticky; position: sticky; top: 6rem; align-self: flex-start;">

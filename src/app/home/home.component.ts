@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
 
   publicAuth: any;
   showBooking: any;
+  bookingPeriod: any = [];
 
   constructor(
     private API: ApiFrontEndService,
@@ -30,7 +31,8 @@ export class HomeComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    this.subscribeData();
+    await this.subscribeData();
+    await this.getBookingDocument();
   }
 
   async subscribeData() {
@@ -45,5 +47,11 @@ export class HomeComponent implements OnInit {
           this.showBooking = data;
       });
     }
+  }
+
+  async getBookingDocument() {
+    var sem = await this.API.getBookingDocument(null);
+    this.bookingPeriod.push(sem[0].bookingPeriodStart);
+    this.bookingPeriod.push(sem[0].bookingPeriodEnd);
   }
 }

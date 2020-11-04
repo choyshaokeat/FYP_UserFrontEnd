@@ -36,6 +36,7 @@ export class SingleBookingComponent implements OnInit {
   numberOfSemester = 1;
   minNumberOfSemester: any = 1;
   maxNumberOfSemester: any;
+  bookingPeriod: any = [];
   totalFees: any;
   checkInDate: any;
   checkOutDate: any;
@@ -67,6 +68,8 @@ export class SingleBookingComponent implements OnInit {
   async getBookingDocument() {
     var sem = await this.API.getBookingDocument(null);
     this.maxNumberOfSemester = sem[0].maxBookingSemester;
+    this.bookingPeriod.push(sem[0].bookingPeriodStart);
+    this.bookingPeriod.push(sem[0].bookingPeriodEnd);
   }
 
   async getVillage() {

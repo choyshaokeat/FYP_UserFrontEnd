@@ -11,6 +11,18 @@
               <p class="lead lh-180 text-white font-weight-bold" style="text-shadow: 0px 0px 4px #7e6a58;">Roomy is an <br>
                 <span class="text-dark" style="text-shadow: 0px 0px 0px #7e6a58;">Automated Student Accommodation Booking System</span>
                 <br>that takes room booking to the next level.</p>
+                <div *ngIf="publicAuth.bookingStatus > 0 || showBooking!='true'" class="card mt-5 pb-2 mb-0">
+                  <div class="card-body text-center">
+                    <h5 class="text-primary font-weight-bold mb-4">Upcoming Room Registration</h5>
+                    <span class="badge badge-soft-success badge-lg text-sm">
+                      {{ bookingPeriod[0] | date:'dd MMM yyyy, hh:mm a' }}
+                    </span>
+                    <span class="mx-2"><i class="fas fa-angle-right"></i></span>
+                    <span class="badge badge-soft-danger badge-lg text-sm">
+                      {{ bookingPeriod[1] | date:'dd MMM yyyy, hh:mm a' }}
+                    </span>
+                  </div>
+                </div>
               <div *ngIf="publicAuth.bookingStatus == 0 && showBooking=='true'" class="mt-5">
                 <div class="card-group text-center">
                   <div class="card bg-gradient-primary p-3 border-0 shadow-primary">
