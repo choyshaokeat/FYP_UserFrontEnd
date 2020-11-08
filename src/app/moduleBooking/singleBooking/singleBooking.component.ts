@@ -296,6 +296,9 @@ export class SingleBookingComponent implements OnInit {
         numberOfSemester: this.numberOfSemester 
       }
       await this.API.updateBookingInfo(data3);
+
+      await this.sendEmail();
+
       this.DataService.callAll();
 
       $('#bookSucessfully').modal('show');
@@ -317,6 +320,24 @@ export class SingleBookingComponent implements OnInit {
   clearCart() {
     this.showBookingDetails = false;
     this.selectedRoom = null;
+  }
+
+  async sendEmail() {
+    var data = {
+      type: "bookingConfirmation",
+      receiver: this.publicAuth.studentEmail,
+      subject: "Roomy Booking Confirmation",
+      studentName: this.publicAuth.studentName,
+      studentID: this.publicAuth.studentID,
+      roomNumber: this.selectedRoom.roomNumber,
+      bed: this.selectedRoom.bed,
+      aircond: this.selectedRoom.aircond,
+      numberOfSemester: this.numberOfSemester,
+      fees: this.selectedRoom.price*this.numberOfSemester,
+      expectedCheckInDate: moment(this.checkInDate).zone(480).add(1, 'day').format("YYYY-MM-DD"),
+      expectedCheckOutDate: moment(this.checkOutDate).zone(480).add(1, 'day').format("YYYY-MM-DD"),
+    }
+    await this.API.sendEmail(data);
   }
 
   async modalEvent(type) {

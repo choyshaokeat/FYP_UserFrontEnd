@@ -10,14 +10,6 @@ export class EncrDecrService {
   p_key = {
     login: 'key_login.bbb',
     client: 'key_client.bbb',
-    merchant: 'key_merchant.bbb',
-    cart: 'key_cart.bbb',
-    order: 'key_order.bbb',
-    reservation: 'key_reservation.bbb',
-    payment: 'key_payment.bbb',
-    search: 'key_search.bbb',
-    public_key : 'key_public_key.bbb',
-    kitchen : 'key_kitchen.bbb',
     mail: 'key_mail.bbb'
   }
 
@@ -61,14 +53,6 @@ export class EncrDecrService {
       var key = '';
       if (type == 'login') key = this.p_key.login;
       else if (type == 'client') key = this.p_key.client;
-      else if (type == 'merchant') key = this.p_key.merchant;
-      else if (type == 'cart') key = this.p_key.cart;
-      else if (type == 'order') key = this.p_key.order;
-      else if (type == 'reservation') key = this.p_key.reservation;
-      else if (type == 'payment') key = this.p_key.payment;
-      else if (type == 'search') key = this.p_key.search;
-      else if (type == 'public_key') key = this.p_key.public_key;
-      else if (type == 'kitchen') key = this.p_key.kitchen;
       else if (type == 'mail') key = this.p_key.mail;
 
       var b64 = CryptoJS.AES.encrypt(JSON.stringify(value), key).toString();
@@ -87,14 +71,6 @@ export class EncrDecrService {
       var key = '';
       if (type == 'login') key = this.p_key.login;
       else if (type == 'client') key = this.p_key.client;
-      else if (type == 'merchant') key = this.p_key.merchant;
-      else if (type == 'cart') key = this.p_key.cart;
-      else if (type == 'order') key = this.p_key.order;
-      else if (type == 'reservation') key = this.p_key.reservation;
-      else if (type == 'payment') key = this.p_key.payment;
-      else if (type == 'search') key = this.p_key.search;
-      else if (type == 'public_key') key = this.p_key.public_key;
-      else if (type == 'kitchen') key = this.p_key.kitchen;
       else if (type == 'mail') key = this.p_key.mail;
 
       var reb64 = CryptoJS.enc.Hex.parse(value);

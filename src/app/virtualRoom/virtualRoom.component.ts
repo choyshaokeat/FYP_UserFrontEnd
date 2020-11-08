@@ -26,6 +26,8 @@ export class VirtualRoomComponent implements OnInit {
   vrRoommatesInfo: any;
   vrCapacity: any;
   studentIDs: any = [];
+  studentNames: any = [];
+  studentEmails: any = [];
   bedAlphabet = ['A','B','C','D','E','F','G','H']
 
   village: any;
@@ -99,11 +101,15 @@ export class VirtualRoomComponent implements OnInit {
 
   getStudentIDs() {
     this.studentIDs[0] = this.vrHostInfo[0].studentID;
+    this.studentNames[0] = this.vrHostInfo[0].studentName;
+      this.studentEmails[0] = this.vrHostInfo[0].studentEmail;
     var j = this.vrRoommatesInfo.length
     for (var i = 0; i < j; i++) {
       this.studentIDs[i+1] = this.vrRoommatesInfo[i].studentID;
+      this.studentNames[i+1] = this.vrRoommatesInfo[i].studentName;
+      this.studentEmails[i+1] = this.vrRoommatesInfo[i].studentEmail;
     }
-    //console.log(this.studentIDs);
+    console.log(this.studentIDs, this.studentNames, this.studentEmails);
   }
 
   async deleteVR() {
@@ -294,7 +300,7 @@ export class VirtualRoomComponent implements OnInit {
           bed: this.bedAlphabet[i]
         }
         await this.API.updateRoomInfo(data2);
-  
+
         var data3 = {
           type: "createBookingHistory",
           studentID: this.studentIDs[i],
@@ -324,18 +330,33 @@ export class VirtualRoomComponent implements OnInit {
           vrCode: this.vrCode
         }
         await this.API.updateVirtualRoom(data);
+  
+        var data5 = {
+          type: "bookingConfirmation",
+          receiver: this.studentEmails[i],
+          subject: "Roomy Booking Confirmation",
+          studentName: this.studentNames[i],
+          studentID: this.studentIDs[i],
+          roomNumber: this.selectedRoom.roomNumber,
+          bed: this.bedAlphabet[i],
+          aircond: this.selectedRoom.aircond,
+          numberOfSemester: this.numberOfSemester,
+          fees: this.selectedRoom.price*this.numberOfSemester,
+          expectedCheckInDate: moment(this.checkInDate).zone(480).add(1, 'day').format("YYYY-MM-DD"),
+          expectedCheckOutDate: moment(this.checkOutDate).zone(480).add(1, 'day').format("YYYY-MM-DD"),
+        }
+        await this.API.sendEmail(data5);
 
-        this.DataService.callAll();
-
-        $('#bookSucessfully').modal('show');
-        await this.sleep(5000).then(() => { $('#bookSucessfully').modal('hide'); });
-        this.router.navigate(['/history']);
         //console.log(data1);
         //console.log(data2);
         //console.log(data3);
         //console.log(data4);
-        //console.log("Done");
       }
+      this.DataService.callAll();
+      $('#bookSucessfully').modal('show');
+      await this.sleep(5000).then(() => { $('#bookSucessfully').modal('hide'); });
+      this.router.navigate(['/history']);
+      //console.log("Done");
     } else {
       $('#roomOccupied').modal('show');
       this.refreshData();

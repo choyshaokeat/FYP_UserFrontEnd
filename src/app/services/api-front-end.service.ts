@@ -235,4 +235,23 @@ export class ApiFrontEndService {
     });
   }
 
+  public sendEmail(data) {
+    console.log(data);
+    return new Promise((resolve, reject) => {
+      data = this.EncrDecrService.encryptObject('mail', data);
+      this.ApiBackEndService.sendEmail(data).subscribe(
+        (res: { status, data }) => {
+          res = this.EncrDecrService.decryptObject('mail', res);
+          if (res.status == 200) {
+            if (res.data.length != 0) resolve(res.data)
+            else if (res.data.length == 0) reject('Empty data');
+          }
+          else reject(res.status);
+        },
+        (err) => {
+          reject(err)
+        }
+      );
+    });
+  }
 }

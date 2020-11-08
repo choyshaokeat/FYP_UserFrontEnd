@@ -74,4 +74,9 @@ export class ApiBackEndService {
   getBookingDocument(data) {
     return this.http.post(`${this.getBackEndURL()}/client/getBookingDocument`, { data }, httpOptions);
   }
+
+  //Email
+  sendEmail(data) {
+    return this.http.post(`${this.getBackEndURL()}/agent/mail`, { data }, httpOptions);
+  }
 }
